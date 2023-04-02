@@ -1,15 +1,53 @@
 <template>
   <div class="w-full flex flex-col p-4 gap-4">
     <div class="flex flex-row">
-      <button class="ml-auto btn"><ChPlus class="mr-1" />增加数据源</button>
+      <label class="ml-auto btn" for="create-datasource">
+        <ChPlus class="mr-1" />
+        {{ $t('add_datasource') }}</label
+      >
+      <input type="checkbox" id="create-datasource" class="modal-toggle" />
+      <div class="modal">
+        <div class="modal-box relative">
+          <label for="create-datasource" class="btn btn-sm btn-circle absolute right-2 top-2"
+            >✕</label
+          >
+          <h3 class="text-lg font-bold">{{ $t('add_datasource') }}</h3>
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text">{{ $t('name') }}</span>
+            </label>
+            <input type="text" placeholder="Type here" class="input input-bordered w-full" />
+          </div>
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text">{{ $t('type') }}</span>
+            </label>
+            <select class="select select-bordered w-full">
+              <option value="mysql">MySQL</option>
+              <option value="postgres">PostgreSQL</option>
+              <option value="local">{{ $t('local') }}</option>
+              <option value="ssh">SSH</option>
+            </select>
+          </div>
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text">{{ $t('options') }}</span>
+            </label>
+            <input type="text" placeholder="Type here" class="input input-bordered w-full" />
+          </div>
+          <div class="modal-action">
+            <label for="create-datasource" class="btn">{{ $t('save') }}</label>
+          </div>
+        </div>
+      </div>
     </div>
     <table class="table w-full">
       <thead>
         <tr>
           <th>ID</th>
-          <th>名称</th>
-          <th>类型</th>
-          <th>动作</th>
+          <th>{{ $t('name') }}</th>
+          <th>{{ $t('type') }}</th>
+          <th>{{ $t('action') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -22,17 +60,20 @@
             </div>
           </td>
           <td class="flex gap-1">
-            <button class="btn btn-sm"><BxDetail /></button>
-            <button class="btn btn-sm"><BxSolidEditAlt /></button>
-            <button class="btn btn-error btn-sm"><ReDeleteBin7Line /></button>
+            <button class="btn btn-primary btn-sm">
+              <BxSolidEditAlt />
+            </button>
+            <button class="btn btn-error btn-sm">
+              <ReDeleteBin7Line />
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
     <div class="flex justify-center">
       <div class="btn-group grid grid-cols-2">
-        <button class="btn btn-outline">Previous</button>
-        <button class="btn btn-outline">Next</button>
+        <button class="btn btn-outline">{{ $t('previous') }}</button>
+        <button class="btn btn-outline">{{ $t('next') }}</button>
       </div>
     </div>
   </div>

@@ -3,40 +3,32 @@
     <li>
       <router-link to="/">
         <AkHomeAlt1 />
-        首页
+        {{ $t('home') }}
       </router-link>
     </li>
     <li>
       <router-link to="/datasource">
         <FeDatabase />
-        数据源
+        {{ $t('datasource') }}
       </router-link>
     </li>
     <li>
       <router-link to="/storage">
         <TiOutlineCloudStorage />
-        存储
+        {{ $t('storage') }}
       </router-link>
     </li>
     <li>
       <router-link to="/task">
         <BsListTask />
-        备份任务</router-link
-      >
+        {{ $t('task') }}
+      </router-link>
     </li>
     <li>
       <router-link to="/tasklog">
         <GlTaskDone />
-        任务记录</router-link
-      >
-    </li>
-    <li>
-      <a>
-        <CaSettings />
-        系统设置</a
-      >
+        {{ $t('task_log') }}
+      </router-link>
     </li>
   </ul>
 </template>
-
-
