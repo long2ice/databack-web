@@ -5,27 +5,32 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
       component: () => import('@/views/HomeView.vue')
     },
     {
       path: '/datasource',
-      name: 'datasource',
-      component: () => import('@/views/DataSourceView.vue')
+      component: () => import('@/views/datasource/DataSourceView.vue'),
+      children: [
+        {
+          path: '',
+          component: () => import('@/views/datasource/DataSourceListView.vue')
+        },
+        {
+          path: 'add',
+          component: () => import('@/views/datasource/AddDataSourceView.vue')
+        }
+      ]
     },
     {
       path: '/storage',
-      name: 'storage',
       component: () => import('@/views/StorageView.vue')
     },
     {
       path: '/task',
-      name: 'task',
       component: () => import('@/views/TaskView.vue')
     },
     {
       path: '/tasklog',
-      name: 'tasklog',
       component: () => import('@/views/TaskLogView.vue')
     }
   ]

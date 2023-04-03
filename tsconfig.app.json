@@ -8,6 +8,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "types": ["vue3-toastify/global"],
     "typeRoots": ["src/types"]
   }
 }

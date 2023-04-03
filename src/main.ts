@@ -1,18 +1,19 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-
 import './assets/main.css'
-import { createI18n } from 'vue-i18n'
-import { messages } from '@/i18n'
-const i18n = createI18n({
-  messages,
-  fallbackLocale: 'en-US'
-})
+import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
+
+import { i18n } from '@/i18n'
+import { pinia } from '@/stores/pinia'
+
 const app = createApp(App)
+app.use(pinia)
 app.use(i18n)
-app.use(createPinia())
 app.use(router)
+app.use(Vue3Toastify, {
+  autoClose: 3000
+} as ToastContainerOptions)
 app.mount('#app')

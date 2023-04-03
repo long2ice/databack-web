@@ -8,7 +8,9 @@ import NavBar from '@/components/NavBar.vue'
   <Suspense>
     <div class="flex flex-row">
       <Sidebar />
-      <RouterView />
+      <div class="w-full flex flex-col p-4 gap-4">
+        <RouterView />
+      </div>
     </div>
   </Suspense>
 </template>
