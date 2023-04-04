@@ -17,13 +17,33 @@ const router = createRouter({
         },
         {
           path: 'add',
-          component: () => import('@/views/datasource/AddDataSourceView.vue')
+          component: () => import('@/views/datasource/AddUpdateDataSourceView.vue')
+        },
+        {
+          path: ':id/update',
+          name: 'updateDataSource',
+          component: () => import('@/views/datasource/AddUpdateDataSourceView.vue')
         }
       ]
     },
     {
       path: '/storage',
-      component: () => import('@/views/StorageView.vue')
+      component: () => import('@/views/storage/StorageView.vue'),
+      children: [
+        {
+          path: '',
+          component: () => import('@/views/storage/StorageListView.vue')
+        },
+        {
+          path: 'add',
+          component: () => import('@/views/storage/AddUpdateStorageView.vue')
+        },
+        {
+          path: ':id/update',
+          name: 'updateStorage',
+          component: () => import('@/views/storage/AddUpdateStorageView.vue')
+        }
+      ]
     },
     {
       path: '/task',

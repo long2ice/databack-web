@@ -5,6 +5,7 @@ export default {
   task: '任务',
   task_log: '任务记录',
   add_datasource: '添加数据源',
+  update_datasource: '更新数据源',
   name: '名称',
   name_placeholder: '请输入唯一名称',
   type: '类型',
@@ -24,17 +25,58 @@ export default {
     '请填写其他选项，例如：--databases=database1,database2，多个选项用空格分隔',
   mysql_other_options_tips: '所有选项请参考mysqlpump的帮助文档，',
   postgresql_other_options_placeholder: '请填写其他选项，例如：-a -b，多个选项用空格分隔',
-  postgresql_other_options_tips: '所有选项请参考 {type} 的帮助文档，',
+  postgresql_other_options_tips: '所有选项请参考 {backup_program} 的帮助文档，',
   backup_program: '备份程序',
   local_path: '本地路径',
+  remote_path: '远程路径',
   private_key: '私钥',
   private_key_pass: '私钥密码',
-  name_required: '名称是必填项',
+  validate: {
+    name_required: '名称是必填项',
+    host_required: '主机是必填项',
+    port_required: '端口是必填项',
+    username_required: '用户名是必填项',
+    path_required: '路径是必填项',
+    ak_required: 'Access Key ID是必填项',
+    sk_required: 'Secret Access Key是必填项',
+    bucket_name_required: '存储桶名称是必填项'
+  },
   error: {
     server: '服务器错误，请稍后再试！'
   },
   success: {
     add_datasource: '添加数据源成功！',
-    delete_datasource: '删除数据源成功！'
-  }
+    delete_datasource: '删除数据源成功！',
+    update_datasource: '更新数据源成功！',
+    add_storage: '添加存储成功！',
+    delete_storage: '删除存储成功！',
+    update_storage: '更新存储成功！'
+  },
+  created_at: '创建时间',
+  updated_at: '更新时间',
+  confirm_title: '确认',
+  cancel: '取消',
+  confirm: {
+    delete_datasource: '确定要删除此数据源吗？',
+    delete_storage: '确定要删除此存储吗？'
+  },
+  search: '查询',
+  search_placeholder: '请输入查询内容',
+  select_datasource_type: '选择数据源类型',
+  reset: '重置',
+  select_storage_type: '选择存储类型',
+  add_storage: '添加存储',
+  update_storage: '更新存储',
+  access_key_id: 'Access Key ID',
+  secret_access_key: 'Secret Access Key',
+  bucket_name: '存储桶名称',
+  region_name: '区域名称',
+  endpoint_url: '端点URL',
+  path: '路径',
+  add_task: '添加任务',
+  compress: '是否压缩',
+  keep_num: '保留数量',
+  enabled: '是否开启',
+  cron: '周期',
+  update_task: '更新任务'
 }

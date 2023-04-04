@@ -1,42 +1,46 @@
 <template>
-  <h3 class="text-lg font-bold">{{ $t('add_datasource') }}</h3>
+  <h3 class="text-lg font-bold">{{ isUpdate ? $t('update_datasource') : $t('add_datasource') }}</h3>
   <div class="tabs">
     <button
-      class="tab tab-bordered"
+      class="tab-bordered tab"
       :class="{
         'tab-active': type == 'mysql'
       }"
       @click="type = 'mysql'"
+      v-if="(isUpdate && type == 'mysql') || !isUpdate"
     >
       <DeMysqlOriginal class="mr-2 text-lg" />
       MySQL
     </button>
     <button
-      class="tab tab-bordered"
+      class="tab-bordered tab"
       :class="{
         'tab-active': type == 'postgres'
       }"
       @click="type = 'postgres'"
+      v-if="(isUpdate && type == 'postgres') || !isUpdate"
     >
       <DePostgresqlOriginal class="mr-2 text-lg" />
       PostgreSQL
     </button>
     <button
-      class="tab tab-bordered"
+      class="tab-bordered tab"
       :class="{
         'tab-active': type == 'local'
       }"
       @click="type = 'local'"
+      v-if="(isUpdate && type == 'local') || !isUpdate"
     >
       <CaVolumeBlockStorage class="mr-2 text-lg" />
       {{ $t('local') }}
     </button>
     <button
-      class="tab tab-bordered"
+      class="tab-bordered tab"
       :class="{
         'tab-active': type == 'ssh'
       }"
       @click="type = 'ssh'"
+      v-if="(isUpdate && type == 'ssh') || !isUpdate"
     >
       <CaVirtualMachine class="mr-2 text-lg" />
       SSH
@@ -51,7 +55,7 @@
         type="text"
         v-model="name"
         :placeholder="$t('name_placeholder')"
-        class="input input-bordered w-full"
+        class="input-bordered input w-full"
       />
       <label class="label">
         <span class="label-text-alt text-red-500">{{ errorMessage }}</span>
@@ -61,16 +65,22 @@
       <label class="label">
         <span class="label-text">{{ $t('options') }}</span>
       </label>
-      <div class="p-4 border rounded">
-        <LocalOptions v-if="type == 'local'" ref="optionsRef" />
-        <SSHOptions v-else-if="type == 'ssh'" ref="optionsRef" />
-        <MySQLOptions v-else-if="type == 'mysql'" ref="optionsRef" />
-        <PostgreSQLOptions v-else-if="type == 'postgres'" ref="optionsRef" />
+      <div class="rounded-lg border p-4">
+        <LocalOptions v-if="type == 'local'" ref="optionsRef" :defaultOptions="options" />
+        <SSHOptions v-else-if="type == 'ssh'" ref="optionsRef" :defaultOptions="options" />
+        <MySQLOptions v-else-if="type == 'mysql'" ref="optionsRef" :defaultOptions="options" />
+        <PostgreSQLOptions
+          v-else-if="type == 'postgres'"
+          ref="optionsRef"
+          :defaultOptions="options"
+        />
       </div>
     </div>
     <div class="btn-group mt-4">
-      <button class="btn" :disabled="isSubmitting" @click="addDataSource">{{ $t('save') }}</button>
-      <button class="btn btn-primary" @click="$router.back()">{{ $t('back') }}</button>
+      <button class="btn-primary btn" :disabled="isSubmitting" @click="onSave">
+        {{ $t('save') }}
+      </button>
+      <button class="btn" @click="$router.back()">{{ $t('back') }}</button>
     </div>
   </div>
 </template>
@@ -84,22 +94,39 @@ import * as yup from 'yup'
 import { ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
 import { useI18n } from 'vue-i18n'
-import { createDataSource } from '@/apis/datasource'
+import { createDataSource, getDataSource, updateDataSource } from '@/apis/datasource'
 import type { DataSourceType } from '@/types/responses'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
-
+const router = useRouter()
+const isUpdate = router.currentRoute.value.name === 'updateDataSource'
 const type = ref<DataSourceType>('mysql')
 const { t } = useI18n()
 const { handleSubmit, isSubmitting } = useForm()
-const { value: name, errorMessage } = useField('name', yup.string().required(t('name_required')))
+const { value: name, errorMessage } = useField(
+  'name',
+  yup.string().required(t('validate.name_required'))
+)
 const optionsRef = ref()
-const router = useRouter()
-const addDataSource = handleSubmit(async (values) => {
+const onSave = handleSubmit(async (values) => {
   const { name } = values
-  const options = optionsRef.value.options
-  await createDataSource(name, type.value, options)
-  toast.success(t('success.add_datasource_success'))
+  const options = optionsRef.value.getOptions()
+  if (isUpdate) {
+    const { id } = router.currentRoute.value.params
+    await updateDataSource(parseInt(id as string), name, type.value, options)
+    toast.success(t('success.update_datasource'))
+  } else {
+    await createDataSource(name, type.value, options)
+    toast.success(t('success.add_datasource'))
+  }
   await router.back()
 })
+let options = {}
+if (isUpdate) {
+  const { id } = router.currentRoute.value.params
+  const dataSource = await getDataSource(parseInt(id as string))
+  type.value = dataSource.type
+  name.value = dataSource.name
+  options = dataSource.options
+}
 </script>

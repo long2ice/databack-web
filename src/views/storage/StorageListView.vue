@@ -8,9 +8,8 @@
       @keyup.enter="initData"
     />
     <select @keyup.enter="initData" class="select-bordered select w-full max-w-xs" v-model="type">
-      <option :value="undefined">{{ t('select_datasource_type') }}</option>
-      <option value="mysql">MySQL</option>
-      <option value="postgres">Postgres</option>
+      <option :value="undefined">{{ t('select_storage_type') }}</option>
+      <option value="s3">S3</option>
       <option value="local">{{ t('local') }}</option>
       <option value="ssh">SSH</option>
     </select>
@@ -18,7 +17,7 @@
     <button class="btn-warning btn" @click="onReset">{{ t('reset') }}</button>
     <router-link class="btn ml-auto" to="/datasource/add">
       <ChPlus class="mr-1" />
-      {{ $t('add_datasource') }}
+      {{ $t('add_storage') }}
     </router-link>
   </div>
   <table class="table w-full">
@@ -38,13 +37,13 @@
         <td>{{ d.name }}</td>
         <td>
           <div class="tooltip tooltip-right" :data-tip="d.type">
-            <DataSourceTypeIcon :type="d.type" />
+            <StorageTypeIcon :type="d.type" />
           </div>
         </td>
         <td>{{ $d(parseDate(d.created_at), 'long') }}</td>
         <td>{{ $d(parseDate(d.updated_at), 'long') }}</td>
         <td class="flex gap-1">
-          <router-link class="btn-primary btn-sm btn" :to="`/datasource/${d.id}/update`">
+          <router-link class="btn-primary btn-sm btn" :to="`/storage/${d.id}/update`">
             <BxSolidEditAlt />
           </router-link>
           <button class="btn-error btn-sm btn" @click="deleteDataSource(d.id)">
@@ -75,13 +74,13 @@
 </template>
 
 <script setup lang="ts">
-import * as datasource from '@/apis/datasource'
+import * as storage from '@/apis/storage'
 import DataSourceTypeIcon from '@/components/datasource/DataSourceTypeIcon.vue'
 import { toast } from 'vue3-toastify'
 import { useI18n } from 'vue-i18n'
 import { parseDate } from '@/utils/date'
 import { reactive, ref, watch } from 'vue'
-import type { DataSourcesResponse, DataSourceType } from '@/types/responses'
+import type { StoragesResponse, StorageType } from '@/types/responses'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 
@@ -90,13 +89,13 @@ const dialog = createConfirmDialog(ConfirmModal)
 const { t } = useI18n()
 const pager = reactive({ limit: 10, offset: 0 })
 const name = ref('')
-const type = ref<DataSourceType | undefined>(undefined)
-const data = reactive<DataSourcesResponse>({
+const type = ref<StorageType | undefined>(undefined)
+const data = reactive<StoragesResponse>({
   total: 0,
   data: []
 })
 const initData = async () => {
-  const ret = await datasource.getDataSources(pager.limit, pager.offset, name.value, type.value)
+  const ret = await storage.getStorages(pager.limit, pager.offset, name.value, type.value)
   data.total = ret.total
   data.data = ret.data
 }
@@ -110,13 +109,13 @@ const onReset = () => {
 }
 const deleteDataSource = async (id: number) => {
   const { isCanceled } = await dialog.reveal({
-    msg: t('confirm.delete_datasource')
+    msg: t('confirm.delete_storage')
   })
   if (isCanceled) {
     return
   }
-  await datasource.deleteDataSource(id)
-  toast.success(t('success.delete_datasource'))
+  await storage.deleteStorage(id)
+  toast.success(t('success.delete_storage'))
   await initData()
 }
 </script>

@@ -1,12 +1,24 @@
 import http from '@/axios'
-import type { DataSourcesResponse, DataSourceType } from '@/types/responses'
+import type { DataSourceResponse, DataSourcesResponse, DataSourceType } from '@/types/responses'
 
-export async function getDataSources(limit: number, offset: number): Promise<DataSourcesResponse> {
+export async function getDataSources(
+  limit: number,
+  offset: number,
+  name?: string,
+  type?: DataSourceType
+): Promise<DataSourcesResponse> {
+  const params: Record<string, any> = {
+    limit,
+    offset
+  }
+  if (name) {
+    params.name = name
+  }
+  if (type) {
+    params.type = type
+  }
   const { data } = await http.get('/datasource', {
-    params: {
-      limit,
-      offset
-    }
+    params: params
   })
   return data
 }
@@ -25,5 +37,24 @@ export async function createDataSource(
 }
 export async function deleteDataSource(id: number): Promise<void> {
   const { data } = await http.delete(`/datasource/${id}`)
+  return data
+}
+
+export async function getDataSource(id: number): Promise<DataSourceResponse> {
+  const { data } = await http.get(`/datasource/${id}`)
+  return data
+}
+
+export async function updateDataSource(
+  id: number,
+  name: string,
+  type: DataSourceType,
+  options: Record<string, any>
+): Promise<void> {
+  const { data } = await http.patch(`/datasource/${id}`, {
+    name,
+    type,
+    options
+  })
   return data
 }

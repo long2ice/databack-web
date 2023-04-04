@@ -4,13 +4,16 @@ import Sidebar from '@/components/SidebarNav.vue'
 import NavBar from '@/components/NavBar.vue'
 </script>
 <template>
-  <NavBar />
-  <Suspense>
-    <div class="flex flex-row">
+  <div class="flex min-h-screen flex-col">
+    <NavBar />
+    <div class="flex flex-1">
       <Sidebar />
-      <div class="w-full flex flex-col p-4 gap-4">
-        <RouterView />
-      </div>
+      <Suspense>
+        <div class="flex w-full flex-col gap-4 p-4">
+          <RouterView />
+        </div>
+      </Suspense>
     </div>
-  </Suspense>
+  </div>
+  <DialogsWrapper />
 </template>

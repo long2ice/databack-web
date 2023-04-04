@@ -1,5 +1,5 @@
 <template>
-  <ul class="menu bg-base-100 w-56 p-2 border-r h-screen">
+  <ul class="menu w-56 border-r bg-base-100 p-2">
     <li>
       <router-link to="/" :class="{ active: currentRoute.path === '/' }">
         <AkHomeAlt1 />
@@ -7,7 +7,10 @@
       </router-link>
     </li>
     <li>
-      <router-link to="/datasource" :class="{ active: currentRoute.path.startsWith('/datasource') }">
+      <router-link
+        to="/datasource"
+        :class="{ active: currentRoute.path.startsWith('/datasource') }"
+      >
         <FeDatabase />
         {{ $t('datasource') }}
       </router-link>
