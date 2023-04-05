@@ -1,44 +1,44 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import { ref } from 'vue'
 const { t } = useI18n()
-defineProps({
+const props = defineProps({
   msg: {
     type: String,
-    required: true
+    required: false
+  },
+  title: {
+    type: String,
+    required: false
+  },
+  open: {
+    type: Boolean
   }
 })
-
+const isModalOpen = ref(props.open)
 const emit = defineEmits(['confirm', 'cancel'])
+const onClick = (confirm: boolean) => {
+  if (confirm) {
+    emit('confirm')
+  } else {
+    emit('cancel')
+  }
+  isModalOpen.value = false
+}
 </script>
 
 <template>
-  <div class="my-modal" @click.self="emit('cancel')">
+  <input type="checkbox" v-model="isModalOpen" class="modal-toggle" />
+  <div class="modal">
     <div class="modal-box">
+      <h3 class="text-lg font-bold">{{ title }}</h3>
       <p>{{ msg }}</p>
       <div class="modal-action">
-        <button class="btn-primary btn" @click="emit('confirm')">
+        <button class="btn-primary btn" @click="onClick(true)">
           {{ t('confirm_title') }}
         </button>
-        <button class="btn" @click="emit('cancel')">{{ t('cancel') }}</button>
+        <button class="btn" @click="onClick(false)">{{ t('cancel') }}</button>
       </div>
     </div>
   </div>
 </template>
-
-<style>
-.my-modal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: #cecece89;
-  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow,
-    transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 100;
-}
-</style>

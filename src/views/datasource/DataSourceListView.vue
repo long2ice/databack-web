@@ -110,7 +110,8 @@ const onReset = () => {
 }
 const deleteDataSource = async (id: number) => {
   const { isCanceled } = await dialog.reveal({
-    msg: t('confirm.delete_datasource')
+    title: t('confirm.delete_datasource'),
+    open: true
   })
   if (isCanceled) {
     return

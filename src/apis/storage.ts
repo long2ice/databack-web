@@ -22,7 +22,10 @@ export async function getStorages(
   })
   return data
 }
-
+export async function getStoragesBasic(): Promise<StorageResponse[]> {
+  const { data } = await http.get('/storage/basic')
+  return data
+}
 export async function createStorage(
   name: string,
   type: StorageType,

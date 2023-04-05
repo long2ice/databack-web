@@ -15,7 +15,7 @@
     </select>
     <button class="btn-primary btn" @click="initData">{{ t('search') }}</button>
     <button class="btn-warning btn" @click="onReset">{{ t('reset') }}</button>
-    <router-link class="btn ml-auto" to="/datasource/add">
+    <router-link class="btn ml-auto" to="/storage/add">
       <ChPlus class="mr-1" />
       {{ $t('add_storage') }}
     </router-link>
@@ -109,7 +109,8 @@ const onReset = () => {
 }
 const deleteDataSource = async (id: number) => {
   const { isCanceled } = await dialog.reveal({
-    msg: t('confirm.delete_storage')
+    title: t('confirm.delete_storage'),
+    open: true
   })
   if (isCanceled) {
     return

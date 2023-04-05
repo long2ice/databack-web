@@ -22,7 +22,10 @@ export async function getDataSources(
   })
   return data
 }
-
+export async function getDataSourcesBasic(): Promise<DataSourceResponse[]> {
+  const { data } = await http.get('/datasource/basic')
+  return data
+}
 export async function createDataSource(
   name: string,
   type: DataSourceType,

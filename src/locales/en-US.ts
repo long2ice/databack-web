@@ -40,7 +40,11 @@ export default {
     path_required: 'Path is required',
     ak_required: 'Access Key ID is required',
     sk_required: 'Secret Access Key is required',
-    bucket_name_required: 'Bucket Name is required'
+    bucket_name_required: 'Bucket Name is required',
+    keep_num_required: 'Keep Num is required',
+    cron_required: 'Cron is required',
+    keep_num_more_than_zero: 'Keep Num must be greater than or equal 0',
+    keep_days_more_than_zero: 'Keep Days must be greater than or equal 0'
   },
   error: {
     server: 'Server error, please try again later!'
@@ -51,7 +55,12 @@ export default {
     update_datasource: 'Update data source success!',
     add_storage: 'Add storage success!',
     delete_storage: 'Delete storage success!',
-    update_storage: 'Update storage success!'
+    update_storage: 'Update storage success!',
+    create_task: 'Create task success!',
+    update_task: 'Update task success!',
+    delete_task: 'Delete task success!',
+    run_task: 'Run task success!',
+    delete_task_log: 'Delete task log success!'
   },
   created_at: 'Created At',
   updated_at: 'Updated At',
@@ -59,7 +68,10 @@ export default {
   cancel: 'Cancel',
   confirm: {
     delete_datasource: 'Are you sure to delete this data source?',
-    delete_storage: 'Are you sure to delete this storage?'
+    delete_storage: 'Are you sure to delete this storage?',
+    delete_task: 'Are you sure to delete this task?',
+    delete_task_log: 'Are you sure to delete this task log?',
+    delete_task_log_msg: 'The backup file will be deleted at the same time, please confirm!'
   },
   search: 'Search',
   search_placeholder: 'Please enter search content',
@@ -74,10 +86,26 @@ export default {
   region_name: 'Region Name',
   endpoint_url: 'Endpoint URL',
   path: 'Path',
-  add_task: 'Add Task',
+  create_task: 'Add Task',
   compress: 'Compress',
   keep_num: 'Keep Num',
+  keep_days: 'Keep Days',
   enabled: 'Enabled',
   cron: 'Cron',
-  update_task: 'Update Task'
+  update_task: 'Update Task',
+  keep_num_placeholder: 'The number of backups to keep, 0 means unlimited',
+  keep_days_placeholder: 'The number of days to keep the backup, 0 means unlimited',
+  cron_tips: 'Cron expression, please refer to the help document of',
+  unlimited: 'Unlimited',
+  select_datasource: 'Select Data Source',
+  select_storage: 'Select Storage',
+  task_id: 'Task ID',
+  message: 'Message',
+  status: 'Status',
+  is_valid: 'Is Valid',
+  start_at: 'Start At',
+  end_at: 'End At',
+  copied: 'Copied',
+  size: 'Size',
+  task_log_stat: 'Task Log Stat'
 }

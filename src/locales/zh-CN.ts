@@ -39,7 +39,11 @@ export default {
     path_required: '路径是必填项',
     ak_required: 'Access Key ID是必填项',
     sk_required: 'Secret Access Key是必填项',
-    bucket_name_required: '存储桶名称是必填项'
+    bucket_name_required: '存储桶名称是必填项',
+    keep_num_required: '保留数量是必填项',
+    cron_required: '周期是必填项',
+    keep_num_more_than_zero: '保留数量必须大于等于0',
+    keep_days_more_than_zero: '保留天数必须大于等于0'
   },
   error: {
     server: '服务器错误，请稍后再试！'
@@ -50,7 +54,12 @@ export default {
     update_datasource: '更新数据源成功！',
     add_storage: '添加存储成功！',
     delete_storage: '删除存储成功！',
-    update_storage: '更新存储成功！'
+    update_storage: '更新存储成功！',
+    create_task: '创建任务成功！',
+    update_task: '更新任务成功！',
+    delete_task: '删除任务成功！',
+    run_task: '运行任务成功！',
+    delete_task_log: '删除任务记录成功！'
   },
   created_at: '创建时间',
   updated_at: '更新时间',
@@ -58,7 +67,10 @@ export default {
   cancel: '取消',
   confirm: {
     delete_datasource: '确定要删除此数据源吗？',
-    delete_storage: '确定要删除此存储吗？'
+    delete_storage: '确定要删除此存储吗？',
+    delete_task: '确定要删除此任务吗？',
+    delete_task_log: '确定要删除此任务记录吗？',
+    delete_task_log_msg: '备份文件将会同时删除，确定要删除吗？'
   },
   search: '查询',
   search_placeholder: '请输入查询内容',
@@ -73,10 +85,26 @@ export default {
   region_name: '区域名称',
   endpoint_url: '端点URL',
   path: '路径',
-  add_task: '添加任务',
+  create_task: '添加任务',
   compress: '是否压缩',
   keep_num: '保留数量',
+  keep_days: '保留天数',
   enabled: '是否开启',
   cron: '周期',
-  update_task: '更新任务'
+  update_task: '更新任务',
+  keep_num_placeholder: '备份保留数量，0表示不限制',
+  keep_days_placeholder: '备份保留天数，0表示不限制',
+  cron_tips: 'Cron表达式，请参考',
+  unlimited: '不限制',
+  select_datasource: '选择数据源',
+  select_storage: '选择存储',
+  task_id: '任务ID',
+  message: '消息',
+  status: '状态',
+  is_valid: '是否有效',
+  start_at: '开始时间',
+  end_at: '结束时间',
+  copied: '已复制',
+  size: '大小',
+  task_log_stat: '任务记录统计'
 }
