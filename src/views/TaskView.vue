@@ -255,8 +255,8 @@ const isUpdate = ref(false)
 const data_sources = await getDataSourcesBasic()
 const storages = await getStoragesBasic()
 const form = reactive({
-  data_source_id: data_sources[0].id,
-  storage_id: storages[0].id,
+  data_source_id: data_sources.length > 0 ? data_sources[0].id : undefined,
+  storage_id: storages.length > 0 ? storages[0].id : undefined,
   compress: true,
   enabled: true,
   title: t('create_task'),
