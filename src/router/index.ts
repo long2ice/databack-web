@@ -52,7 +52,12 @@ const router = createRouter({
     {
       path: '/tasklog',
       component: () => import('@/views/TaskLogView.vue')
-    }
+    },
+    {
+      path: '/404',
+      component: () => import('@/views/NotFoundView.vue')
+    },
+    { path: '/:pathMatch(.*)', redirect: '/404' }
   ]
 })
 
