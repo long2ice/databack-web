@@ -291,8 +291,8 @@ const onSubmit = handleSubmit(async (values) => {
     await task.updateTask(
       form.id,
       values.name,
-      form.storage_id,
-      form.data_source_id,
+      form.storage_id!,
+      form.data_source_id!,
       form.compress,
       values.keep_num,
       values.keep_days,
@@ -303,8 +303,8 @@ const onSubmit = handleSubmit(async (values) => {
   } else {
     await task.createTask(
       values.name,
-      form.storage_id,
-      form.data_source_id,
+      form.storage_id!,
+      form.data_source_id!,
       form.compress,
       values.keep_num,
       values.keep_days,
