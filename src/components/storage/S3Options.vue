@@ -13,7 +13,7 @@
       <label class="label">
         <span class="label-text">{{ $t('secret_access_key') }}</span>
       </label>
-      <input type="number" class="input-bordered input" v-model="sk" />
+      <input type="text" class="input-bordered input" v-model="sk" />
       <label class="label">
         <span class="label-text-alt text-red-500">{{ errorMessageSK }}</span>
       </label>
