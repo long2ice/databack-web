@@ -8,6 +8,12 @@
       <option selected :value="undefined">{{ t('select_storage') }}</option>
       <option v-for="s in storages" :value="s.id" :key="s.id">{{ s.name }}</option>
     </select>
+    <select class="select-bordered select" v-model="search.status">
+      <option selected :value="undefined">{{ t('status') }}</option>
+      <option value="success">SUCCESS</option>
+      <option value="failed">FAILED</option>
+      <option value="running">RUNNING</option>
+    </select>
     <button class="btn-primary btn" @click="initData">{{ t('search') }}</button>
     <button class="btn-warning btn" @click="onReset">{{ t('reset') }}</button>
   </div>
@@ -86,7 +92,6 @@ import { getStoragesBasic } from '@/apis/storage'
 import { toast } from 'vue3-toastify'
 import { Clipboard } from 'v-clipboard'
 import { formatFileSize } from '@/utils/file'
-import * as storage from '@/apis/storage'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 
@@ -94,7 +99,8 @@ const { t } = useI18n()
 const pager = reactive({ limit: 10, offset: 0 })
 const search = reactive({
   data_source_id: undefined,
-  storage_id: undefined
+  storage_id: undefined,
+  status: undefined
 })
 const data = reactive<TaskLogsResponse>({
   total: 0,
@@ -103,7 +109,14 @@ const data = reactive<TaskLogsResponse>({
 const data_sources = await getDataSourcesBasic()
 const storages = await getStoragesBasic()
 const initData = async () => {
-  const ret = await task_log.getTaskLogs(pager.limit, pager.offset)
+  const ret = await task_log.getTaskLogs(
+    pager.limit,
+    pager.offset,
+    search.data_source_id,
+    search.storage_id,
+    undefined,
+    search.status
+  )
   data.total = ret.total
   data.data = ret.data
 }
