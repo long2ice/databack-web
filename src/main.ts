@@ -7,7 +7,7 @@ import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import * as ConfirmDialog from 'vuejs-confirm-dialog'
 import Clipboard from 'v-clipboard'
-
+import 'nprogress/nprogress.css'
 import { i18n } from '@/i18n'
 import { pinia } from '@/stores/pinia'
 
