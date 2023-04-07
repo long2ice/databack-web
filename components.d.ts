@@ -26,6 +26,8 @@ declare module '@vue/runtime-core' {
     DePostgresqlOriginalWordmark: typeof import('@kalimahapps/vue-icons/de')['DePostgresqlOriginalWordmark']
     FaBandsAws: typeof import('@kalimahapps/vue-icons/fa')['FaBandsAws']
     FeDatabase: typeof import('@kalimahapps/vue-icons/fe')['FeDatabase']
+    GlCollapseLeft: typeof import('@kalimahapps/vue-icons/gl')['GlCollapseLeft']
+    GlCollapseRight: typeof import('@kalimahapps/vue-icons/gl')['GlCollapseRight']
     GlTaskDone: typeof import('@kalimahapps/vue-icons/gl')['GlTaskDone']
     HiLanguage: typeof import('@kalimahapps/vue-icons/hi')['HiLanguage']
     LocalOptions: typeof import('./src/components/datasource/LocalOptions.vue')['default']

@@ -114,5 +114,11 @@ export default {
   task_log_stat: '任务记录统计',
   path_placeholder: '存储路径，默认为根目录',
   sub_path: '子路径',
-  sub_path_tips: '相对于存储路径的子路径，不填写则默认为根目录'
+  sub_path_tips: '相对于存储路径的子路径，不填写则默认为根目录',
+  mysql_datasource_desc: '使用 mysqlpump 备份 MySQL 数据',
+  postgres_datasource_desc: '使用 pg_dump 和 pg_dumpall 备份 PostgreSQL 数据',
+  mongo_datasource_desc: '使用 mongodump 备份 MongoDB 数据',
+  redis_datasource_desc: '使用 redis-cli 备份 Redis 数据',
+  local_datasource_desc: '备份本地目录',
+  ssh_datasource_desc: '使用 SCP 备份远程目录'
 }

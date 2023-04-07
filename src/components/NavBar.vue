@@ -1,21 +1,21 @@
 <template>
   <div class="navbar bg-neutral text-neutral-content">
     <div class="flex-1">
-      <router-link class="btn btn-ghost normal-case text-xl" to="/">Databack</router-link>
+      <router-link class="btn-ghost btn text-xl normal-case" to="/">Databack</router-link>
     </div>
     <div class="flex-none">
-      <button class="btn btn-ghost btn-circle">
+      <button class="btn-ghost btn-circle btn">
         <label class="swap-rotate swap">
           <input type="checkbox" data-toggle-theme="light,dark" />
-          <MdOutlinedWbSunny class="text-xl swap-off" />
-          <CoMoon class="text-xl swap-on" />
+          <MdOutlinedWbSunny class="swap-off text-xl" />
+          <CoMoon class="swap-on text-xl" />
         </label>
       </button>
-      <div class="dropdown dropdown-end">
-        <label tabindex="0" class="btn btn-ghost btn-circle">
+      <div class="dropdown-end dropdown">
+        <label tabindex="0" class="btn-ghost btn-circle btn">
           <HiLanguage class="text-xl" />
         </label>
-        <ul tabindex="0" class="menu dropdown-content mt-3 p-3 shadow bg-neutral rounded-box">
+        <ul tabindex="0" class="dropdown-content menu rounded-box mt-3 bg-neutral p-3 shadow">
           <li>
             <button @click="language.language = 'en-US'">
               <span class="text-lg">🇺🇸</span>English
@@ -29,7 +29,7 @@
         </ul>
       </div>
       <a
-        class="btn btn-ghost btn-circle"
+        class="btn-ghost btn-circle btn"
         href="https://github.com/long2ice/databack"
         target="_blank"
       >

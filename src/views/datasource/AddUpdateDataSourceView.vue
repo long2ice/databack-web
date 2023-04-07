@@ -46,6 +46,12 @@
       SSH
     </button>
   </div>
+  <div class="text-sm text-gray-500" v-if="type === 'mysql'">{{ t('mysql_datasource_desc') }}</div>
+  <div class="text-sm text-gray-500" v-if="type === 'postgres'">
+    {{ t('postgres_datasource_desc') }}
+  </div>
+  <div class="text-sm text-gray-500" v-if="type === 'local'">{{ t('local_datasource_desc') }}</div>
+  <div class="text-sm text-gray-500" v-if="type === 'ssh'">{{ t('ssh_datasource_desc') }}</div>
   <div class="flex flex-col">
     <div class="form-control w-full">
       <label class="label">

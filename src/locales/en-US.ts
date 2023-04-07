@@ -115,5 +115,11 @@ export default {
   task_log_stat: 'Task Log Stat',
   path_placeholder: 'The storage path, default is the root directory',
   sub_path: 'Sub Path',
-  sub_path_tips: 'The sub path of the storage path, default is the root directory'
+  sub_path_tips: 'The sub path of the storage path, default is the root directory',
+  mysql_datasource_desc: 'Backup MySQL data by mysqlpump',
+  postgres_datasource_desc: 'Backup PostgreSQL data by pg_dump and pg_dumpall',
+  mongo_datasource_desc: 'Backup MongoDB data by mongodump',
+  redis_datasource_desc: 'Backup Redis data by redis-cli',
+  local_datasource_desc: 'Backup local data',
+  ssh_datasource_desc: 'Backup remote data by SCP'
 }
