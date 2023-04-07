@@ -26,6 +26,7 @@
         <th>ID</th>
         <th>{{ $t('name') }}</th>
         <th>{{ $t('type') }}</th>
+        <td>{{ $t('path') }}</td>
         <th>{{ $t('created_at') }}</th>
         <th>{{ $t('updated_at') }}</th>
         <th>{{ $t('action') }}</th>
@@ -40,6 +41,7 @@
             <StorageTypeIcon :type="d.type" />
           </div>
         </td>
+        <td>{{ d.path }}</td>
         <td>{{ $d(parseDate(d.created_at), 'long') }}</td>
         <td>{{ $d(parseDate(d.updated_at), 'long') }}</td>
         <td class="flex gap-1">
@@ -110,6 +112,7 @@ const onReset = () => {
 const deleteDataSource = async (id: number) => {
   const { isCanceled } = await dialog.reveal({
     title: t('confirm.delete_storage'),
+    msg: t('confirm.delete_storage_message'),
     open: true
   })
   if (isCanceled) {

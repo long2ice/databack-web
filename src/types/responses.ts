@@ -21,6 +21,7 @@ export interface StorageResponse {
   created_at: string
   updated_at: string
   type: StorageType
+  path: string
   name: string
   options: [key: string]
 }
@@ -36,6 +37,7 @@ export interface TaskResponse {
   compress: boolean
   keep_num: number
   keep_days: number
+  sub_path: string
   enabled: boolean
   cron: string
   data_source_name: string

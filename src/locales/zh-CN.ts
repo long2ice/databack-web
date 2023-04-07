@@ -31,6 +31,9 @@ export default {
   remote_path: '远程路径',
   private_key: '私钥',
   private_key_pass: '私钥密码',
+  s3_type_desc: '任何兼容S3协议的存储',
+  local_type_desc: '存储在本地目录',
+  ssh_type_desc: '使用SCP存储到远程目录',
   validate: {
     name_required: '名称是必填项',
     host_required: '主机是必填项',
@@ -68,6 +71,7 @@ export default {
   confirm: {
     delete_datasource: '确定要删除此数据源吗？',
     delete_storage: '确定要删除此存储吗？',
+    delete_storage_message: '备份文件不会同时被删除',
     delete_task: '确定要删除此任务吗？',
     delete_task_log: '确定要删除此任务记录吗？',
     delete_task_log_msg: '备份文件将会同时删除，确定要删除吗？'
@@ -92,8 +96,8 @@ export default {
   enabled: '是否开启',
   cron: '周期',
   update_task: '更新任务',
-  keep_num_placeholder: '备份保留数量，0表示不限制',
-  keep_days_placeholder: '备份保留天数，0表示不限制',
+  keep_num_tips: '备份保留数量，0表示不限制',
+  keep_days_tips: '备份保留天数，0表示不限制',
   cron_tips: 'Cron表达式，请参考',
   unlimited: '不限制',
   select_datasource: '选择数据源',
@@ -106,5 +110,8 @@ export default {
   end_at: '结束时间',
   copied: '已复制',
   size: '大小',
-  task_log_stat: '任务记录统计'
+  task_log_stat: '任务记录统计',
+  path_placeholder: '存储路径，默认为根目录',
+  sub_path: '子路径',
+  sub_path_tips: '相对于存储路径的子路径，不填写则默认为根目录'
 }

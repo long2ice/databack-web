@@ -35,28 +35,43 @@
       SSH
     </button>
   </div>
+  <div class="text-sm text-gray-500" v-if="type === 's3'">{{ t('s3_type_desc') }}</div>
+  <div class="text-sm text-gray-500" v-if="type === 'local'">{{ t('local_type_desc') }}</div>
+  <div class="text-sm text-gray-500" v-if="type === 'ssh'">{{ t('ssh_type_desc') }}</div>
   <div class="flex flex-col">
-    <div class="form-control w-full">
-      <label class="label">
-        <span class="label-text">{{ $t('name') }}</span>
-      </label>
-      <input
-        type="text"
-        v-model="name"
-        :placeholder="$t('name_placeholder')"
-        class="input-bordered input w-full"
-      />
-      <label class="label">
-        <span class="label-text-alt text-red-500">{{ errorMessage }}</span>
-      </label>
+    <div class="flex gap-4">
+      <div class="form-control w-full">
+        <label class="label">
+          <span class="label-text">{{ $t('name') }}</span>
+        </label>
+        <input
+          type="text"
+          v-model="name"
+          :placeholder="$t('name_placeholder')"
+          class="input-bordered input w-full"
+        />
+        <label class="label">
+          <span class="label-text-alt text-red-500">{{ errorMessage }}</span>
+        </label>
+      </div>
+      <div class="form-control w-full">
+        <label class="label">
+          <span class="label-text">{{ $t('path') }}</span>
+        </label>
+        <input
+          type="text"
+          class="input-bordered input"
+          v-model="path"
+          :placeholder="t('path_placeholder')"
+        />
+      </div>
     </div>
-    <div class="form-control w-full">
+    <div class="form-control w-full" v-if="type !== 'local'">
       <label class="label">
         <span class="label-text">{{ $t('options') }}</span>
       </label>
       <div class="rounded-lg border p-4">
-        <LocalOptions v-if="type == 'local'" ref="optionsRef" :defaultOptions="options" />
-        <SSHOptions v-else-if="type == 'ssh'" ref="optionsRef" :defaultOptions="options" />
+        <SSHOptions v-if="type == 'ssh'" ref="optionsRef" :defaultOptions="options" />
         <S3Options v-else-if="type == 's3'" ref="optionsRef" :defaultOptions="options" />
       </div>
     </div>
@@ -70,7 +85,6 @@
 </template>
 
 <script setup lang="ts">
-import LocalOptions from '@/components/storage/LocalOptions.vue'
 import SSHOptions from '@/components/storage/SSHOptions.vue'
 import * as yup from 'yup'
 import { ref } from 'vue'
@@ -84,6 +98,7 @@ import S3Options from '@/components/storage/S3Options.vue'
 const router = useRouter()
 const isUpdate = router.currentRoute.value.name === 'updateStorage'
 const type = ref<StorageType>('s3')
+const path = ref('')
 const { t } = useI18n()
 const { handleSubmit, isSubmitting } = useForm()
 const { value: name, errorMessage } = useField(
@@ -96,10 +111,10 @@ const onSave = handleSubmit(async (values) => {
   const options = optionsRef.value.getOptions()
   if (isUpdate) {
     const { id } = router.currentRoute.value.params
-    await updateStorage(parseInt(id as string), name, type.value, options)
+    await updateStorage(parseInt(id as string), name, path.value, type.value, options)
     toast.success(t('success.update_datasource'))
   } else {
-    await createStorage(name, type.value, options)
+    await createStorage(name, path.value, type.value, options)
     toast.success(t('success.add_datasource'))
   }
   await router.back()
@@ -110,6 +125,7 @@ if (isUpdate) {
   const storage = await getStorage(parseInt(id as string))
   type.value = storage.type
   name.value = storage.name
+  path.value = storage.path
   options = storage.options
 }
 </script>

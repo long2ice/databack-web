@@ -33,15 +33,6 @@
       </label>
       <input type="text" class="input-bordered input" v-model="options.password" />
     </div>
-    <div class="form-control w-full">
-      <label class="label">
-        <span class="label-text">{{ $t('remote_path') }}</span>
-      </label>
-      <input type="text" class="input-bordered input" v-model="path" />
-      <label class="label">
-        <span class="label-text-alt text-red-500">{{ errorMessagePath }}</span>
-      </label>
-    </div>
   </div>
   <div class="flex flex-row gap-4">
     <div class="form-control w-full">

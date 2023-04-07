@@ -32,6 +32,9 @@ export default {
   remote_path: 'Remote Path',
   private_key: 'Private Key',
   private_key_pass: 'Private Key Password',
+  s3_type_desc: 'Any storage compatible with the S3 protocol',
+  local_type_desc: 'Stored in local directory',
+  ssh_type_desc: 'Stored in remote directory using SCP',
   validate: {
     name_required: 'Name is required',
     host_required: 'Host is required',
@@ -69,6 +72,7 @@ export default {
   confirm: {
     delete_datasource: 'Are you sure to delete this data source?',
     delete_storage: 'Are you sure to delete this storage?',
+    delete_storage_message: 'The backup file will not be deleted',
     delete_task: 'Are you sure to delete this task?',
     delete_task_log: 'Are you sure to delete this task log?',
     delete_task_log_msg: 'The backup file will be deleted at the same time, please confirm!'
@@ -93,8 +97,8 @@ export default {
   enabled: 'Enabled',
   cron: 'Cron',
   update_task: 'Update Task',
-  keep_num_placeholder: 'The number of backups to keep, 0 means unlimited',
-  keep_days_placeholder: 'The number of days to keep the backup, 0 means unlimited',
+  keep_num_tips: 'The number of backups to keep, 0 means unlimited',
+  keep_days_tips: 'The number of days to keep the backup, 0 means unlimited',
   cron_tips: 'Cron expression, please refer to the help document of',
   unlimited: 'Unlimited',
   select_datasource: 'Select Data Source',
@@ -107,5 +111,8 @@ export default {
   end_at: 'End At',
   copied: 'Copied',
   size: 'Size',
-  task_log_stat: 'Task Log Stat'
+  task_log_stat: 'Task Log Stat',
+  path_placeholder: 'The storage path, default is the root directory',
+  sub_path: 'Sub Path',
+  sub_path_tips: 'The sub path of the storage path, default is the root directory'
 }

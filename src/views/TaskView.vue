@@ -93,12 +93,10 @@
               <label class="label">
                 <span class="label-text">{{ t('keep_num') }}</span>
               </label>
-              <input
-                type="number"
-                class="input-bordered input"
-                v-model="keep_num"
-                :placeholder="$t('keep_num_placeholder')"
-              />
+              <input type="number" class="input-bordered input" v-model="keep_num" />
+              <label class="label">
+                <span class="label-text-alt">{{ $t('keep_num_tips') }}</span>
+              </label>
               <label class="label">
                 <span class="label-text-alt text-red-500">{{ errorMessageKeepNum }}</span>
               </label>
@@ -107,42 +105,51 @@
               <label class="label">
                 <span class="label-text">{{ t('keep_days') }}</span>
               </label>
-              <input
-                type="number"
-                class="input-bordered input"
-                v-model="keep_days"
-                :placeholder="$t('keep_days_placeholder')"
-              />
+              <input type="number" class="input-bordered input" v-model="keep_days" />
+              <label class="label">
+                <span class="label-text-alt">{{ $t('keep_days_tips') }}</span>
+              </label>
               <label class="label">
                 <span class="label-text-alt text-red-500">{{ errorMessageKeepDays }}</span>
               </label>
             </div>
           </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">{{ t('cron') }}</span>
-            </label>
-            <input
-              type="text"
-              placeholder="0 * * * *"
-              class="input-bordered input"
-              v-model="cron"
-            />
-            <label class="label">
-              <span class="label-text-alt"
-                >{{ t('cron_tips') }}
-                <a
-                  class="link-primary link"
-                  href="https://github.com/josiahcarlson/parse-crontab"
-                  target="_blank"
+          <div class="flex gap-4">
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">{{ t('sub_path') }}</span>
+              </label>
+              <input type="text" class="input-bordered input" v-model="form.sub_path" />
+              <label class="label">
+                <span class="label-text-alt">{{ t('sub_path_tips') }}</span>
+              </label>
+            </div>
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">{{ t('cron') }}</span>
+              </label>
+              <input
+                type="text"
+                placeholder="0 * * * *"
+                class="input-bordered input"
+                v-model="cron"
+              />
+              <label class="label">
+                <span class="label-text-alt"
+                  >{{ t('cron_tips') }}
+                  <a
+                    class="link-primary link"
+                    href="https://github.com/josiahcarlson/parse-crontab"
+                    target="_blank"
+                  >
+                    https://github.com/josiahcarlson/parse-crontab
+                  </a></span
                 >
-                  https://github.com/josiahcarlson/parse-crontab
-                </a></span
-              >
-            </label>
-            <label class="label">
-              <span class="label-text-alt text-red-500">{{ errorMessageCron }}</span>
-            </label>
+              </label>
+              <label class="label">
+                <span class="label-text-alt text-red-500">{{ errorMessageCron }}</span>
+              </label>
+            </div>
           </div>
         </div>
         <div class="modal-action">
@@ -169,6 +176,7 @@
         <th>{{ $t('enabled') }}</th>
         <th>{{ $t('keep_num') }}</th>
         <th>{{ $t('keep_days') }}</th>
+        <th>{{ $t('sub_path') }}</th>
         <th>{{ $t('cron') }}</th>
         <th>{{ $t('created_at') }}</th>
         <th>{{ $t('updated_at') }}</th>
@@ -185,6 +193,7 @@
         <td>{{ d.enabled ? '✅' : '❌' }}</td>
         <td>{{ d.keep_num === 0 ? t('unlimited') : d.keep_num }}</td>
         <td>{{ d.keep_days === 0 ? t('unlimited') : d.keep_days }}</td>
+        <td>{{ d.sub_path }}</td>
         <td>
           <span class="badge">{{ d.cron }}</span>
         </td>
@@ -259,6 +268,7 @@ const form = reactive({
   storage_id: storages.length > 0 ? storages[0].id : undefined,
   compress: true,
   enabled: true,
+  sub_path: '',
   title: t('create_task'),
   id: 0
 })
@@ -286,6 +296,8 @@ const { value: keep_days, errorMessage: errorMessageKeepDays } = useField(
   'keep_days',
   yup.number().moreThan(-1, t('validate.keep_days_more_than_zero'))
 )
+keep_num.value = 0
+keep_days.value = 0
 const onSubmit = handleSubmit(async (values) => {
   if (isUpdate.value) {
     await task.updateTask(
@@ -297,7 +309,8 @@ const onSubmit = handleSubmit(async (values) => {
       values.keep_num,
       values.keep_days,
       form.enabled,
-      values.cron
+      values.cron,
+      form.sub_path
     )
     toast.success(t('success.update_task'))
   } else {
@@ -309,7 +322,8 @@ const onSubmit = handleSubmit(async (values) => {
       values.keep_num,
       values.keep_days,
       form.enabled,
-      values.cron
+      values.cron,
+      form.sub_path
     )
     toast.success(t('success.create_task'))
   }

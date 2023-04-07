@@ -28,11 +28,13 @@ export async function getStoragesBasic(): Promise<StorageResponse[]> {
 }
 export async function createStorage(
   name: string,
+  path: string,
   type: StorageType,
   options: Record<string, any>
 ): Promise<void> {
   const { data } = await http.post('/storage', {
     name,
+    path,
     type,
     options
   })
@@ -51,11 +53,13 @@ export async function getStorage(id: number): Promise<StorageResponse> {
 export async function updateStorage(
   id: number,
   name: string,
+  path: string,
   type: StorageType,
   options: Record<string, any>
 ): Promise<void> {
   const { data } = await http.patch(`/storage/${id}`, {
     name,
+    path,
     type,
     options
   })

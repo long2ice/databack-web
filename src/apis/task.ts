@@ -35,7 +35,8 @@ export async function createTask(
   keep_num: number,
   keep_days: number,
   enabled: boolean,
-  cron: string
+  cron: string,
+  sub_path: string
 ): Promise<void> {
   const { data } = await http.post('/task', {
     name,
@@ -45,7 +46,8 @@ export async function createTask(
     keep_num,
     keep_days,
     enabled,
-    cron
+    cron,
+    sub_path
   })
   return data
 }
@@ -66,7 +68,8 @@ export async function updateTask(
   keep_num: number,
   keep_days: number,
   enabled: boolean,
-  cron: string
+  cron: string,
+  sub_path: string
 ): Promise<void> {
   const { data } = await http.patch(`/task/${id}`, {
     name,
@@ -76,7 +79,8 @@ export async function updateTask(
     keep_num,
     keep_days,
     enabled,
-    cron
+    cron,
+    sub_path
   })
   return data
 }

@@ -34,19 +34,11 @@
       <input type="text" v-model="options.region_name" class="input-bordered input" />
     </div>
   </div>
-  <div class="flex flex-row gap-4">
-    <div class="form-control w-full">
-      <label class="label">
-        <span class="label-text">{{ $t('endpoint_url') }}</span>
-      </label>
-      <input type="text" class="input-bordered input" v-model="options.endpoint_url" />
-    </div>
-    <div class="form-control w-full">
-      <label class="label">
-        <span class="label-text">{{ $t('path') }}</span>
-      </label>
-      <input type="text" class="input-bordered input" v-model="options.path" />
-    </div>
+  <div class="form-control w-full">
+    <label class="label">
+      <span class="label-text">{{ $t('endpoint_url') }}</span>
+    </label>
+    <input type="text" class="input-bordered input" v-model="options.endpoint_url" />
   </div>
 </template>
 
