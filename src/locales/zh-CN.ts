@@ -31,6 +31,7 @@ export default {
   remote_path: '远程路径',
   private_key: '私钥',
   private_key_pass: '私钥密码',
+  import_private_key: '导入私钥文件',
   s3_type_desc: '任何兼容S3协议的存储',
   local_type_desc: '存储在本地目录',
   ssh_type_desc: '使用SCP存储到远程目录',

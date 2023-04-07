@@ -31,6 +31,7 @@ export default {
   local_path: 'Local Path',
   remote_path: 'Remote Path',
   private_key: 'Private Key',
+  import_private_key: 'Import Private Key File',
   private_key_pass: 'Private Key Password',
   s3_type_desc: 'Any storage compatible with the S3 protocol',
   local_type_desc: 'Stored in local directory',

@@ -13,5 +13,3 @@ const props = defineProps<{
 }>()
 const type = toRef(props, 'type')
 </script>
-
-<style scoped></style>

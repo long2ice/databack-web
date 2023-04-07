@@ -47,6 +47,11 @@
     <div class="form-control w-full">
       <label class="label">
         <span class="label-text">{{ $t('private_key') }}</span>
+        <span class="label-text-alt link"
+          ><input type="file" hidden="hidden" @change="importPrivateKey" />{{
+            t('import_private_key')
+          }}</span
+        >
       </label>
       <textarea v-model="options.private_key" class="textarea-bordered textarea h-24"></textarea>
     </div>
@@ -91,7 +96,7 @@ const { value: path, errorMessage: errorMessagePath } = useField(
   yup.string().required(t('validate.path_required'))
 )
 host.value = defaultOptions['host'] || 'localhost'
-port.value = defaultOptions['port'] || '22'
+port.value = defaultOptions['port'] || 22
 username.value = defaultOptions['username'] || 'root'
 path.value = defaultOptions['path'] || ''
 const getOptions = () => {
@@ -104,6 +109,21 @@ const getOptions = () => {
     private_key: options.private_key,
     private_key_pass: options.private_key_pass
   }
+}
+const importPrivateKey = (e: Event) => {
+  const target = e.target as HTMLInputElement
+  const file = target.files?.[0]
+  if (!file) {
+    return
+  }
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    const result = e.target?.result
+    if (result) {
+      options.private_key = result.toString()
+    }
+  }
+  reader.readAsText(file)
 }
 defineExpose({
   getOptions
