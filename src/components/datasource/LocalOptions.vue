@@ -1,7 +1,7 @@
 <template>
   <div class="form-control w-full">
     <label class="label">
-      <span class="label-text">{{ $t('local_path') }}</span>
+      <span class="label-text">{{ $t('local_path') }}<span class="text-red-500">*</span></span>
     </label>
     <input type="text" class="input-bordered input" v-model="path" />
     <label class="label">

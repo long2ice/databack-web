@@ -42,7 +42,7 @@
     <div class="flex gap-4">
       <div class="form-control w-full">
         <label class="label">
-          <span class="label-text">{{ $t('name') }}</span>
+          <span class="label-text">{{ $t('name') }}<span class="text-red-500">*</span></span>
         </label>
         <input
           type="text"
@@ -108,7 +108,12 @@ const { value: name, errorMessage } = useField(
 const optionsRef = ref()
 const onSave = handleSubmit(async (values) => {
   const { name } = values
-  const options = optionsRef.value.getOptions()
+  let options
+  if (type.value === 'local') {
+    options = null
+  } else {
+    options = optionsRef.value.getOptions()
+  }
   if (isUpdate) {
     const { id } = router.currentRoute.value.params
     await updateStorage(parseInt(id as string), name, path.value, type.value, options)

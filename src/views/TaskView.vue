@@ -34,7 +34,7 @@
         <div>
           <div class="form-control">
             <label class="label">
-              <span class="label-text">{{ t('name') }}</span>
+              <span class="label-text">{{ t('name') }}<span class="text-red-500">*</span></span>
             </label>
             <input
               type="text"
@@ -91,7 +91,9 @@
           <div class="flex gap-4">
             <div class="form-control w-full">
               <label class="label">
-                <span class="label-text">{{ t('keep_num') }}</span>
+                <span class="label-text"
+                  >{{ t('keep_num') }}<span class="text-red-500">*</span></span
+                >
               </label>
               <input type="number" class="input-bordered input" v-model="keep_num" />
               <label class="label">
@@ -103,7 +105,9 @@
             </div>
             <div class="form-control w-full">
               <label class="label">
-                <span class="label-text">{{ t('keep_days') }}</span>
+                <span class="label-text"
+                  >{{ t('keep_days') }}<span class="text-red-500">*</span></span
+                >
               </label>
               <input type="number" class="input-bordered input" v-model="keep_days" />
               <label class="label">
@@ -126,7 +130,7 @@
             </div>
             <div class="form-control w-full">
               <label class="label">
-                <span class="label-text">{{ t('cron') }}</span>
+                <span class="label-text">{{ t('cron') }}<span class="text-red-500">*</span></span>
               </label>
               <input
                 type="text"

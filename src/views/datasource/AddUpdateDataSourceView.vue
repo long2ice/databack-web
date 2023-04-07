@@ -49,7 +49,7 @@
   <div class="flex flex-col">
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text">{{ $t('name') }}</span>
+        <span class="label-text">{{ $t('name') }}<span class="text-red-500">*</span></span>
       </label>
       <input
         type="text"

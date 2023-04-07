@@ -2,7 +2,7 @@
   <div class="flex flex-row gap-4">
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text">{{ $t('access_key_id') }}</span>
+        <span class="label-text">{{ $t('access_key_id') }}<span class="text-red-500">*</span></span>
       </label>
       <input type="text" class="input-bordered input" v-model="ak" />
       <label class="label">
@@ -11,7 +11,9 @@
     </div>
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text">{{ $t('secret_access_key') }}</span>
+        <span class="label-text"
+          >{{ $t('secret_access_key') }}<span class="text-red-500">*</span></span
+        >
       </label>
       <input type="text" class="input-bordered input" v-model="sk" />
       <label class="label">
@@ -20,7 +22,7 @@
     </div>
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text">{{ $t('bucket_name') }}</span>
+        <span class="label-text">{{ $t('bucket_name') }}<span class="text-red-500">*</span></span>
       </label>
       <input type="text" class="input-bordered input" v-model="bucket_name" />
       <label class="label">
