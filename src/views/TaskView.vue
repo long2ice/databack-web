@@ -365,6 +365,15 @@ const deleteTask = async (id: number) => {
 const handleCreateTask = () => {
   isCreateUpdateTaskOpen.value = true
   isUpdate.value = false
+  form.data_source_id = data_sources.length > 0 ? data_sources[0].id : undefined
+  form.storage_id = storages.length > 0 ? storages[0].id : undefined
+  form.compress = true
+  form.enabled = true
+  form.sub_path = ''
+  name.value = ''
+  cron.value = ''
+  keep_num.value = 0
+  keep_days.value = 0
 }
 const handleEditTask = async (d: TaskResponse) => {
   isCreateUpdateTaskOpen.value = true
@@ -376,6 +385,7 @@ const handleEditTask = async (d: TaskResponse) => {
   form.enabled = d.enabled
   name.value = d.name
   cron.value = d.cron
+  form.sub_path = d.sub_path
   keep_num.value = d.keep_num
   keep_days.value = d.keep_days
 }
