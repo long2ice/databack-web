@@ -1,11 +1,11 @@
 <template>
   <div class="form-control w-full">
     <label class="label">
-      <span class="label-text">{{ $t('local_path') }}<span class="text-red-500">*</span></span>
+      <span class="label-text">{{ $t('local_path') }}<span class="text-error">*</span></span>
     </label>
     <input type="text" class="input-bordered input" v-model="path" />
     <label class="label">
-      <span class="label-text-alt text-red-500">{{ errorMessagePath }}</span>
+      <span class="label-text-alt text-error">{{ errorMessagePath }}</span>
     </label>
   </div>
 </template>

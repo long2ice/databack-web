@@ -55,7 +55,7 @@
   <div class="flex flex-col">
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text">{{ $t('name') }}<span class="text-red-500">*</span></span>
+        <span class="label-text">{{ $t('name') }}<span class="text-error">*</span></span>
       </label>
       <input
         type="text"
@@ -64,7 +64,7 @@
         class="input-bordered input w-full"
       />
       <label class="label">
-        <span class="label-text-alt text-red-500">{{ errorMessage }}</span>
+        <span class="label-text-alt text-error">{{ errorMessage }}</span>
       </label>
     </div>
     <div class="form-control w-full">

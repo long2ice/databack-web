@@ -2,29 +2,29 @@
   <div class="flex flex-row gap-4">
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text">{{ $t('host') }}<span class="text-red-500">*</span></span>
+        <span class="label-text">{{ $t('host') }}<span class="text-error">*</span></span>
       </label>
       <input type="text" class="input-bordered input" v-model="host" />
       <label class="label">
-        <span class="label-text-alt text-red-500">{{ errorMessageHost }}</span>
+        <span class="label-text-alt text-error">{{ errorMessageHost }}</span>
       </label>
     </div>
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text">{{ $t('port') }}<span class="text-red-500">*</span></span>
+        <span class="label-text">{{ $t('port') }}<span class="text-error">*</span></span>
       </label>
       <input type="number" class="input-bordered input" v-model="port" />
       <label class="label">
-        <span class="label-text-alt text-red-500">{{ errorMessagePort }}</span>
+        <span class="label-text-alt text-error">{{ errorMessagePort }}</span>
       </label>
     </div>
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text">{{ $t('username') }}<span class="text-red-500">*</span></span>
+        <span class="label-text">{{ $t('username') }}<span class="text-error">*</span></span>
       </label>
       <input type="text" v-model="username" class="input-bordered input" />
       <label class="label">
-        <span class="label-text-alt text-red-500">{{ errorMessageUsername }}</span>
+        <span class="label-text-alt text-error">{{ errorMessageUsername }}</span>
       </label>
     </div>
     <div class="form-control w-full">

@@ -31,6 +31,9 @@ const onClick = (confirm: boolean) => {
   <input type="checkbox" v-model="isModalOpen" class="modal-toggle" />
   <div class="modal">
     <div class="modal-box">
+      <button class="btn-sm btn-circle btn absolute right-2 top-2" @click="onClick(false)">
+        ✕
+      </button>
       <h3 class="text-lg font-bold">{{ title }}</h3>
       <p class="py-4">{{ msg }}</p>
       <div class="modal-action">

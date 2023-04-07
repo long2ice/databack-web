@@ -34,7 +34,7 @@
         <div>
           <div class="form-control">
             <label class="label">
-              <span class="label-text">{{ t('name') }}<span class="text-red-500">*</span></span>
+              <span class="label-text">{{ t('name') }}<span class="text-error">*</span></span>
             </label>
             <input
               type="text"
@@ -43,7 +43,7 @@
               :placeholder="$t('name_placeholder')"
             />
             <label class="label">
-              <span class="label-text-alt text-red-500">{{ errorMessageName }}</span>
+              <span class="label-text-alt text-error">{{ errorMessageName }}</span>
             </label>
           </div>
           <div class="flex gap-4">
@@ -91,22 +91,20 @@
           <div class="flex gap-4">
             <div class="form-control w-full">
               <label class="label">
-                <span class="label-text"
-                  >{{ t('keep_num') }}<span class="text-red-500">*</span></span
-                >
+                <span class="label-text">{{ t('keep_num') }}<span class="text-error">*</span></span>
               </label>
               <input type="number" class="input-bordered input" v-model="keep_num" />
               <label class="label">
                 <span class="label-text-alt">{{ $t('keep_num_tips') }}</span>
               </label>
               <label class="label">
-                <span class="label-text-alt text-red-500">{{ errorMessageKeepNum }}</span>
+                <span class="label-text-alt text-error">{{ errorMessageKeepNum }}</span>
               </label>
             </div>
             <div class="form-control w-full">
               <label class="label">
                 <span class="label-text"
-                  >{{ t('keep_days') }}<span class="text-red-500">*</span></span
+                  >{{ t('keep_days') }}<span class="text-error">*</span></span
                 >
               </label>
               <input type="number" class="input-bordered input" v-model="keep_days" />
@@ -114,7 +112,7 @@
                 <span class="label-text-alt">{{ $t('keep_days_tips') }}</span>
               </label>
               <label class="label">
-                <span class="label-text-alt text-red-500">{{ errorMessageKeepDays }}</span>
+                <span class="label-text-alt text-error">{{ errorMessageKeepDays }}</span>
               </label>
             </div>
           </div>
@@ -130,7 +128,7 @@
             </div>
             <div class="form-control w-full">
               <label class="label">
-                <span class="label-text">{{ t('cron') }}<span class="text-red-500">*</span></span>
+                <span class="label-text">{{ t('cron') }}<span class="text-error">*</span></span>
               </label>
               <input
                 type="text"
@@ -151,7 +149,7 @@
                 >
               </label>
               <label class="label">
-                <span class="label-text-alt text-red-500">{{ errorMessageCron }}</span>
+                <span class="label-text-alt text-error">{{ errorMessageCron }}</span>
               </label>
             </div>
           </div>
@@ -356,7 +354,7 @@ const onReset = () => {
 }
 const deleteTask = async (id: number) => {
   const { isCanceled } = await dialog.reveal({
-    msg: t('confirm.delete_task'),
+    title: t('confirm.delete_task'),
     open: true
   })
   if (isCanceled) {

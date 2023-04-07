@@ -2,31 +2,31 @@
   <div class="flex flex-row gap-4">
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text">{{ $t('access_key_id') }}<span class="text-red-500">*</span></span>
+        <span class="label-text">{{ $t('access_key_id') }}<span class="text-error">*</span></span>
       </label>
       <input type="text" class="input-bordered input" v-model="ak" />
       <label class="label">
-        <span class="label-text-alt text-red-500">{{ errorMessageAK }}</span>
+        <span class="label-text-alt text-error">{{ errorMessageAK }}</span>
       </label>
     </div>
     <div class="form-control w-full">
       <label class="label">
         <span class="label-text"
-          >{{ $t('secret_access_key') }}<span class="text-red-500">*</span></span
+          >{{ $t('secret_access_key') }}<span class="text-error">*</span></span
         >
       </label>
       <input type="text" class="input-bordered input" v-model="sk" />
       <label class="label">
-        <span class="label-text-alt text-red-500">{{ errorMessageSK }}</span>
+        <span class="label-text-alt text-error">{{ errorMessageSK }}</span>
       </label>
     </div>
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text">{{ $t('bucket_name') }}<span class="text-red-500">*</span></span>
+        <span class="label-text">{{ $t('bucket_name') }}<span class="text-error">*</span></span>
       </label>
       <input type="text" class="input-bordered input" v-model="bucket_name" />
       <label class="label">
-        <span class="label-text-alt text-red-500">{{ errorMessageBucketName }}</span>
+        <span class="label-text-alt text-error">{{ errorMessageBucketName }}</span>
       </label>
     </div>
     <div class="form-control w-full">
