@@ -42,9 +42,15 @@
         </router-link>
       </li>
       <li>
-        <router-link to="/tasklog" :class="{ active: currentRoute.path === '/tasklog' }">
+        <router-link to="/task_log" :class="{ active: currentRoute.path === '/task_log' }">
           <GlTaskDone class="text-2xl" />
           <span v-show="!sidebar.close">{{ $t('task_log') }}</span>
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/restore_log" :class="{ active: currentRoute.path === '/restore_log' }">
+          <MdTwotoneRestore class="text-2xl" />
+          <span v-show="!sidebar.close">{{ $t('restore_log') }}</span>
         </router-link>
       </li>
     </ul>

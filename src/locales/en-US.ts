@@ -64,7 +64,9 @@ export default {
     update_task: 'Update task success!',
     delete_task: 'Delete task success!',
     run_task: 'Run task success!',
-    delete_task_log: 'Delete task log success!'
+    delete_task_log: 'Delete task log success!',
+    restore_task_log: 'Submit restore task success!',
+    delete_restore_log: 'Delete restore log success!'
   },
   created_at: 'Created At',
   updated_at: 'Updated At',
@@ -76,7 +78,8 @@ export default {
     delete_storage_message: 'The backup file will not be deleted',
     delete_task: 'Are you sure to delete this task?',
     delete_task_log: 'Are you sure to delete this task log?',
-    delete_task_log_msg: 'The backup file will be deleted at the same time, please confirm!'
+    delete_task_log_msg: 'The backup file will be deleted at the same time, please confirm!',
+    delete_restore_log: 'Are you sure to delete this restore log?'
   },
   search: 'Search',
   search_placeholder: 'Please enter search content',
@@ -121,5 +124,11 @@ export default {
   mongo_datasource_desc: 'Backup MongoDB data by mongodump',
   redis_datasource_desc: 'Backup Redis data by redis-cli',
   local_datasource_desc: 'Backup local data',
-  ssh_datasource_desc: 'Backup remote data by SCP'
+  ssh_datasource_desc: 'Backup remote data by SCP',
+  restore: 'Restore',
+  mysql_restore_options_tips: 'All options refer to the help document of mysql, ',
+  postgresql_restore_options_tips: 'All options refer to the help document of psql, ',
+  submit: 'Submit',
+  restore_log: 'Restore Log',
+  task_log_id: 'Task Log ID'
 }

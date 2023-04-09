@@ -63,7 +63,9 @@ export default {
     update_task: '更新任务成功！',
     delete_task: '删除任务成功！',
     run_task: '运行任务成功！',
-    delete_task_log: '删除任务记录成功！'
+    delete_task_log: '删除任务记录成功！',
+    restore_task_log: '提交恢复任务成功！',
+    delete_restore_log: '删除恢复记录成功！'
   },
   created_at: '创建时间',
   updated_at: '更新时间',
@@ -75,7 +77,8 @@ export default {
     delete_storage_message: '备份文件不会同时被删除',
     delete_task: '确定要删除此任务吗？',
     delete_task_log: '确定要删除此任务记录吗？',
-    delete_task_log_msg: '备份文件将会同时删除，确定要删除吗？'
+    delete_task_log_msg: '备份文件将会同时删除，确定要删除吗？',
+    delete_restore_log: '确定要删除此恢复记录吗？'
   },
   search: '查询',
   search_placeholder: '请输入查询内容',
@@ -120,5 +123,11 @@ export default {
   mongo_datasource_desc: '使用 mongodump 备份 MongoDB 数据',
   redis_datasource_desc: '使用 redis-cli 备份 Redis 数据',
   local_datasource_desc: '备份本地目录',
-  ssh_datasource_desc: '使用 SCP 备份远程目录'
+  ssh_datasource_desc: '使用 SCP 备份远程目录',
+  restore: '备份恢复',
+  mysql_restore_options_tips: '所有选项请参考mysql的帮助文档，',
+  postgresql_restore_options_tips: '所有选项请参考 psql 的帮助文档，',
+  submit: '提交',
+  restore_log: '恢复记录',
+  task_log_id: '任务记录ID'
 }

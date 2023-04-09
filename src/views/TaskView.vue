@@ -208,7 +208,13 @@
           <button class="btn-error btn-sm btn" @click="deleteTask(d.id)">
             <ReDeleteBin7Line />
           </button>
-          <button class="btn-accent btn-sm btn" @click="runTask(d.id)">
+          <button
+            class="btn-accent btn-sm btn"
+            @click="runTask(d.id)"
+            :class="{
+              'btn-disabled': !d.enabled
+            }"
+          >
             <AkPlay />
           </button>
         </td>

@@ -29,6 +29,13 @@
         <div class="stat-title">{{ $t('task_log') }}</div>
         <div class="stat-value">{{ stat.task_log_count }}</div>
       </div>
+      <div class="stat">
+        <div class="stat-figure">
+          <MdTwotoneRestore class="text-2xl" />
+        </div>
+        <div class="stat-title">{{ $t('restore_log') }}</div>
+        <div class="stat-value">{{ stat.restore_log_count }}</div>
+      </div>
     </div>
   </div>
   <div class="max-w-5xl">
@@ -69,25 +76,35 @@ const data = {
   datasets: [
     {
       label: 'SUCCESS',
-      data: _.filter(task_logs, { status: 'success' }).map(
-        (item: TaskLogStatResponse) => item.count
-      ),
+      data: _.map(task_logs, (log) => {
+        if (log.status == 'success') {
+          return log.count
+        }
+        return 0
+      }),
       backgroundColor: '#7ed321'
     },
     {
       label: 'FAILED',
-      data: _.filter(task_logs, { status: 'failed' }).map(
-        (item: TaskLogStatResponse) => item.count
-      ),
+      data: _.map(task_logs, (log) => {
+        if (log.status == 'failed') {
+          return log.count
+        }
+        return 0
+      }),
       backgroundColor: '#f87979'
     },
     {
       label: 'RUNNING',
-      data: _.filter(task_logs, { status: 'running' }).map(
-        (item: TaskLogStatResponse) => item.count
-      ),
+      data: _.map(task_logs, (log) => {
+        if (log.status == 'running') {
+          return log.count
+        }
+        return 0
+      }),
       backgroundColor: '#f8d21c'
     }
   ]
 }
+console.log(data)
 </script>

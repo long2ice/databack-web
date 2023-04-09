@@ -32,6 +32,7 @@ declare module '@vue/runtime-core' {
     HiLanguage: typeof import('@kalimahapps/vue-icons/hi')['HiLanguage']
     LocalOptions: typeof import('./src/components/datasource/LocalOptions.vue')['default']
     MdOutlinedWbSunny: typeof import('@kalimahapps/vue-icons/md')['MdOutlinedWbSunny']
+    MdTwotoneRestore: typeof import('@kalimahapps/vue-icons/md')['MdTwotoneRestore']
     MySQLOptions: typeof import('./src/components/datasource/MySQLOptions.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     PostgreSQLOptions: typeof import('./src/components/datasource/PostgreSQLOptions.vue')['default']

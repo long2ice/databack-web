@@ -1,0 +1,107 @@
+<template>
+  <div class="flex flex-row gap-4">
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">{{ $t('host') }}<span class="text-error">*</span></span>
+      </label>
+      <input type="text" class="input-bordered input" v-model="host" />
+      <label class="label">
+        <span class="label-text-alt text-error">{{ errorMessageHost }}</span>
+      </label>
+    </div>
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">{{ $t('port') }}<span class="text-error">*</span></span>
+      </label>
+      <input type="number" class="input-bordered input" v-model="port" />
+      <label class="label">
+        <span class="label-text-alt text-error">{{ errorMessagePort }}</span>
+      </label>
+    </div>
+  </div>
+  <div class="flex gap-4">
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">{{ $t('username') }}<span class="text-error">*</span></span>
+      </label>
+      <input type="text" v-model="username" class="input-bordered input" />
+      <label class="label">
+        <span class="label-text-alt text-error">{{ errorMessageUsername }}</span>
+      </label>
+    </div>
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">{{ $t('password') }}</span>
+      </label>
+      <input type="text" class="input-bordered input" v-model="options.password" />
+    </div>
+  </div>
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">{{ $t('other_options') }}</span>
+    </label>
+    <textarea
+      class="textarea-bordered textarea h-24"
+      v-model="options.otherOptions"
+      :placeholder="$t('postgresql_other_options_placeholder')"
+    ></textarea>
+    <label class="label">
+      <span class="label-text-alt">
+        {{ $t('postgresql_restore_options_tips') }}
+        <a
+          class="link-primary link"
+          href="https://www.postgresql.org/docs/current/app-psql.html"
+          target="_blank"
+          >https://www.postgresql.org/docs/current/app-psql.html</a
+        >
+      </span>
+    </label>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed, reactive } from 'vue'
+import { str2dict } from '@/utils/options'
+import { useI18n } from 'vue-i18n'
+import { useField } from 'vee-validate'
+import * as yup from 'yup'
+
+const options: {
+  password: string
+  otherOptions: string
+} = reactive({
+  password: '',
+  otherOptions: ''
+})
+const { t } = useI18n()
+const { value: host, errorMessage: errorMessageHost } = useField(
+  'host',
+  yup.string().required(t('validate.host_required'))
+)
+const { value: port, errorMessage: errorMessagePort } = useField(
+  'port',
+  yup.string().required(t('validate.port_required'))
+)
+const { value: username, errorMessage: errorMessageUsername } = useField(
+  'username',
+  yup.string().required(t('validate.username_required'))
+)
+host.value = 'localhost'
+port.value = '5432'
+username.value = 'postgres'
+const otherOptionsDict = computed(() => {
+  return str2dict(options.otherOptions)
+})
+const getOptions = () => {
+  return {
+    '--host': host.value,
+    '--port': port.value,
+    '--username': username.value,
+    password: options.password,
+    ...otherOptionsDict.value
+  }
+}
+defineExpose({
+  getOptions
+})
+</script>

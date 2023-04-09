@@ -1,4 +1,4 @@
-export type DataSourceType = 'mysql' | 'postgres' | 'local' | 'ssh'
+export type DataSourceType = 'mysql' | 'postgres' | 'local' | 'ssh' | 'redis' | 'mongo'
 
 export interface DataSourceResponse {
   id: number
@@ -52,6 +52,7 @@ export interface TasksResponse {
 export type TaskStatus = 'running' | 'success' | 'failed'
 export interface TaskLogResponse {
   status: TaskStatus
+  data_source_type: DataSourceType
   message: string
   start_at: string
   updated_at: string
@@ -77,5 +78,21 @@ export interface StatResponse {
   storage_count: number
   task_count: number
   task_log_count: number
+  restore_log_count: number
   task_logs: TaskLogStatResponse[]
+}
+export interface RestoreResponse {
+  id: number
+  task_log_id: number
+  message: string
+  options: [key: string]
+  status: TaskStatus
+  start_at: string
+  end_at: string
+  created_at: string
+  updated_at: string
+}
+export interface RestoresResponse {
+  total: number
+  data: RestoreResponse[]
 }

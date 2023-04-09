@@ -17,12 +17,12 @@ const router = createRouter({
         },
         {
           path: 'add',
-          component: () => import('@/views/datasource/AddUpdateDataSourceView.vue')
+          component: () => import('@/views/datasource/DataSourceAddUpdateView.vue')
         },
         {
           path: ':id/update',
           name: 'updateDataSource',
-          component: () => import('@/views/datasource/AddUpdateDataSourceView.vue')
+          component: () => import('@/views/datasource/DataSourceAddUpdateView.vue')
         }
       ]
     },
@@ -50,8 +50,12 @@ const router = createRouter({
       component: () => import('@/views/TaskView.vue')
     },
     {
-      path: '/tasklog',
+      path: '/task_log',
       component: () => import('@/views/TaskLogView.vue')
+    },
+    {
+      path: '/restore_log',
+      component: () => import('@/views/RestoreLogView.vue')
     },
     {
       path: '/404',

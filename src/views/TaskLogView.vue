@@ -1,14 +1,14 @@
 <template>
   <div class="flex flex-row gap-2">
-    <select class="select-bordered select" v-model="search.data_source_id">
+    <select class="select-bordered select" v-model="search.data_source_id" @keyup.enter="initData">
       <option selected :value="undefined">{{ t('select_datasource') }}</option>
       <option v-for="d in data_sources" :value="d.id" :key="d.id">{{ d.name }}</option>
     </select>
-    <select class="select-bordered select" v-model="search.storage_id">
+    <select class="select-bordered select" v-model="search.storage_id" @keyup.enter="initData">
       <option selected :value="undefined">{{ t('select_storage') }}</option>
       <option v-for="s in storages" :value="s.id" :key="s.id">{{ s.name }}</option>
     </select>
-    <select class="select-bordered select" v-model="search.status">
+    <select class="select-bordered select" v-model="search.status" @keyup.enter="initData">
       <option selected :value="undefined">{{ t('status') }}</option>
       <option value="success">SUCCESS</option>
       <option value="failed">FAILED</option>
@@ -54,6 +54,15 @@
         <td>{{ $d(parseDate(d.start_at), 'long') }}</td>
         <td>{{ d.end_at && $d(parseDate(d.end_at), 'long') }}</td>
         <td class="flex gap-1">
+          <button
+            class="btn-primary btn-sm btn"
+            @click="handleRestore(d)"
+            :class="{
+              'btn-disabled': d.is_deleted || d.status != 'success'
+            }"
+          >
+            <MdTwotoneRestore />
+          </button>
           <button class="btn-error btn-sm btn" @click="deleteTaskLog(d.id)">
             <ReDeleteBin7Line />
           </button>
@@ -61,6 +70,34 @@
       </tr>
     </tbody>
   </table>
+  <input type="checkbox" class="modal-toggle" v-model="restoreState.isOpen" />
+  <div class="modal">
+    <div class="modal-box relative">
+      <button
+        class="btn-sm btn-circle btn absolute right-2 top-2"
+        @click="restoreState.isOpen = false"
+      >
+        ✕
+      </button>
+      <h3 class="text-lg font-bold">{{ $t('restore') }}</h3>
+      <div>
+        <MySQLOptions v-if="restoreState.data_source_type === 'mysql'" ref="optionsRef" />
+        <PostgreSQLOptions v-if="restoreState.data_source_type === 'postgres'" ref="optionsRef" />
+        <LocalOptions v-if="restoreState.data_source_type === 'local'" ref="optionsRef" />
+        <SSHOptions v-if="restoreState.data_source_type === 'ssh'" ref="optionsRef" />
+      </div>
+      <div class="modal-action">
+        <label
+          class="btn"
+          :class="{
+            disabled: isSubmitting
+          }"
+          @click="onSubmit"
+          >{{ $t('submit') }}</label
+        >
+      </div>
+    </div>
+  </div>
   <div class="flex items-center justify-center">
     <div class="btn-group grid grid-cols-2">
       <button
@@ -83,10 +120,11 @@
 
 <script setup lang="ts">
 import * as task_log from '@/apis/tasklog'
+import * as restore from '@/apis/restore'
 import { useI18n } from 'vue-i18n'
 import { parseDate } from '@/utils/date'
-import { reactive, watch } from 'vue'
-import type { TaskLogsResponse } from '@/types/responses'
+import { reactive, ref, watch } from 'vue'
+import type { DataSourceType, TaskLogResponse, TaskLogsResponse } from '@/types/responses'
 import { getDataSourcesBasic } from '@/apis/datasource'
 import { getStoragesBasic } from '@/apis/storage'
 import { toast } from 'vue3-toastify'
@@ -94,7 +132,11 @@ import { Clipboard } from 'v-clipboard'
 import { formatFileSize } from '@/utils/file'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import ConfirmModal from '@/components/ConfirmModal.vue'
-
+import MySQLOptions from '@/components/restore/MySQLOptions.vue'
+import PostgreSQLOptions from '@/components/restore/PostgreSQLOptions.vue'
+import LocalOptions from '@/components/restore/LocalOptions.vue'
+import SSHOptions from '@/components/restore/SSHOptions.vue'
+import { useForm } from 'vee-validate'
 const { t } = useI18n()
 const pager = reactive({ limit: 10, offset: 0 })
 const search = reactive({
@@ -120,6 +162,16 @@ const initData = async () => {
   data.total = ret.total
   data.data = ret.data
 }
+const optionsRef = ref()
+const restoreState = reactive<{
+  isOpen: boolean
+  data_source_type: DataSourceType | undefined
+  id: number
+}>({
+  isOpen: false,
+  data_source_type: undefined,
+  id: 0
+})
 const dialog = createConfirmDialog(ConfirmModal)
 await initData()
 watch(pager, async () => {
@@ -133,6 +185,18 @@ const clipboardHandler = async (message: string) => {
   await Clipboard.copy(message)
   toast.success(t('copied'))
 }
+const handleRestore = (data: TaskLogResponse) => {
+  restoreState.isOpen = true
+  restoreState.data_source_type = data.data_source_type
+  restoreState.id = data.id
+}
+const { handleSubmit, isSubmitting } = useForm()
+const onSubmit = handleSubmit(async () => {
+  const options = optionsRef.value.getOptions()
+  await restore.restoreTaskLog(restoreState.id, options)
+  restoreState.isOpen = false
+  toast.success(t('success.restore_task_log'))
+})
 const deleteTaskLog = async (id: number) => {
   const { isCanceled } = await dialog.reveal({
     title: t('confirm.delete_task_log'),
