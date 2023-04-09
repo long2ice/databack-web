@@ -56,7 +56,6 @@ import {
   PointElement
 } from 'chart.js'
 import _ from 'lodash'
-import type { TaskLogStatResponse } from '@/types/responses'
 import { i18n } from '@/i18n'
 
 ChartJS.register(Title, Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale)

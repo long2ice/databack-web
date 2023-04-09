@@ -81,10 +81,13 @@
       </button>
       <h3 class="text-lg font-bold">{{ $t('restore') }}</h3>
       <div>
-        <MySQLOptions v-if="restoreState.data_source_type === 'mysql'" ref="optionsRef" />
-        <PostgreSQLOptions v-if="restoreState.data_source_type === 'postgres'" ref="optionsRef" />
-        <LocalOptions v-if="restoreState.data_source_type === 'local'" ref="optionsRef" />
-        <SSHOptions v-if="restoreState.data_source_type === 'ssh'" ref="optionsRef" />
+        <RestoreMySQLOptions v-if="restoreState.data_source_type == 'mysql'" ref="optionsRef" />
+        <RestorePostgreSQLOptions
+          v-if="restoreState.data_source_type == 'postgres'"
+          ref="optionsRef"
+        />
+        <RestoreLocalOptions v-if="restoreState.data_source_type == 'local'" ref="optionsRef" />
+        <RestoreSSHOptions v-if="restoreState.data_source_type == 'ssh'" ref="optionsRef" />
       </div>
       <div class="modal-action">
         <label
@@ -132,10 +135,6 @@ import { Clipboard } from 'v-clipboard'
 import { formatFileSize } from '@/utils/file'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import ConfirmModal from '@/components/ConfirmModal.vue'
-import MySQLOptions from '@/components/restore/MySQLOptions.vue'
-import PostgreSQLOptions from '@/components/restore/PostgreSQLOptions.vue'
-import LocalOptions from '@/components/restore/LocalOptions.vue'
-import SSHOptions from '@/components/restore/SSHOptions.vue'
 import { useForm } from 'vee-validate'
 const { t } = useI18n()
 const pager = reactive({ limit: 10, offset: 0 })
