@@ -360,8 +360,7 @@ const onReset = () => {
 }
 const deleteTask = async (id: number) => {
   const { isCanceled } = await dialog.reveal({
-    title: t('confirm.delete_task'),
-    open: true
+    title: t('confirm.delete_task')
   })
   if (isCanceled) {
     return
