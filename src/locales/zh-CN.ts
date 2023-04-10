@@ -22,7 +22,7 @@ export default {
   password: '密码',
   other_options: '其他选项',
   mysql_other_options_placeholder:
-    '请填写其他选项，例如：--databases=database1,database2，多个选项用空格分隔',
+    '请填写其他选项，例如：--databases database1,database2，多个选项用空格分隔',
   mysql_other_options_tips: '所有选项请参考mysqlpump的帮助文档，',
   postgresql_other_options_placeholder: '请填写其他选项，例如：-a -b，多个选项用空格分隔',
   postgresql_other_options_tips: '所有选项请参考 {backup_program} 的帮助文档，',

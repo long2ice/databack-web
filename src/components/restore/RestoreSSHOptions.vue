@@ -18,6 +18,8 @@
         <span class="label-text-alt text-error">{{ errorMessagePort }}</span>
       </label>
     </div>
+  </div>
+  <div class="flex gap-4">
     <div class="form-control w-full">
       <label class="label">
         <span class="label-text">{{ $t('username') }}<span class="text-error">*</span></span>
@@ -33,25 +35,23 @@
       </label>
       <input type="text" class="input-bordered input" v-model="options.password" />
     </div>
-    <div class="form-control w-full">
-      <label class="label">
-        <span class="label-text">{{ $t('remote_path') }}<span class="text-error">*</span></span>
-      </label>
-      <input type="text" class="input-bordered input" v-model="path" />
-      <label class="label">
-        <span class="label-text-alt text-error">{{ errorMessagePath }}</span>
-      </label>
-    </div>
+  </div>
+  <div class="form-control w-full">
+    <label class="label">
+      <span class="label-text">{{ $t('remote_path') }}<span class="text-error">*</span></span>
+    </label>
+    <input type="text" class="input-bordered input" v-model="path" />
+    <label class="label">
+      <span class="label-text-alt text-error">{{ errorMessagePath }}</span>
+    </label>
   </div>
   <div class="flex flex-row gap-4">
     <div class="form-control w-full">
       <label class="label">
         <span class="label-text">{{ $t('private_key') }}</span>
-        <span class="label-text-alt link"
-          ><input type="file" hidden @change="importPrivateKey" />{{
-            t('import_private_key')
-          }}</span
-        >
+        <span class="label-text-alt link"><input type="file" hidden @change="importPrivateKey" />{{
+          t('import_private_key')
+        }}</span>
       </label>
       <textarea v-model="options.private_key" class="textarea-bordered textarea h-24"></textarea>
     </div>

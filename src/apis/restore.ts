@@ -1,13 +1,15 @@
 import http from '@/axios'
-import type { RestoresResponse, TaskStatus } from '@/types/responses'
+import type { DataSourceType, RestoresResponse, TaskStatus } from '@/types/responses'
 
 export async function restoreTaskLog(
   task_log_id: number,
+  restore_type: DataSourceType,
   options: Record<string, any>
 ): Promise<void> {
   await http.post('/restore', {
     task_log_id,
-    options
+    options,
+    restore_type
   })
 }
 export async function getRestoreLogs(

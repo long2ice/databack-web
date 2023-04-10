@@ -22,7 +22,7 @@ export default {
   password: 'Password',
   other_options: 'Other Options',
   mysql_other_options_placeholder:
-    'Please enter other options, such as: --databases=database1,database2, multiple options are separated by spaces',
+    'Please enter other options, such as: --databases database1,database2, multiple options are separated by spaces',
   mysql_other_options_tips: 'All options refer to the help document of mysqlpump,',
   postgresql_other_options_placeholder:
     'Please enter other options, such as: -a -b, multiple options are separated by spaces',
