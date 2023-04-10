@@ -14,6 +14,7 @@
       <tr>
         <th>ID</th>
         <th>{{ $t('task_log_id') }}</th>
+        <td>{{ $t('restore_type') }}</td>
         <td>{{ $t('status') }}</td>
         <td>{{ $t('message') }}</td>
         <td>{{ $t('options') }}</td>
@@ -26,6 +27,7 @@
       <tr v-for="d in data.data" :key="d.id">
         <td>{{ d.id }}</td>
         <td>{{ d.task_log_id }}</td>
+        <td>{{ d.restore_type }}</td>
         <td><TaskStatus :status="d.status" /></td>
         <td>
           <div class="message max-w-sm" @click="clipboardHandler(d.message)">
@@ -111,8 +113,7 @@ const clipboardHandler = async (message: string) => {
 
 const deleteRestoreLog = async (id: number) => {
   const { isCanceled } = await dialog.reveal({
-    title: t('confirm.delete_restore_log'),
-    open: true
+    title: t('confirm.delete_restore_log')
   })
   if (isCanceled) {
     return

@@ -56,16 +56,16 @@ import {
   PointElement
 } from 'chart.js'
 import _ from 'lodash'
-import { i18n } from '@/i18n'
+import { useI18n } from 'vue-i18n'
 
 ChartJS.register(Title, Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale)
-
+const { t } = useI18n()
 const stat = await getStats()
 const options = {
   plugins: {
     title: {
       display: true,
-      text: i18n.global.t('task_log_stat')
+      text: t('task_log_stat')
     }
   }
 }
@@ -105,5 +105,4 @@ const data = {
     }
   ]
 }
-console.log(data)
 </script>

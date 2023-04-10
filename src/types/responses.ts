@@ -53,6 +53,8 @@ export type TaskStatus = 'running' | 'success' | 'failed'
 export interface TaskLogResponse {
   status: TaskStatus
   data_source_type: DataSourceType
+  data_source_name: string
+  storage_name: string
   message: string
   start_at: string
   updated_at: string
@@ -84,6 +86,7 @@ export interface StatResponse {
 export interface RestoreResponse {
   id: number
   task_log_id: number
+  restore_type: DataSourceType
   message: string
   options: [key: string]
   status: TaskStatus

@@ -111,8 +111,7 @@ const onReset = () => {
 const deleteDataSource = async (id: number) => {
   const { isCanceled } = await dialog.reveal({
     title: t('confirm.delete_storage'),
-    msg: t('confirm.delete_storage_message'),
-    open: true
+    msg: t('confirm.delete_storage_message')
   })
   if (isCanceled) {
     return

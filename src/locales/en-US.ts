@@ -130,5 +130,6 @@ export default {
   postgresql_restore_options_tips: 'All options refer to the help document of psql, ',
   submit: 'Submit',
   restore_log: 'Restore Log',
-  task_log_id: 'Task Log ID'
+  task_log_id: 'Task Log ID',
+  restore_type: 'Restore Type'
 }

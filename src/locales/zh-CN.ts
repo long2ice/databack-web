@@ -129,5 +129,6 @@ export default {
   postgresql_restore_options_tips: '所有选项请参考 psql 的帮助文档，',
   submit: '提交',
   restore_log: '恢复记录',
-  task_log_id: '任务记录ID'
+  task_log_id: '任务记录ID',
+  restore_type: '恢复类型'
 }

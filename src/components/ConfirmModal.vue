@@ -2,7 +2,7 @@
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
 const { t } = useI18n()
-const props = defineProps({
+defineProps({
   msg: {
     type: String,
     required: false
@@ -10,20 +10,22 @@ const props = defineProps({
   title: {
     type: String,
     required: false
-  },
-  open: {
-    type: Boolean
   }
 })
-const isModalOpen = ref(props.open)
+const isModalOpen = ref(false)
+setTimeout(() => {
+  isModalOpen.value = true
+}, 10)
 const emit = defineEmits(['confirm', 'cancel'])
 const onClick = (confirm: boolean) => {
-  if (confirm) {
-    emit('confirm')
-  } else {
-    emit('cancel')
-  }
   isModalOpen.value = false
+  setTimeout(() => {
+    if (confirm) {
+      emit('confirm')
+    } else {
+      emit('cancel')
+    }
+  }, 300)
 }
 </script>
 

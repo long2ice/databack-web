@@ -22,6 +22,8 @@
       <tr>
         <th>ID</th>
         <th>{{ $t('task_id') }}</th>
+        <td>{{ $t('datasource') }}</td>
+        <td>{{ $t('storage') }}</td>
         <td>{{ $t('status') }}</td>
         <td>{{ $t('is_valid') }}</td>
         <td>{{ $t('path') }}</td>
@@ -36,6 +38,8 @@
       <tr v-for="d in data.data" :key="d.id">
         <td>{{ d.id }}</td>
         <td>{{ d.task_id }}</td>
+        <td>{{ d.data_source_name }}</td>
+        <td>{{ d.storage_name }}</td>
         <td>
           <TaskStatus :status="d.status" />
         </td>
@@ -56,9 +60,13 @@
         <td>{{ $d(parseDate(d.start_at), 'long') }}</td>
         <td>{{ d.end_at && $d(parseDate(d.end_at), 'long') }}</td>
         <td class="flex gap-1">
-          <button class="btn-primary btn-sm btn" @click="handleRestore(d)" :class="{
-            'btn-disabled': d.is_deleted || d.status != 'success'
-          }">
+          <button
+            class="btn-primary btn-sm btn"
+            @click="handleRestore(d)"
+            :class="{
+              'btn-disabled': d.is_deleted || d.status != 'success'
+            }"
+          >
             <MdTwotoneRestore />
           </button>
           <button class="btn-error btn-sm btn" @click="deleteTaskLog(d.id)">
@@ -71,46 +79,89 @@
   <input type="checkbox" class="modal-toggle" v-model="restoreState.isOpen" />
   <div class="modal">
     <div class="modal-box relative">
-      <button class="btn-sm btn-circle btn absolute right-2 top-2" @click="restoreState.isOpen = false">
+      <button
+        class="btn-sm btn-circle btn absolute right-2 top-2"
+        @click="restoreState.isOpen = false"
+      >
         ✕
       </button>
       <h3 class="text-lg font-bold">{{ $t('restore') }}</h3>
       <div class="flex flex-col">
         <div class="tabs">
-          <a class="tab tab-bordered" @click="restoreState.restore_type = 'local'" :class="{
-            'tab-active': restoreState.restore_type == 'local'
-          }">{{ $t('local') }}</a>
-          <a class="tab tab-bordered" @click="restoreState.restore_type = 'ssh'" :class="{
-            'tab-active': restoreState.restore_type == 'ssh'
-          }">SSH</a>
-          <a class="tab tab-bordered" @click="restoreState.restore_type = 'mysql'" :class="{
-            'tab-active': restoreState.restore_type == 'mysql'
-          }" v-if="restoreState.data_source_type == 'mysql'">{{ $t('mysql') }}</a>
-          <a class="tab tab-bordered" @click="restoreState.restore_type = 'postgres'" :class="{
-            'tab-active': restoreState.restore_type == 'postgres'
-          }" v-if="restoreState.data_source_type == 'postgres'">{{ $t('postgres') }}</a>
+          <a
+            class="tab-bordered tab"
+            @click="restoreState.restore_type = 'local'"
+            :class="{
+              'tab-active': restoreState.restore_type == 'local'
+            }"
+            >{{ $t('local') }}</a
+          >
+          <a
+            class="tab-bordered tab"
+            @click="restoreState.restore_type = 'ssh'"
+            :class="{
+              'tab-active': restoreState.restore_type == 'ssh'
+            }"
+            >SSH</a
+          >
+          <a
+            class="tab-bordered tab"
+            @click="restoreState.restore_type = 'mysql'"
+            :class="{
+              'tab-active': restoreState.restore_type == 'mysql'
+            }"
+            v-if="restoreState.data_source_type == 'mysql'"
+            >{{ $t('mysql') }}</a
+          >
+          <a
+            class="tab-bordered tab"
+            @click="restoreState.restore_type = 'postgres'"
+            :class="{
+              'tab-active': restoreState.restore_type == 'postgres'
+            }"
+            v-if="restoreState.data_source_type == 'postgres'"
+            >{{ $t('postgres') }}</a
+          >
         </div>
-        <RestoreMySQLOptions v-if="restoreState.data_source_type == 'mysql' && restoreState.restore_type == 'mysql'"
-          ref="optionsRef" />
+        <RestoreMySQLOptions
+          v-if="restoreState.data_source_type == 'mysql' && restoreState.restore_type == 'mysql'"
+          ref="optionsRef"
+        />
         <RestorePostgreSQLOptions
-          v-if="restoreState.data_source_type == 'postgres' && restoreState.restore_type == 'postgres'" ref="optionsRef" />
+          v-if="
+            restoreState.data_source_type == 'postgres' && restoreState.restore_type == 'postgres'
+          "
+          ref="optionsRef"
+        />
         <RestoreLocalOptions ref="optionsRef" v-if="restoreState.restore_type == 'local'" />
         <RestoreSSHOptions ref="optionsRef" v-if="restoreState.restore_type == 'ssh'" />
       </div>
       <div class="modal-action">
-        <label class="btn" :class="{
-          disabled: isSubmitting
-        }" @click="onSubmit">{{ $t('submit') }}</label>
+        <label
+          class="btn"
+          :class="{
+            disabled: isSubmitting
+          }"
+          @click="onSubmit"
+          >{{ $t('submit') }}</label
+        >
       </div>
     </div>
   </div>
   <div class="flex items-center justify-center">
     <div class="btn-group grid grid-cols-2">
-      <button class="btn-outline btn" @click="pager.offset -= pager.limit" :disabled="pager.offset == 0">
+      <button
+        class="btn-outline btn"
+        @click="pager.offset -= pager.limit"
+        :disabled="pager.offset == 0"
+      >
         {{ $t('previous') }}
       </button>
-      <button class="btn-outline btn" @click="pager.offset += pager.limit"
-        :disabled="pager.offset + pager.limit >= data.total">
+      <button
+        class="btn-outline btn"
+        @click="pager.offset += pager.limit"
+        :disabled="pager.offset + pager.limit >= data.total"
+      >
         {{ $t('next') }}
       </button>
     </div>
@@ -198,8 +249,7 @@ const onSubmit = handleSubmit(async () => {
 const deleteTaskLog = async (id: number) => {
   const { isCanceled } = await dialog.reveal({
     title: t('confirm.delete_task_log'),
-    msg: t('confirm.delete_task_log_msg'),
-    open: true
+    msg: t('confirm.delete_task_log_msg')
   })
   if (isCanceled) {
     return
@@ -219,7 +269,7 @@ const deleteTaskLog = async (id: number) => {
   @apply cursor-pointer truncate;
 }
 
-.message:hover+.message-tooltip {
+.message:hover + .message-tooltip {
   visibility: visible;
 }
 </style>
