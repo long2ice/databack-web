@@ -71,8 +71,8 @@
         <span class="label-text">{{ $t('options') }}</span>
       </label>
       <div class="rounded-lg border p-4">
-        <SSHOptions v-if="type == 'ssh'" ref="optionsRef" :defaultOptions="options" />
-        <S3Options v-else-if="type == 's3'" ref="optionsRef" :defaultOptions="options" />
+        <StorageSSHOptions v-if="type == 'ssh'" ref="optionsRef" :defaultOptions="options" />
+        <StorageS3Options v-else-if="type == 's3'" ref="optionsRef" :defaultOptions="options" />
       </div>
     </div>
     <div class="btn-group mt-4">
@@ -85,7 +85,6 @@
 </template>
 
 <script setup lang="ts">
-import SSHOptions from '@/components/storage/SSHOptions.vue'
 import * as yup from 'yup'
 import { ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
@@ -94,7 +93,6 @@ import type { StorageType } from '@/types/responses'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import { createStorage, getStorage, updateStorage } from '@/apis/storage'
-import S3Options from '@/components/storage/S3Options.vue'
 const router = useRouter()
 const isUpdate = router.currentRoute.value.name === 'updateStorage'
 const type = ref<StorageType>('s3')
