@@ -58,8 +58,8 @@ import { h, reactive, ref, watch } from 'vue'
 import type { DataSourcesResponse, DataSourceType } from '@/types/responses'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
-import { TableField } from '@/types/common'
-import { StorageResponse } from '@/types/responses'
+import type { TableField } from '@/types/common'
+import type { StorageResponse } from '@/types/responses'
 import StorageActions from '@/components/action/StorageActions.vue'
 
 const dialog = createConfirmDialog(ConfirmModal)

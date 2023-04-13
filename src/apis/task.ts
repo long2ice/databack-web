@@ -1,5 +1,5 @@
 import http from '@/axios'
-import type { TaskResponse, TasksResponse } from '@/types/responses'
+import type { TasksResponse } from '@/types/responses'
 
 export async function getTasks(
   limit: number,

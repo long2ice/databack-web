@@ -57,7 +57,11 @@
         </td>
         <th class="flex gap-1">
           <Component v-if="actions" :is="actions" :data="d" />
-          <button class="btn-error btn-sm btn" @click="onDelete([d.id])" v-if="onDelete">
+          <button
+            class="btn-error btn-sm btn"
+            @click="onDelete && onDelete([d.id])"
+            v-if="onDelete"
+          >
             <ReDeleteBin7Line />
           </button>
         </th>

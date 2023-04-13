@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { TaskResponse } from '@/types/responses'
+import type { TaskResponse } from '@/types/responses'
 
 defineProps<{
   data: TaskResponse
