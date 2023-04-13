@@ -1,3 +1,5 @@
+import type { Component } from 'vue'
+
 export type Language = 'en-US' | 'zh-CN'
 
 export interface TableField {
@@ -5,6 +7,11 @@ export interface TableField {
   label: string
   sortable?: boolean
   truncate?: boolean
-  formatter?: (row?: Record<string, any>, column?: string, cellValue?: any, index?: number) => any
+  formatter?: (
+    row?: Record<string, any>,
+    column?: string,
+    cellValue?: any,
+    index?: number
+  ) => Component
   defaultHidden?: boolean
 }

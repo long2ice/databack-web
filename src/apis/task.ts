@@ -51,12 +51,9 @@ export async function createTask(
   })
   return data
 }
-export async function deleteTask(id: number): Promise<void> {
-  const { data } = await http.delete(`/task/${id}`)
-  return data
-}
-export async function getTask(id: number): Promise<TaskResponse> {
-  const { data } = await http.get(`/task/${id}`)
+export async function deleteTasks(ids: number[]): Promise<void> {
+  const idsStr = ids.join(',')
+  const { data } = await http.delete(`/task/${idsStr}`)
   return data
 }
 export async function updateTask(

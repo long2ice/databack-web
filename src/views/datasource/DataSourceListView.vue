@@ -21,39 +21,13 @@
       {{ $t('add_datasource') }}
     </router-link>
   </div>
-  <table class="table w-full">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>{{ $t('name') }}</th>
-        <th>{{ $t('type') }}</th>
-        <th>{{ $t('created_at') }}</th>
-        <th>{{ $t('updated_at') }}</th>
-        <th>{{ $t('action') }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="d in data.data" :key="d.id">
-        <td>{{ d.id }}</td>
-        <td>{{ d.name }}</td>
-        <td>
-          <div class="tooltip tooltip-right" :data-tip="d.type">
-            <DataSourceTypeIcon :type="d.type" />
-          </div>
-        </td>
-        <td>{{ $d(parseDate(d.created_at), 'long') }}</td>
-        <td>{{ $d(parseDate(d.updated_at), 'long') }}</td>
-        <td class="flex gap-1">
-          <router-link class="btn-primary btn-sm btn" :to="`/datasource/${d.id}/update`">
-            <BxSolidEditAlt />
-          </router-link>
-          <button class="btn-error btn-sm btn" @click="deleteDataSource(d.id)">
-            <ReDeleteBin7Line />
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <DataTable
+    :data="data.data"
+    :total="data.total"
+    :fields="fields"
+    :actions="actions"
+    :onDelete="onDelete"
+  />
   <div class="flex items-center justify-center">
     <div class="btn-group grid grid-cols-2">
       <button
@@ -80,14 +54,17 @@ import DataSourceTypeIcon from '@/components/datasource/DataSourceTypeIcon.vue'
 import { toast } from 'vue3-toastify'
 import { useI18n } from 'vue-i18n'
 import { parseDate } from '@/utils/date'
-import { reactive, ref, watch } from 'vue'
+import { h, reactive, ref, watch } from 'vue'
 import type { DataSourcesResponse, DataSourceType } from '@/types/responses'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
+import { TableField } from '@/types/common'
+import { StorageResponse } from '@/types/responses'
+import StorageActions from '@/components/action/StorageActions.vue'
 
 const dialog = createConfirmDialog(ConfirmModal)
 
-const { t } = useI18n()
+const { t, d } = useI18n()
 const pager = reactive({ limit: 10, offset: 0 })
 const name = ref('')
 const type = ref<DataSourceType | undefined>(undefined)
@@ -95,6 +72,39 @@ const data = reactive<DataSourcesResponse>({
   total: 0,
   data: []
 })
+const fields: TableField[] = [
+  { field: 'id', label: 'ID' },
+  { field: 'name', label: t('name') },
+  {
+    field: 'type',
+    label: t('type'),
+    formatter: (row, column, cellValue) => {
+      return () =>
+        h('div', { class: 'tooltip tooltip-right', 'data-tip': cellValue }, [
+          h(DataSourceTypeIcon, { type: cellValue })
+        ])
+    }
+  },
+  {
+    field: 'created_at',
+    label: t('created_at'),
+    formatter: (row, column, cellValue) => {
+      return () => cellValue && d(parseDate(cellValue), 'long')
+    }
+  },
+  {
+    field: 'updated_at',
+    label: t('updated_at'),
+    formatter: (row, column, cellValue) => {
+      return () => cellValue && d(parseDate(cellValue), 'long')
+    }
+  }
+]
+const actions = (props: { data: StorageResponse }) => {
+  return h(StorageActions, {
+    data: props.data
+  })
+}
 const initData = async () => {
   const ret = await datasource.getDataSources(pager.limit, pager.offset, name.value, type.value)
   data.total = ret.total
@@ -108,14 +118,14 @@ const onReset = () => {
   name.value = ''
   type.value = undefined
 }
-const deleteDataSource = async (id: number) => {
+const onDelete = async (ids: number[]) => {
   const { isCanceled } = await dialog.reveal({
     title: t('confirm.delete_datasource')
   })
   if (isCanceled) {
     return
   }
-  await datasource.deleteDataSource(id)
+  await datasource.deleteDataSources(ids)
   toast.success(t('success.delete_datasource'))
   await initData()
 }

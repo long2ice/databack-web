@@ -143,7 +143,6 @@ const search = reactive({
 const actions = (props: { data: TaskLogResponse }) => {
   return h(TaskLogActions, {
     onRestore,
-    onDelete,
     data: props.data
   })
 }
@@ -167,7 +166,7 @@ const onDelete = async (ids: number[]) => {
   toast.success(t('success.delete_task_log'))
   await initData()
 }
-const fields = reactive<Array<TableField>>([
+const fields: TableField[] = [
   {
     field: 'id',
     label: 'ID',
@@ -233,7 +232,7 @@ const fields = reactive<Array<TableField>>([
     },
     defaultHidden: true
   }
-])
+]
 const data = reactive<TaskLogsResponse>({
   total: 0,
   data: []

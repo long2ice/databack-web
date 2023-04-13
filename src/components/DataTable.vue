@@ -55,8 +55,11 @@
             {{ d[field.field] }}
           </template>
         </td>
-        <th v-if="actions" class="flex gap-1">
-          <Component :is="actions" :data="d" />
+        <th class="flex gap-1">
+          <Component v-if="actions" :is="actions" :data="d" />
+          <button class="btn-error btn-sm btn" @click="onDelete([d.id])" v-if="onDelete">
+            <ReDeleteBin7Line />
+          </button>
         </th>
       </tr>
     </tbody>
@@ -85,9 +88,6 @@ watch(selectAll, (val) => {
   } else {
     selected.value = []
   }
-})
-watch(selected, (val) => {
-  selectAll.value = val.length === props.data.length
 })
 const clipboardHandler = async (message: string) => {
   await Clipboard.copy(message)

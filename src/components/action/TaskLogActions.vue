@@ -8,9 +8,6 @@
   >
     <MdTwotoneRestore />
   </button>
-  <button class="btn-error btn-sm btn" @click="onDelete([data.id])">
-    <ReDeleteBin7Line />
-  </button>
 </template>
 
 <script setup lang="ts">
@@ -19,7 +16,6 @@ import type { TaskLogResponse } from '@/types/responses'
 defineProps<{
   data: TaskLogResponse
   onRestore: (data: TaskLogResponse) => void
-  onDelete: (ids: number[]) => void
 }>()
 </script>
 

@@ -167,60 +167,13 @@
       </div>
     </div>
   </div>
-  <table class="table w-full">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>{{ $t('name') }}</th>
-        <th>{{ $t('datasource') }}</th>
-        <th>{{ $t('storage') }}</th>
-        <th>{{ $t('compress') }}</th>
-        <th>{{ $t('enabled') }}</th>
-        <th>{{ $t('keep_num') }}</th>
-        <th>{{ $t('keep_days') }}</th>
-        <th>{{ $t('sub_path') }}</th>
-        <th>{{ $t('cron') }}</th>
-        <th>{{ $t('created_at') }}</th>
-        <th>{{ $t('updated_at') }}</th>
-        <th>{{ $t('action') }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="d in data.data" :key="d.id">
-        <td>{{ d.id }}</td>
-        <td>{{ d.name }}</td>
-        <td>{{ d.data_source_name }}</td>
-        <td>{{ d.storage_name }}</td>
-        <td>{{ d.compress ? '✅' : '❌' }}</td>
-        <td>{{ d.enabled ? '✅' : '❌' }}</td>
-        <td>{{ d.keep_num === 0 ? t('unlimited') : d.keep_num }}</td>
-        <td>{{ d.keep_days === 0 ? t('unlimited') : d.keep_days }}</td>
-        <td>{{ d.sub_path }}</td>
-        <td>
-          <span class="badge">{{ d.cron }}</span>
-        </td>
-        <td>{{ $d(parseDate(d.created_at), 'long') }}</td>
-        <td>{{ $d(parseDate(d.updated_at), 'long') }}</td>
-        <td class="flex gap-1">
-          <button class="btn-primary btn-sm btn" @click="handleEditTask(d)">
-            <BxSolidEditAlt />
-          </button>
-          <button class="btn-error btn-sm btn" @click="deleteTask(d.id)">
-            <ReDeleteBin7Line />
-          </button>
-          <button
-            class="btn-accent btn-sm btn"
-            @click="runTask(d.id)"
-            :class="{
-              'btn-disabled': !d.enabled
-            }"
-          >
-            <AkPlay />
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <DataTable
+    :data="data.data"
+    :total="data.total"
+    :fields="fields"
+    :actions="actions"
+    :onDelete="onDelete"
+  />
   <div class="flex items-center justify-center">
     <div class="btn-group grid grid-cols-2">
       <button
@@ -246,7 +199,7 @@ import * as task from '@/apis/task'
 import { toast } from 'vue3-toastify'
 import { useI18n } from 'vue-i18n'
 import { parseDate } from '@/utils/date'
-import { reactive, ref, watch } from 'vue'
+import { h, reactive, ref, watch } from 'vue'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import type { TaskResponse, TasksResponse } from '@/types/responses'
@@ -254,9 +207,91 @@ import { getDataSourcesBasic } from '@/apis/datasource'
 import { getStoragesBasic } from '@/apis/storage'
 import * as yup from 'yup'
 import { useField, useForm } from 'vee-validate'
+import type { TableField } from '@/types/common'
+import TaskActions from '@/components/action/TaskActions.vue'
 const dialog = createConfirmDialog(ConfirmModal)
 
-const { t } = useI18n()
+const { t, d } = useI18n()
+const actions = (props: { data: TaskResponse }) => {
+  return h(TaskActions, {
+    onEdit,
+    onTask,
+    data: props.data
+  })
+}
+const fields: TableField[] = [
+  {
+    field: 'id',
+    label: 'ID'
+  },
+  {
+    field: 'name',
+    label: t('name')
+  },
+  {
+    field: 'data_source_name',
+    label: t('datasource')
+  },
+  {
+    field: 'storage_name',
+    label: t('storage')
+  },
+  {
+    field: 'compress',
+    label: t('compress'),
+    formatter: (row, column, cellValue) => {
+      return () => (!cellValue ? '✅' : '❌')
+    }
+  },
+  {
+    field: 'enabled',
+    label: t('enabled'),
+    formatter: (row, column, cellValue) => {
+      return () => (!cellValue ? '✅' : '❌')
+    }
+  },
+  {
+    field: 'sub_path',
+    label: t('sub_path')
+  },
+  {
+    field: 'keep_num',
+    label: t('keep_num'),
+    formatter: (row, column, cellValue) => {
+      return () => (cellValue === 0 ? t('unlimited') : cellValue)
+    }
+  },
+  {
+    field: 'keep_days',
+    label: t('keep_days'),
+    formatter: (row, column, cellValue) => {
+      return () => (cellValue === 0 ? t('unlimited') : cellValue)
+    }
+  },
+  {
+    field: 'cron',
+    label: t('cron'),
+    formatter: (row, column, cellValue) => {
+      return () => h('span', { class: 'badge' }, cellValue)
+    }
+  },
+  {
+    field: 'created_at',
+    label: t('created_at'),
+    defaultHidden: true,
+    formatter: (row, column, cellValue) => {
+      return () => cellValue && d(parseDate(cellValue), 'long')
+    }
+  },
+  {
+    field: 'updated_at',
+    label: t('updated_at'),
+    defaultHidden: true,
+    formatter: (row, column, cellValue) => {
+      return () => cellValue && d(parseDate(cellValue), 'long')
+    }
+  }
+]
 const pager = reactive({ limit: 10, offset: 0 })
 const search = reactive({
   name: '',
@@ -358,14 +393,14 @@ const onReset = () => {
   search.data_source_id = undefined
   search.storage_id = undefined
 }
-const deleteTask = async (id: number) => {
+const onDelete = async (ids: number[]) => {
   const { isCanceled } = await dialog.reveal({
     title: t('confirm.delete_task')
   })
   if (isCanceled) {
     return
   }
-  await task.deleteTask(id)
+  await task.deleteTasks(ids)
   toast.success(t('success.delete_task'))
   await initData()
 }
@@ -382,7 +417,7 @@ const handleCreateTask = () => {
   keep_num.value = 0
   keep_days.value = 0
 }
-const handleEditTask = async (d: TaskResponse) => {
+const onEdit = async (d: TaskResponse) => {
   isCreateUpdateTaskOpen.value = true
   isUpdate.value = true
   form.data_source_id = d.data_source_id
@@ -396,7 +431,7 @@ const handleEditTask = async (d: TaskResponse) => {
   keep_num.value = d.keep_num
   keep_days.value = d.keep_days
 }
-const runTask = async (id: number) => {
+const onTask = async (id: number) => {
   await task.runTask(id)
   toast.success(t('success.run_task'))
 }

@@ -38,8 +38,9 @@ export async function createDataSource(
   })
   return data
 }
-export async function deleteDataSource(id: number): Promise<void> {
-  const { data } = await http.delete(`/datasource/${id}`)
+export async function deleteDataSources(ids: number[]): Promise<void> {
+  const idsStr = ids.join(',')
+  const { data } = await http.delete(`/datasource/${idsStr}`)
   return data
 }
 

@@ -29,6 +29,7 @@ export async function getRestoreLogs(
   })
   return data
 }
-export async function deleteRestoreLog(id: number): Promise<void> {
-  await http.delete(`/restore/${id}`)
+export async function deleteRestoreLogs(ids: number[]): Promise<void> {
+  const idsStr = ids.join(',')
+  await http.delete(`/restore/${idsStr}`)
 }

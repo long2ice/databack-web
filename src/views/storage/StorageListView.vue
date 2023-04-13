@@ -20,41 +20,13 @@
       {{ $t('add_storage') }}
     </router-link>
   </div>
-  <table class="table w-full">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>{{ $t('name') }}</th>
-        <th>{{ $t('type') }}</th>
-        <td>{{ $t('path') }}</td>
-        <th>{{ $t('created_at') }}</th>
-        <th>{{ $t('updated_at') }}</th>
-        <th>{{ $t('action') }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="d in data.data" :key="d.id">
-        <td>{{ d.id }}</td>
-        <td>{{ d.name }}</td>
-        <td>
-          <div class="tooltip tooltip-right" :data-tip="d.type">
-            <StorageTypeIcon :type="d.type" />
-          </div>
-        </td>
-        <td>{{ d.path }}</td>
-        <td>{{ $d(parseDate(d.created_at), 'long') }}</td>
-        <td>{{ $d(parseDate(d.updated_at), 'long') }}</td>
-        <td class="flex gap-1">
-          <router-link class="btn-primary btn-sm btn" :to="`/storage/${d.id}/update`">
-            <BxSolidEditAlt />
-          </router-link>
-          <button class="btn-error btn-sm btn" @click="deleteDataSource(d.id)">
-            <ReDeleteBin7Line />
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <DataTable
+    :data="data.data"
+    :total="data.total"
+    :fields="fields"
+    :actions="actions"
+    :onDelete="onDelete"
+  />
   <div class="flex items-center justify-center">
     <div class="btn-group grid grid-cols-2">
       <button
@@ -80,14 +52,16 @@ import * as storage from '@/apis/storage'
 import { toast } from 'vue3-toastify'
 import { useI18n } from 'vue-i18n'
 import { parseDate } from '@/utils/date'
-import { reactive, ref, watch } from 'vue'
-import type { StoragesResponse, StorageType } from '@/types/responses'
+import { h, reactive, ref, watch } from 'vue'
+import type { StorageResponse, StoragesResponse, StorageType } from '@/types/responses'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
+import type { TableField } from '@/types/common'
+import StorageActions from '@/components/action/StorageActions.vue'
 
 const dialog = createConfirmDialog(ConfirmModal)
 
-const { t } = useI18n()
+const { t, d } = useI18n()
 const pager = reactive({ limit: 10, offset: 0 })
 const name = ref('')
 const type = ref<StorageType | undefined>(undefined)
@@ -95,6 +69,31 @@ const data = reactive<StoragesResponse>({
   total: 0,
   data: []
 })
+const fields: TableField[] = [
+  { field: 'id', label: 'ID' },
+  { field: 'name', label: t('name') },
+  { field: 'type', label: t('type') },
+  { field: 'path', label: t('path') },
+  {
+    field: 'created_at',
+    label: t('created_at'),
+    formatter: (row, column, cellValue) => {
+      return () => cellValue && d(parseDate(cellValue), 'long')
+    }
+  },
+  {
+    field: 'updated_at',
+    label: t('updated_at'),
+    formatter: (row, column, cellValue) => {
+      return () => cellValue && d(parseDate(cellValue), 'long')
+    }
+  }
+]
+const actions = (props: { data: StorageResponse }) => {
+  return h(StorageActions, {
+    data: props.data
+  })
+}
 const initData = async () => {
   const ret = await storage.getStorages(pager.limit, pager.offset, name.value, type.value)
   data.total = ret.total
@@ -108,7 +107,7 @@ const onReset = () => {
   name.value = ''
   type.value = undefined
 }
-const deleteDataSource = async (id: number) => {
+const onDelete = async (ids: number[]) => {
   const { isCanceled } = await dialog.reveal({
     title: t('confirm.delete_storage'),
     msg: t('confirm.delete_storage_message')
@@ -116,7 +115,7 @@ const deleteDataSource = async (id: number) => {
   if (isCanceled) {
     return
   }
-  await storage.deleteStorage(id)
+  await storage.deleteStorages(ids)
   toast.success(t('success.delete_storage'))
   await initData()
 }

@@ -40,8 +40,9 @@ export async function createStorage(
   })
   return data
 }
-export async function deleteStorage(id: number): Promise<void> {
-  const { data } = await http.delete(`/storage/${id}`)
+export async function deleteStorages(ids: number[]): Promise<void> {
+  const idsStr = ids.join(',')
+  const { data } = await http.delete(`/storage/${idsStr}`)
   return data
 }
 

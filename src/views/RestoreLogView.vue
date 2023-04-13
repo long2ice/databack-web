@@ -9,48 +9,7 @@
     <button class="btn-primary btn" @click="initData">{{ t('search') }}</button>
     <button class="btn-warning btn" @click="onReset">{{ t('reset') }}</button>
   </div>
-  <table class="table w-full">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>{{ $t('task_log_id') }}</th>
-        <td>{{ $t('restore_type') }}</td>
-        <td>{{ $t('status') }}</td>
-        <td>{{ $t('message') }}</td>
-        <td>{{ $t('options') }}</td>
-        <td>{{ $t('start_at') }}</td>
-        <td>{{ $t('end_at') }}</td>
-        <th>{{ $t('action') }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="d in data.data" :key="d.id">
-        <td>{{ d.id }}</td>
-        <td>{{ d.task_log_id }}</td>
-        <td>{{ d.restore_type }}</td>
-        <td><TaskStatus :status="d.status" /></td>
-        <td>
-          <div class="message max-w-sm" @click="clipboardHandler(d.message)">
-            {{ d.message }}
-          </div>
-          <span class="message-tooltip">{{ d.message }}</span>
-        </td>
-        <td>
-          <div class="message max-w-sm" @click="clipboardHandler(dict2str(d.options))">
-            {{ dict2str(d.options) }}
-          </div>
-          <span class="message-tooltip">{{ dict2str(d.options) }}</span>
-        </td>
-        <td>{{ $d(parseDate(d.start_at), 'long') }}</td>
-        <td>{{ d.end_at && $d(parseDate(d.end_at), 'long') }}</td>
-        <td class="flex gap-1">
-          <button class="btn-error btn-sm btn" @click="deleteRestoreLog(d.id)">
-            <ReDeleteBin7Line />
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <DataTable :data="data.data" :total="data.total" :fields="fields" :onDelete="onDelete" />
   <div class="flex items-center justify-center">
     <div class="btn-group grid grid-cols-2">
       <button
@@ -75,15 +34,15 @@
 import * as restore from '@/apis/restore'
 import { useI18n } from 'vue-i18n'
 import { parseDate } from '@/utils/date'
-import { reactive, watch } from 'vue'
+import { h, reactive, watch } from 'vue'
 import type { RestoresResponse } from '@/types/responses'
 import { toast } from 'vue3-toastify'
-import { Clipboard } from 'v-clipboard'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import ConfirmModal from '@/components/ConfirmModal.vue'
-import { dict2str } from '@/utils/options'
+import type { TableField } from '@/types/common'
+import TaskStatus from '@/components/TaskStatus.vue'
 
-const { t } = useI18n()
+const { t, d } = useI18n()
 const pager = reactive({ limit: 10, offset: 0 })
 const search = reactive({
   status: undefined
@@ -92,7 +51,72 @@ const data = reactive<RestoresResponse>({
   total: 0,
   data: []
 })
-
+const fields: TableField[] = [
+  {
+    field: 'id',
+    label: 'ID',
+    sortable: true
+  },
+  {
+    field: 'task_log_id',
+    label: t('task_log_id'),
+    sortable: true
+  },
+  {
+    field: 'restore_type',
+    label: t('restore_type')
+  },
+  {
+    field: 'status',
+    label: t('status'),
+    formatter: (row, column, cellValue) => {
+      return () =>
+        h(TaskStatus, {
+          status: cellValue
+        })
+    }
+  },
+  {
+    field: 'message',
+    label: t('message'),
+    truncate: true
+  },
+  {
+    field: 'options',
+    label: t('options'),
+    truncate: true
+  },
+  {
+    field: 'start_at',
+    label: t('start_at'),
+    formatter: (row, column, cellValue) => {
+      return () => d(parseDate(cellValue), 'long')
+    }
+  },
+  {
+    field: 'end_at',
+    label: t('end_at'),
+    formatter: (row, column, cellValue) => {
+      return () => cellValue && d(parseDate(cellValue), 'long')
+    }
+  },
+  {
+    field: 'created_at',
+    label: t('created_at'),
+    defaultHidden: true,
+    formatter: (row, column, cellValue) => {
+      return () => d(parseDate(cellValue), 'long')
+    }
+  },
+  {
+    field: 'updated_at',
+    label: t('updated_at'),
+    defaultHidden: true,
+    formatter: (row, column, cellValue) => {
+      return () => d(parseDate(cellValue), 'long')
+    }
+  }
+]
 const initData = async () => {
   const ret = await restore.getRestoreLogs(pager.limit, pager.offset, search.status)
   data.total = ret.total
@@ -106,19 +130,15 @@ watch(pager, async () => {
 const onReset = () => {
   search.status = undefined
 }
-const clipboardHandler = async (message: string) => {
-  await Clipboard.copy(message)
-  toast.success(t('copied'))
-}
 
-const deleteRestoreLog = async (id: number) => {
+const onDelete = async (ids: number[]) => {
   const { isCanceled } = await dialog.reveal({
     title: t('confirm.delete_restore_log')
   })
   if (isCanceled) {
     return
   }
-  await restore.deleteRestoreLog(id)
+  await restore.deleteRestoreLogs(ids)
   toast.success(t('success.delete_restore_log'))
   await initData()
 }
