@@ -240,14 +240,14 @@ const fields: TableField[] = [
     field: 'compress',
     label: t('compress'),
     formatter: (row, column, cellValue) => {
-      return () => (!cellValue ? '✅' : '❌')
+      return () => (cellValue ? '✅' : '❌')
     }
   },
   {
     field: 'enabled',
     label: t('enabled'),
     formatter: (row, column, cellValue) => {
-      return () => (!cellValue ? '✅' : '❌')
+      return () => (cellValue ? '✅' : '❌')
     }
   },
   {
