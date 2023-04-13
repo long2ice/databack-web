@@ -154,17 +154,18 @@ const onRestore = (data: TaskLogResponse) => {
 }
 
 const dialog = createConfirmDialog(ConfirmModal)
-const onDelete = async (ids: number[]) => {
+const onDelete = async (ids: number[]): Promise<boolean> => {
   const { isCanceled } = await dialog.reveal({
     title: t('confirm.delete_task_log'),
     msg: t('confirm.delete_task_log_msg')
   })
   if (isCanceled) {
-    return
+    return false
   }
   await task_log.deleteTaskLogs(ids)
   toast.success(t('success.delete_task_log'))
   await initData()
+  return true
 }
 const fields: TableField[] = [
   {

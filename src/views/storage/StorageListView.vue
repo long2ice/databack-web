@@ -58,6 +58,7 @@ import ConfirmModal from '@/components/ConfirmModal.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import type { TableField } from '@/types/common'
 import StorageActions from '@/components/action/StorageActions.vue'
+import { boolean } from 'yup'
 
 const dialog = createConfirmDialog(ConfirmModal)
 
@@ -107,16 +108,17 @@ const onReset = () => {
   name.value = ''
   type.value = undefined
 }
-const onDelete = async (ids: number[]) => {
+const onDelete = async (ids: number[]): Promise<boolean> => {
   const { isCanceled } = await dialog.reveal({
     title: t('confirm.delete_storage'),
     msg: t('confirm.delete_storage_message')
   })
   if (isCanceled) {
-    return
+    return false
   }
   await storage.deleteStorages(ids)
   toast.success(t('success.delete_storage'))
   await initData()
+  return true
 }
 </script>

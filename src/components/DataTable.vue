@@ -55,16 +55,18 @@
             {{ d[field.field] }}
           </template>
         </td>
-        <th class="flex gap-1">
-          <Component v-if="actions" :is="actions" :data="d" />
-          <button
-            class="btn-error btn-sm btn"
-            @click="onDelete && onDelete([d.id])"
-            v-if="onDelete"
-          >
-            <ReDeleteBin7Line />
-          </button>
-        </th>
+        <td>
+          <div class="flex gap-1">
+            <Component v-if="actions" :is="actions" :data="d" />
+            <button
+              class="btn-error btn-sm btn"
+              @click="onDelete && onDelete([d.id])"
+              v-if="onDelete"
+            >
+              <ReDeleteBin7Line />
+            </button>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -77,13 +79,22 @@ import { toast } from 'vue3-toastify'
 import { useI18n } from 'vue-i18n'
 import type { Component } from 'vue'
 import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { useColumns } from '@/stores/table'
 const { t } = useI18n()
 const props = defineProps<{
   data: Record<string, any>[]
   fields: TableField[]
   actions?: Component
-  onDelete?: (ids: number[]) => void
+  onDelete?: (ids: number[]) => Promise<boolean>
 }>()
+const route = useRoute()
+const columnsMap = useColumns()
+const defaultColumns = columnsMap.columns[route.path]
+const columns = ref(defaultColumns || props.fields.map((f) => !f.defaultHidden && f.field))
+watch(columns, (val) => {
+  columnsMap.columns[route.path] = val
+})
 const selected = ref<number[]>([])
 const selectAll = ref(false)
 watch(selectAll, (val) => {
@@ -97,13 +108,14 @@ const clipboardHandler = async (message: string) => {
   await Clipboard.copy(message)
   toast.success(t('copied'))
 }
-const columns = ref(props.fields.map((f) => !f.defaultHidden && f.field))
 const realFields = computed(() => {
   return props.fields.filter((f) => columns.value.includes(f.field))
 })
 const deleteSelected = async () => {
-  await props.onDelete?.(selected.value)
-  selected.value = []
+  const ret = await props.onDelete?.(selected.value)
+  if (ret) {
+    selected.value = []
+  }
 }
 </script>
 

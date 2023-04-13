@@ -61,6 +61,7 @@ import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import type { TableField } from '@/types/common'
 import type { StorageResponse } from '@/types/responses'
 import StorageActions from '@/components/action/StorageActions.vue'
+import { boolean } from 'yup'
 
 const dialog = createConfirmDialog(ConfirmModal)
 
@@ -118,15 +119,16 @@ const onReset = () => {
   name.value = ''
   type.value = undefined
 }
-const onDelete = async (ids: number[]) => {
+const onDelete = async (ids: number[]): Promise<boolean> => {
   const { isCanceled } = await dialog.reveal({
     title: t('confirm.delete_datasource')
   })
   if (isCanceled) {
-    return
+    return false
   }
   await datasource.deleteDataSources(ids)
   toast.success(t('success.delete_datasource'))
   await initData()
+  return true
 }
 </script>

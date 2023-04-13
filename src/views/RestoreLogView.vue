@@ -131,15 +131,16 @@ const onReset = () => {
   search.status = undefined
 }
 
-const onDelete = async (ids: number[]) => {
+const onDelete = async (ids: number[]): Promise<boolean> => {
   const { isCanceled } = await dialog.reveal({
     title: t('confirm.delete_restore_log')
   })
   if (isCanceled) {
-    return
+    return false
   }
   await restore.deleteRestoreLogs(ids)
   toast.success(t('success.delete_restore_log'))
   await initData()
+  return true
 }
 </script>

@@ -393,16 +393,17 @@ const onReset = () => {
   search.data_source_id = undefined
   search.storage_id = undefined
 }
-const onDelete = async (ids: number[]) => {
+const onDelete = async (ids: number[]): Promise<boolean> => {
   const { isCanceled } = await dialog.reveal({
     title: t('confirm.delete_task')
   })
   if (isCanceled) {
-    return
+    return false
   }
   await task.deleteTasks(ids)
   toast.success(t('success.delete_task'))
   await initData()
+  return true
 }
 const handleCreateTask = () => {
   isCreateUpdateTaskOpen.value = true

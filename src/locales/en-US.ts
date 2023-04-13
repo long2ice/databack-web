@@ -134,5 +134,6 @@ export default {
   restore_type: 'Restore Type',
   rows_selected: '{num} selected',
   delete_selected: 'Delete Selected',
-  columns: 'Columns'
+  columns: 'Columns',
+  mysql: 'MySQL'
 }
