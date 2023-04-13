@@ -130,5 +130,8 @@ export default {
   submit: '提交',
   restore_log: '恢复记录',
   task_log_id: '任务记录ID',
-  restore_type: '恢复类型'
+  restore_type: '恢复类型',
+  rows_selected: '已选择 {num} 行',
+  delete_selected: '删除选中',
+  columns: '展示列'
 }

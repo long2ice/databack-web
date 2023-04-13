@@ -17,65 +17,13 @@
     <button class="btn-primary btn" @click="initData">{{ t('search') }}</button>
     <button class="btn-warning btn" @click="onReset">{{ t('reset') }}</button>
   </div>
-  <table class="table w-full">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>{{ $t('task_id') }}</th>
-        <td>{{ $t('datasource') }}</td>
-        <td>{{ $t('storage') }}</td>
-        <td>{{ $t('status') }}</td>
-        <td>{{ $t('is_valid') }}</td>
-        <td>{{ $t('path') }}</td>
-        <td>{{ $t('size') }}</td>
-        <td>{{ $t('message') }}</td>
-        <td>{{ $t('start_at') }}</td>
-        <td>{{ $t('end_at') }}</td>
-        <th>{{ $t('action') }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="d in data.data" :key="d.id">
-        <td>{{ d.id }}</td>
-        <td>{{ d.task_id }}</td>
-        <td>{{ d.data_source_name }}</td>
-        <td>{{ d.storage_name }}</td>
-        <td>
-          <TaskStatus :status="d.status" />
-        </td>
-        <td>{{ !d.is_deleted ? '✅' : '❌' }}</td>
-        <td>
-          <div class="message w-48" @click="clipboardHandler(d.path)">
-            {{ d.path }}
-          </div>
-          <span class="message-tooltip">{{ d.path }}</span>
-        </td>
-        <td>{{ formatFileSize(d.size) }}</td>
-        <td>
-          <div class="message max-w-sm" @click="clipboardHandler(d.message)">
-            {{ d.message }}
-          </div>
-          <span class="message-tooltip">{{ d.message }}</span>
-        </td>
-        <td>{{ $d(parseDate(d.start_at), 'long') }}</td>
-        <td>{{ d.end_at && $d(parseDate(d.end_at), 'long') }}</td>
-        <td class="flex gap-1">
-          <button
-            class="btn-primary btn-sm btn"
-            @click="handleRestore(d)"
-            :class="{
-              'btn-disabled': d.is_deleted || d.status != 'success'
-            }"
-          >
-            <MdTwotoneRestore />
-          </button>
-          <button class="btn-error btn-sm btn" @click="deleteTaskLog(d.id)">
-            <ReDeleteBin7Line />
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <DataTable
+    :data="data.data"
+    :total="data.total"
+    :fields="fields"
+    :actions="actions"
+    :onDelete="onDelete"
+  />
   <input type="checkbox" class="modal-toggle" v-model="restoreState.isOpen" />
   <div class="modal">
     <div class="modal-box relative">
@@ -173,23 +121,119 @@ import * as task_log from '@/apis/tasklog'
 import * as restore from '@/apis/restore'
 import { useI18n } from 'vue-i18n'
 import { parseDate } from '@/utils/date'
-import { reactive, ref, watch } from 'vue'
+import { h, reactive, ref, watch } from 'vue'
 import type { DataSourceType, TaskLogResponse, TaskLogsResponse } from '@/types/responses'
 import { getDataSourcesBasic } from '@/apis/datasource'
 import { getStoragesBasic } from '@/apis/storage'
 import { toast } from 'vue3-toastify'
-import { Clipboard } from 'v-clipboard'
 import { formatFileSize } from '@/utils/file'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { useForm } from 'vee-validate'
-const { t } = useI18n()
+import type { TableField } from '@/types/common'
+import TaskStatus from '@/components/TaskStatus.vue'
+import TaskLogActions from '@/components/action/TaskLogActions.vue'
+const { t, d } = useI18n()
 const pager = reactive({ limit: 10, offset: 0 })
 const search = reactive({
   data_source_id: undefined,
   storage_id: undefined,
   status: undefined
 })
+const actions = (props: { data: TaskLogResponse }) => {
+  return h(TaskLogActions, {
+    onRestore,
+    onDelete,
+    data: props.data
+  })
+}
+const onRestore = (data: TaskLogResponse) => {
+  restoreState.isOpen = true
+  restoreState.data_source_type = data.data_source_type
+  restoreState.restore_type = data.data_source_type
+  restoreState.id = data.id
+}
+
+const dialog = createConfirmDialog(ConfirmModal)
+const onDelete = async (ids: number[]) => {
+  const { isCanceled } = await dialog.reveal({
+    title: t('confirm.delete_task_log'),
+    msg: t('confirm.delete_task_log_msg')
+  })
+  if (isCanceled) {
+    return
+  }
+  await task_log.deleteTaskLogs(ids)
+  toast.success(t('success.delete_task_log'))
+  await initData()
+}
+const fields = reactive<Array<TableField>>([
+  {
+    field: 'id',
+    label: 'ID',
+    sortable: true
+  },
+  {
+    field: 'task_id',
+    label: t('task_id'),
+    sortable: true
+  },
+  {
+    field: 'data_source_name',
+    label: t('datasource')
+  },
+  {
+    field: 'storage_name',
+    label: t('storage')
+  },
+  {
+    field: 'status',
+    label: t('status'),
+    formatter: (row, column, cellValue) => {
+      return h(TaskStatus, { status: cellValue })
+    }
+  },
+  {
+    field: 'is_deleted',
+    label: t('is_valid'),
+    formatter: (row, column, cellValue) => {
+      return () => (!cellValue ? '✅' : '❌')
+    }
+  },
+  {
+    field: 'path',
+    label: t('path'),
+    truncate: true
+  },
+  {
+    field: 'size',
+    label: t('size'),
+    formatter: (row, column, cellValue) => {
+      return () => formatFileSize(cellValue)
+    }
+  },
+  {
+    field: 'message',
+    label: t('message'),
+    truncate: true
+  },
+  {
+    field: 'start_at',
+    label: t('start_at'),
+    formatter: (row, column, cellValue) => {
+      return () => d(parseDate(cellValue), 'long')
+    },
+    defaultHidden: true
+  },
+  {
+    field: 'end_at',
+    label: t('end_at'),
+    formatter: (row, column, cellValue) => {
+      return () => cellValue && d(parseDate(cellValue), 'long')
+    },
+    defaultHidden: true
+  }
+])
 const data = reactive<TaskLogsResponse>({
   total: 0,
   data: []
@@ -220,7 +264,6 @@ const restoreState = reactive<{
   restore_type: undefined,
   id: 0
 })
-const dialog = createConfirmDialog(ConfirmModal)
 await initData()
 watch(pager, async () => {
   await initData()
@@ -229,16 +272,6 @@ const onReset = () => {
   search.data_source_id = undefined
   search.storage_id = undefined
 }
-const clipboardHandler = async (message: string) => {
-  await Clipboard.copy(message)
-  toast.success(t('copied'))
-}
-const handleRestore = (data: TaskLogResponse) => {
-  restoreState.isOpen = true
-  restoreState.data_source_type = data.data_source_type
-  restoreState.restore_type = data.data_source_type
-  restoreState.id = data.id
-}
 const { handleSubmit, isSubmitting } = useForm()
 const onSubmit = handleSubmit(async () => {
   const options = optionsRef.value.getOptions()
@@ -246,30 +279,4 @@ const onSubmit = handleSubmit(async () => {
   restoreState.isOpen = false
   toast.success(t('success.restore_task_log'))
 })
-const deleteTaskLog = async (id: number) => {
-  const { isCanceled } = await dialog.reveal({
-    title: t('confirm.delete_task_log'),
-    msg: t('confirm.delete_task_log_msg')
-  })
-  if (isCanceled) {
-    return
-  }
-  await task_log.deleteTaskLog(id)
-  toast.success(t('success.delete_task_log'))
-  await initData()
-}
 </script>
-<style scoped>
-.message-tooltip {
-  @apply absolute max-w-2xl whitespace-pre-line break-all rounded-lg border bg-neutral p-4 text-neutral-content;
-  visibility: hidden;
-}
-
-.message {
-  @apply cursor-pointer truncate;
-}
-
-.message:hover + .message-tooltip {
-  visibility: visible;
-}
-</style>

@@ -38,6 +38,7 @@ export async function getTaskLogs(
   })
   return data
 }
-export async function deleteTaskLog(id: number): Promise<void> {
-  await http.delete(`/task_log/${id}`)
+export async function deleteTaskLogs(ids: number[]): Promise<void> {
+  const idsStr = ids.join(',')
+  await http.delete(`/task_log/${idsStr}`)
 }

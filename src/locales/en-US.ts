@@ -131,5 +131,8 @@ export default {
   submit: 'Submit',
   restore_log: 'Restore Log',
   task_log_id: 'Task Log ID',
-  restore_type: 'Restore Type'
+  restore_type: 'Restore Type',
+  rows_selected: '{num} selected',
+  delete_selected: 'Delete Selected',
+  columns: 'Columns'
 }

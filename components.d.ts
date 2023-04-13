@@ -20,6 +20,7 @@ declare module '@vue/runtime-core' {
     CoMoon: typeof import('@kalimahapps/vue-icons/co')['CoMoon']
     ConfirmModal: typeof import('./src/components/ConfirmModal.vue')['default']
     DataSourceTypeIcon: typeof import('./src/components/datasource/DataSourceTypeIcon.vue')['default']
+    DataTable: typeof import('./src/components/DataTable.vue')['default']
     DeMysqlOriginal: typeof import('@kalimahapps/vue-icons/de')['DeMysqlOriginal']
     DeMysqlOriginalWordmark: typeof import('@kalimahapps/vue-icons/de')['DeMysqlOriginalWordmark']
     DePostgresqlOriginal: typeof import('@kalimahapps/vue-icons/de')['DePostgresqlOriginal']
@@ -47,6 +48,8 @@ declare module '@vue/runtime-core' {
     StorageS3Options: typeof import('./src/components/storage/StorageS3Options.vue')['default']
     StorageSSHOptions: typeof import('./src/components/storage/StorageSSHOptions.vue')['default']
     StorageTypeIcon: typeof import('./src/components/storage/StorageTypeIcon.vue')['default']
+    Table: typeof import('./src/components/Table.vue')['default']
+    TaskLogActions: typeof import('./src/components/action/TaskLogActions.vue')['default']
     TaskStatus: typeof import('./src/components/TaskStatus.vue')['default']
     TiOutlineCloudStorage: typeof import('@kalimahapps/vue-icons/ti')['TiOutlineCloudStorage']
   }
