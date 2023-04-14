@@ -220,6 +220,8 @@ import * as yup from 'yup'
 import { useField, useForm } from 'vee-validate'
 import type { Sort, TableField } from '@/types/common'
 import TaskActions from '@/components/action/TaskActions.vue'
+import { useTableState } from '@/stores/table'
+import { useRoute } from 'vue-router'
 const dialog = createConfirmDialog(ConfirmModal)
 
 const { t, d } = useI18n()
@@ -313,7 +315,7 @@ const query = reactive({
   storage_id: undefined,
   compress: undefined,
   enabled: undefined,
-  sorts: [] as Sort[],
+  sorts: useTableState().sorts[useRoute().path],
   limit: 10,
   offset: 0
 })

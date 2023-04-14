@@ -20,15 +20,15 @@
     <div class="btn-group grid grid-cols-2">
       <button
         class="btn-outline btn"
-        @click="pager.offset -= pager.limit"
-        :disabled="pager.offset == 0"
+        @click="query.offset -= query.limit"
+        :disabled="query.offset == 0"
       >
         {{ $t('previous') }}
       </button>
       <button
         class="btn-outline btn"
-        @click="pager.offset += pager.limit"
-        :disabled="pager.offset + pager.limit >= data.total"
+        @click="query.offset += query.limit"
+        :disabled="query.offset + query.limit >= data.total"
       >
         {{ $t('next') }}
       </button>
@@ -48,12 +48,15 @@ import ConfirmModal from '@/components/ConfirmModal.vue'
 import type { TableField } from '@/types/common'
 import TaskStatus from '@/components/TaskStatus.vue'
 import type { Sort } from '@/types/common'
+import { useTableState } from '@/stores/table'
+import { useRoute } from 'vue-router'
 
 const { t, d } = useI18n()
-const pager = reactive({ limit: 10, offset: 0 })
 const query = reactive({
   status: undefined,
-  sorts: [] as Sort[]
+  sorts: useTableState().sorts[useRoute().path],
+  limit: 10,
+  offset: 0
 })
 const data = reactive<RestoresResponse>({
   total: 0,
@@ -129,13 +132,13 @@ const fields: TableField[] = [
   }
 ]
 const initData = async () => {
-  const ret = await restore.getRestoreLogs(pager.limit, pager.offset, query.status)
+  const ret = await restore.getRestoreLogs(query.limit, query.offset, query.status, query.sorts)
   data.total = ret.total
   data.data = ret.data
 }
 const dialog = createConfirmDialog(ConfirmModal)
 await initData()
-watch(pager, async () => {
+watch(query, async () => {
   await initData()
 })
 const onReset = () => {

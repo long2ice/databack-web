@@ -139,8 +139,10 @@ import { useForm } from 'vee-validate'
 import type { Sort, TableField } from '@/types/common'
 import TaskStatus from '@/components/TaskStatus.vue'
 import TaskLogActions from '@/components/action/TaskLogActions.vue'
+import { useTableState } from '@/stores/table'
+import { useRoute } from 'vue-router'
 const { t, d } = useI18n()
-const query = reactive({ limit: 10, offset: 0, sorts: [] as Sort[] })
+const query = reactive({ limit: 10, offset: 0, sorts: useTableState().sorts[useRoute().path] })
 const search = reactive({
   data_source_id: undefined,
   storage_id: undefined,

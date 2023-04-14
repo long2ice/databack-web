@@ -60,11 +60,13 @@ import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import type { TableField } from '@/types/common'
 import StorageActions from '@/components/action/StorageActions.vue'
 import type { Sort } from '@/types/common'
+import { useTableState } from '@/stores/table'
+import { useRoute } from 'vue-router'
 
 const dialog = createConfirmDialog(ConfirmModal)
 
 const { t, d } = useI18n()
-const query = reactive({ limit: 10, offset: 0, sorts: [] as Sort[] })
+const query = reactive({ limit: 10, offset: 0, sorts: useTableState().sorts[useRoute().path] })
 const name = ref('')
 const type = ref<StorageType | undefined>(undefined)
 const data = reactive<StoragesResponse>({
