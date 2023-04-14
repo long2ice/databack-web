@@ -1,12 +1,16 @@
 import http from '@/axios'
 import type { TasksResponse } from '@/types/responses'
+import type { Sort } from '@/types/common'
 
 export async function getTasks(
   limit: number,
   offset: number,
+  compress?: boolean,
+  enabled?: boolean,
   name?: string,
   data_source_id?: number,
-  storage_id?: number
+  storage_id?: number,
+  sorts?: Sort[]
 ): Promise<TasksResponse> {
   const params: Record<string, any> = {
     limit,
@@ -20,6 +24,15 @@ export async function getTasks(
   }
   if (storage_id) {
     params.storage_id = storage_id
+  }
+  if (compress !== undefined) {
+    params.compress = compress
+  }
+  if (enabled !== undefined) {
+    params.enabled = enabled
+  }
+  if (sorts) {
+    params.sorts = JSON.stringify(sorts)
   }
   const { data } = await http.get('/task', {
     params: params

@@ -133,5 +133,7 @@ export default {
   restore_type: '恢复类型',
   rows_selected: '已选择 {num} 行',
   delete_selected: '删除选中',
-  columns: '展示列'
+  columns: '展示列',
+  total_rows: '共 {total} 条记录',
+  root_path: '根目录'
 }

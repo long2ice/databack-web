@@ -135,5 +135,8 @@ export default {
   rows_selected: '{num} selected',
   delete_selected: 'Delete Selected',
   columns: 'Columns',
-  mysql: 'MySQL'
+  mysql: 'MySQL',
+  postgres: 'PostgreSQL',
+  total_rows: '{total} rows in total',
+  root_path: 'Root Path'
 }

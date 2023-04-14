@@ -55,11 +55,11 @@
       </li>
     </ul>
     <div
-      class="mt-auto flex w-full cursor-pointer justify-center bg-base-300 py-4"
+      class="mt-auto flex w-full cursor-pointer justify-center bg-base-300 p-4"
       @click="sidebar.close = !sidebar.close"
     >
       <GlCollapseLeft
-        class="text-2xl"
+        class="text-xl"
         :class="{
           'rotate-180 transform': sidebar.close
         }"
@@ -69,8 +69,8 @@
 </template>
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { useSidebarClose } from '@/stores/sidebar'
+import { useSidebarState } from '@/stores/sidebar'
 
 const currentRoute = useRoute()
-const sidebar = useSidebarClose()
+const sidebar = useSidebarState()
 </script>

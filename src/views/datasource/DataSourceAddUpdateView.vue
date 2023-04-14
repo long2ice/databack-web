@@ -26,6 +26,28 @@
     <button
       class="tab-bordered tab"
       :class="{
+        'tab-active': type == 'redis'
+      }"
+      @click="type = 'redis'"
+      v-if="(isUpdate && type == 'redis') || !isUpdate"
+    >
+      <DeRedisOriginal class="mr-2 text-lg" />
+      Redis
+    </button>
+    <button
+      class="tab-bordered tab"
+      :class="{
+        'tab-active': type == 'mongo'
+      }"
+      @click="type = 'mongo'"
+      v-if="(isUpdate && type == 'mongo') || !isUpdate"
+    >
+      <VsFolderTypeMongodb class="mr-2 text-lg" />
+      MongoDB
+    </button>
+    <button
+      class="tab-bordered tab"
+      :class="{
         'tab-active': type == 'local'
       }"
       @click="type = 'local'"
@@ -52,6 +74,8 @@
   </div>
   <div class="text-sm text-gray-500" v-if="type === 'local'">{{ t('local_datasource_desc') }}</div>
   <div class="text-sm text-gray-500" v-if="type === 'ssh'">{{ t('ssh_datasource_desc') }}</div>
+  <div class="text-sm text-gray-500" v-if="type === 'redis'">{{ t('redis_datasource_desc') }}</div>
+  <div class="text-sm text-gray-500" v-if="type === 'mongo'">{{ t('mongo_datasource_desc') }}</div>
   <div class="flex flex-col">
     <div class="form-control w-full">
       <label class="label">
@@ -80,6 +104,8 @@
           ref="optionsRef"
           :defaultOptions="options"
         />
+        <RedisOptions v-else-if="type == 'redis'" ref="optionsRef" :defaultOptions="options" />
+        <MongoOptions v-else-if="type == 'mongo'" ref="optionsRef" :defaultOptions="options" />
       </div>
     </div>
     <div class="btn-group mt-4">

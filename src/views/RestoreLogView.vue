@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row gap-2">
-    <select class="select-bordered select" v-model="search.status" @keyup.enter="initData">
+    <select class="select-bordered select" v-model="query.status" @keyup.enter="initData">
       <option selected :value="undefined">{{ t('status') }}</option>
       <option value="success">SUCCESS</option>
       <option value="failed">FAILED</option>
@@ -9,7 +9,13 @@
     <button class="btn-primary btn" @click="initData">{{ t('search') }}</button>
     <button class="btn-warning btn" @click="onReset">{{ t('reset') }}</button>
   </div>
-  <DataTable :data="data.data" :total="data.total" :fields="fields" :onDelete="onDelete" />
+  <DataTable
+    :data="data.data"
+    :total="data.total"
+    :fields="fields"
+    :onDelete="onDelete"
+    :onSort="onSort"
+  />
   <div class="flex items-center justify-center">
     <div class="btn-group grid grid-cols-2">
       <button
@@ -41,16 +47,21 @@ import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import type { TableField } from '@/types/common'
 import TaskStatus from '@/components/TaskStatus.vue'
+import type { Sort } from '@/types/common'
 
 const { t, d } = useI18n()
 const pager = reactive({ limit: 10, offset: 0 })
-const search = reactive({
-  status: undefined
+const query = reactive({
+  status: undefined,
+  sorts: [] as Sort[]
 })
 const data = reactive<RestoresResponse>({
   total: 0,
   data: []
 })
+const onSort = (fields: Sort[]) => {
+  query.sorts = fields
+}
 const fields: TableField[] = [
   {
     field: 'id',
@@ -118,7 +129,7 @@ const fields: TableField[] = [
   }
 ]
 const initData = async () => {
-  const ret = await restore.getRestoreLogs(pager.limit, pager.offset, search.status)
+  const ret = await restore.getRestoreLogs(pager.limit, pager.offset, query.status)
   data.total = ret.total
   data.data = ret.data
 }
@@ -128,7 +139,7 @@ watch(pager, async () => {
   await initData()
 })
 const onReset = () => {
-  search.status = undefined
+  query.status = undefined
 }
 
 const onDelete = async (ids: number[]): Promise<boolean> => {

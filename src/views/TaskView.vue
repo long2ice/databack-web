@@ -4,16 +4,26 @@
       type="text"
       :placeholder="t('search_placeholder')"
       class="input-bordered input"
-      v-model="search.name"
+      v-model="query.name"
       @keyup.enter="initData"
     />
-    <select class="select-bordered select" v-model="search.data_source_id">
+    <select class="select-bordered select" v-model="query.data_source_id">
       <option selected :value="undefined">{{ t('select_datasource') }}</option>
       <option v-for="d in data_sources" :value="d.id" :key="d.id">{{ d.name }}</option>
     </select>
-    <select class="select-bordered select" v-model="search.storage_id">
+    <select class="select-bordered select" v-model="query.storage_id">
       <option selected :value="undefined">{{ t('select_storage') }}</option>
       <option v-for="s in storages" :value="s.id" :key="s.id">{{ s.name }}</option>
+    </select>
+    <select class="select-bordered select" v-model="query.enabled" @keyup.enter="initData">
+      <option selected :value="undefined">{{ t('enabled') }}</option>
+      <option value="true">YES</option>
+      <option value="false">NO</option>
+    </select>
+    <select class="select-bordered select" v-model="query.compress" @keyup.enter="initData">
+      <option selected :value="undefined">{{ t('compress') }}</option>
+      <option value="true">YES</option>
+      <option value="false">NO</option>
     </select>
     <button class="btn-primary btn" @click="initData">{{ t('search') }}</button>
     <button class="btn-warning btn" @click="onReset">{{ t('reset') }}</button>
@@ -173,20 +183,21 @@
     :fields="fields"
     :actions="actions"
     :onDelete="onDelete"
+    :onSort="onSort"
   />
   <div class="flex items-center justify-center">
     <div class="btn-group grid grid-cols-2">
       <button
         class="btn-outline btn"
-        @click="pager.offset -= pager.limit"
-        :disabled="pager.offset == 0"
+        @click="query.offset -= query.limit"
+        :disabled="query.offset == 0"
       >
         {{ $t('previous') }}
       </button>
       <button
         class="btn-outline btn"
-        @click="pager.offset += pager.limit"
-        :disabled="pager.offset + pager.limit >= data.total"
+        @click="query.offset += query.limit"
+        :disabled="query.offset + query.limit >= data.total"
       >
         {{ $t('next') }}
       </button>
@@ -207,7 +218,7 @@ import { getDataSourcesBasic } from '@/apis/datasource'
 import { getStoragesBasic } from '@/apis/storage'
 import * as yup from 'yup'
 import { useField, useForm } from 'vee-validate'
-import type { TableField } from '@/types/common'
+import type { Sort, TableField } from '@/types/common'
 import TaskActions from '@/components/action/TaskActions.vue'
 const dialog = createConfirmDialog(ConfirmModal)
 
@@ -222,7 +233,8 @@ const actions = (props: { data: TaskResponse }) => {
 const fields: TableField[] = [
   {
     field: 'id',
-    label: 'ID'
+    label: 'ID',
+    sortable: true
   },
   {
     field: 'name',
@@ -252,7 +264,10 @@ const fields: TableField[] = [
   },
   {
     field: 'sub_path',
-    label: t('sub_path')
+    label: t('sub_path'),
+    formatter: (row, column, cellValue) => {
+      return () => (cellValue ? cellValue : t('root_path'))
+    }
   },
   {
     field: 'keep_num',
@@ -292,11 +307,15 @@ const fields: TableField[] = [
     }
   }
 ]
-const pager = reactive({ limit: 10, offset: 0 })
-const search = reactive({
+const query = reactive({
   name: '',
   data_source_id: undefined,
-  storage_id: undefined
+  storage_id: undefined,
+  compress: undefined,
+  enabled: undefined,
+  sorts: [] as Sort[],
+  limit: 10,
+  offset: 0
 })
 const data = reactive<TasksResponse>({
   total: 0,
@@ -375,23 +394,29 @@ const onSubmit = handleSubmit(async (values) => {
 })
 const initData = async () => {
   const ret = await task.getTasks(
-    pager.limit,
-    pager.offset,
-    search.name,
-    search.data_source_id,
-    search.storage_id
+    query.limit,
+    query.offset,
+    query.compress,
+    query.enabled,
+    query.name,
+    query.data_source_id,
+    query.storage_id,
+    query.sorts
   )
   data.total = ret.total
   data.data = ret.data
 }
+const onSort = (fields: Sort[]) => {
+  query.sorts = fields
+}
 await initData()
-watch(pager, async () => {
+watch(query, async () => {
   await initData()
 })
 const onReset = () => {
-  search.name = ''
-  search.data_source_id = undefined
-  search.storage_id = undefined
+  query.name = ''
+  query.data_source_id = undefined
+  query.storage_id = undefined
 }
 const onDelete = async (ids: number[]): Promise<boolean> => {
   const { isCanceled } = await dialog.reveal({

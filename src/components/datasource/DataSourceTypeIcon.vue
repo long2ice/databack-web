@@ -3,6 +3,8 @@
   <DePostgresqlOriginalWordmark v-else-if="type === 'postgres'" class="text-5xl" />
   <CaVolumeBlockStorage v-else-if="type === 'local'" class="text-5xl" />
   <CaVirtualMachine v-else-if="type === 'ssh'" class="text-5xl" />
+  <VsFolderTypeMongodb v-if="type === 'mongo'" class="text-5xl" />
+  <DeRedisOriginal v-if="type === 'redis'" class="text-5xl" />
 </template>
 
 <script setup lang="ts">

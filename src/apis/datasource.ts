@@ -1,11 +1,13 @@
 import http from '@/axios'
+import type { Sort } from '@/types/common'
 import type { DataSourceResponse, DataSourcesResponse, DataSourceType } from '@/types/responses'
 
 export async function getDataSources(
   limit: number,
   offset: number,
   name?: string,
-  type?: DataSourceType
+  type?: DataSourceType,
+  sorts?: Sort[]
 ): Promise<DataSourcesResponse> {
   const params: Record<string, any> = {
     limit,
@@ -16,6 +18,9 @@ export async function getDataSources(
   }
   if (type) {
     params.type = type
+  }
+  if (sorts) {
+    params.sorts = JSON.stringify(sorts)
   }
   const { data } = await http.get('/datasource', {
     params: params

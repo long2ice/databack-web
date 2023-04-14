@@ -27,20 +27,21 @@
     :fields="fields"
     :actions="actions"
     :onDelete="onDelete"
+    :onSort="onSort"
   />
   <div class="flex items-center justify-center">
     <div class="btn-group grid grid-cols-2">
       <button
         class="btn-outline btn"
-        @click="pager.offset -= pager.limit"
-        :disabled="pager.offset == 0"
+        @click="query.offset -= query.limit"
+        :disabled="query.offset == 0"
       >
         {{ $t('previous') }}
       </button>
       <button
         class="btn-outline btn"
-        @click="pager.offset += pager.limit"
-        :disabled="pager.offset + pager.limit >= data.total"
+        @click="query.offset += query.limit"
+        :disabled="query.offset + query.limit >= data.total"
       >
         {{ $t('next') }}
       </button>
@@ -58,23 +59,25 @@ import { h, reactive, ref, watch } from 'vue'
 import type { DataSourcesResponse, DataSourceType } from '@/types/responses'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
-import type { TableField } from '@/types/common'
+import type { Sort, TableField } from '@/types/common'
 import type { StorageResponse } from '@/types/responses'
 import StorageActions from '@/components/action/StorageActions.vue'
-import { boolean } from 'yup'
 
 const dialog = createConfirmDialog(ConfirmModal)
 
 const { t, d } = useI18n()
-const pager = reactive({ limit: 10, offset: 0 })
+const query = reactive({ limit: 10, offset: 0, sorts: [] as Sort[] })
 const name = ref('')
 const type = ref<DataSourceType | undefined>(undefined)
 const data = reactive<DataSourcesResponse>({
   total: 0,
   data: []
 })
+const onSort = (fields: Sort[]) => {
+  query.sorts = fields
+}
 const fields: TableField[] = [
-  { field: 'id', label: 'ID' },
+  { field: 'id', label: 'ID', sortable: true },
   { field: 'name', label: t('name') },
   {
     field: 'type',
@@ -107,12 +110,18 @@ const actions = (props: { data: StorageResponse }) => {
   })
 }
 const initData = async () => {
-  const ret = await datasource.getDataSources(pager.limit, pager.offset, name.value, type.value)
+  const ret = await datasource.getDataSources(
+    query.limit,
+    query.offset,
+    name.value,
+    type.value,
+    query.sorts
+  )
   data.total = ret.total
   data.data = ret.data
 }
 await initData()
-watch(pager, async () => {
+watch(query, async () => {
   await initData()
 })
 const onReset = () => {

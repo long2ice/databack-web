@@ -1,11 +1,13 @@
 import http from '@/axios'
 import type { StorageResponse, StoragesResponse, StorageType } from '@/types/responses'
+import type { Sort } from '@/types/common'
 
 export async function getStorages(
   limit: number,
   offset: number,
   name?: string,
-  type?: StorageType
+  type?: StorageType,
+  sorts?: Sort[]
 ): Promise<StoragesResponse> {
   const params: Record<string, any> = {
     limit,
@@ -16,6 +18,9 @@ export async function getStorages(
   }
   if (type) {
     params.type = type
+  }
+  if (sorts) {
+    params.sorts = JSON.stringify(sorts)
   }
   const { data } = await http.get('/storage', {
     params: params

@@ -14,6 +14,11 @@
       <option value="failed">FAILED</option>
       <option value="running">RUNNING</option>
     </select>
+    <select class="select-bordered select" v-model="search.is_deleted" @keyup.enter="initData">
+      <option selected :value="undefined">{{ t('is_valid') }}</option>
+      <option value="false">YES</option>
+      <option value="true">NO</option>
+    </select>
     <button class="btn-primary btn" @click="initData">{{ t('search') }}</button>
     <button class="btn-warning btn" @click="onReset">{{ t('reset') }}</button>
   </div>
@@ -23,6 +28,7 @@
     :fields="fields"
     :actions="actions"
     :onDelete="onDelete"
+    :onSort="onSort"
   />
   <input type="checkbox" class="modal-toggle" v-model="restoreState.isOpen" />
   <div class="modal">
@@ -100,15 +106,15 @@
     <div class="btn-group grid grid-cols-2">
       <button
         class="btn-outline btn"
-        @click="pager.offset -= pager.limit"
-        :disabled="pager.offset == 0"
+        @click="query.offset -= query.limit"
+        :disabled="query.offset == 0"
       >
         {{ $t('previous') }}
       </button>
       <button
         class="btn-outline btn"
-        @click="pager.offset += pager.limit"
-        :disabled="pager.offset + pager.limit >= data.total"
+        @click="query.offset += query.limit"
+        :disabled="query.offset + query.limit >= data.total"
       >
         {{ $t('next') }}
       </button>
@@ -130,15 +136,16 @@ import { formatFileSize } from '@/utils/file'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { useForm } from 'vee-validate'
-import type { TableField } from '@/types/common'
+import type { Sort, TableField } from '@/types/common'
 import TaskStatus from '@/components/TaskStatus.vue'
 import TaskLogActions from '@/components/action/TaskLogActions.vue'
 const { t, d } = useI18n()
-const pager = reactive({ limit: 10, offset: 0 })
+const query = reactive({ limit: 10, offset: 0, sorts: [] as Sort[] })
 const search = reactive({
   data_source_id: undefined,
   storage_id: undefined,
-  status: undefined
+  status: undefined,
+  is_deleted: undefined
 })
 const actions = (props: { data: TaskLogResponse }) => {
   return h(TaskLogActions, {
@@ -166,6 +173,9 @@ const onDelete = async (ids: number[]): Promise<boolean> => {
   toast.success(t('success.delete_task_log'))
   await initData()
   return true
+}
+const onSort = (fields: Sort[]) => {
+  query.sorts = fields
 }
 const fields: TableField[] = [
   {
@@ -242,12 +252,16 @@ const data_sources = await getDataSourcesBasic()
 const storages = await getStoragesBasic()
 const initData = async () => {
   const ret = await task_log.getTaskLogs(
-    pager.limit,
-    pager.offset,
+    query.limit,
+    query.offset,
+    search.is_deleted,
     search.data_source_id,
     search.storage_id,
     undefined,
-    search.status
+    search.status,
+    undefined,
+    undefined,
+    query.sorts
   )
   data.total = ret.total
   data.data = ret.data
@@ -265,7 +279,7 @@ const restoreState = reactive<{
   id: 0
 })
 await initData()
-watch(pager, async () => {
+watch(query, async () => {
   await initData()
 })
 const onReset = () => {

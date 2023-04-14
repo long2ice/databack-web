@@ -26,20 +26,21 @@
     :fields="fields"
     :actions="actions"
     :onDelete="onDelete"
+    :onSort="onSort"
   />
   <div class="flex items-center justify-center">
     <div class="btn-group grid grid-cols-2">
       <button
         class="btn-outline btn"
-        @click="pager.offset -= pager.limit"
-        :disabled="pager.offset == 0"
+        @click="query.offset -= query.limit"
+        :disabled="query.offset == 0"
       >
         {{ $t('previous') }}
       </button>
       <button
         class="btn-outline btn"
-        @click="pager.offset += pager.limit"
-        :disabled="pager.offset + pager.limit >= data.total"
+        @click="query.offset += query.limit"
+        :disabled="query.offset + query.limit >= data.total"
       >
         {{ $t('next') }}
       </button>
@@ -58,23 +59,32 @@ import ConfirmModal from '@/components/ConfirmModal.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import type { TableField } from '@/types/common'
 import StorageActions from '@/components/action/StorageActions.vue'
-import { boolean } from 'yup'
+import type { Sort } from '@/types/common'
 
 const dialog = createConfirmDialog(ConfirmModal)
 
 const { t, d } = useI18n()
-const pager = reactive({ limit: 10, offset: 0 })
+const query = reactive({ limit: 10, offset: 0, sorts: [] as Sort[] })
 const name = ref('')
 const type = ref<StorageType | undefined>(undefined)
 const data = reactive<StoragesResponse>({
   total: 0,
   data: []
 })
+const onSort = (fields: Sort[]) => {
+  query.sorts = fields
+}
 const fields: TableField[] = [
-  { field: 'id', label: 'ID' },
+  { field: 'id', label: 'ID', sortable: true },
   { field: 'name', label: t('name') },
   { field: 'type', label: t('type') },
-  { field: 'path', label: t('path') },
+  {
+    field: 'path',
+    label: t('path'),
+    formatter: (row, column, cellValue) => {
+      return () => (cellValue ? cellValue : t('root_path'))
+    }
+  },
   {
     field: 'created_at',
     label: t('created_at'),
@@ -96,12 +106,18 @@ const actions = (props: { data: StorageResponse }) => {
   })
 }
 const initData = async () => {
-  const ret = await storage.getStorages(pager.limit, pager.offset, name.value, type.value)
+  const ret = await storage.getStorages(
+    query.limit,
+    query.offset,
+    name.value,
+    type.value,
+    query.sorts
+  )
   data.total = ret.total
   data.data = ret.data
 }
 await initData()
-watch(pager, async () => {
+watch(query, async () => {
   await initData()
 })
 const onReset = () => {

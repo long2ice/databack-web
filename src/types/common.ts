@@ -15,3 +15,8 @@ export interface TableField {
   ) => Component
   defaultHidden?: boolean
 }
+export type Order = 'asc' | 'desc'
+export interface Sort {
+  field: string
+  order: Order
+}
