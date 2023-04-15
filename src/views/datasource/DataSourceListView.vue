@@ -56,14 +56,13 @@ import { toast } from 'vue3-toastify'
 import { useI18n } from 'vue-i18n'
 import { parseDate } from '@/utils/date'
 import { h, reactive, ref, watch } from 'vue'
-import type { DataSourcesResponse, DataSourceType } from '@/types/responses'
+import type { DataSourceResponse, DataSourcesResponse, DataSourceType } from '@/types/responses'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import type { Sort, TableField } from '@/types/common'
-import type { StorageResponse } from '@/types/responses'
-import StorageActions from '@/components/action/StorageActions.vue'
 import { useTableState } from '@/stores/table'
 import { useRoute } from 'vue-router'
+import DataSourceActions from '@/components/action/DataSourceActions.vue'
 
 const dialog = createConfirmDialog(ConfirmModal)
 
@@ -106,8 +105,8 @@ const fields: TableField[] = [
     }
   }
 ]
-const actions = (props: { data: StorageResponse }) => {
-  return h(StorageActions, {
+const actions = (props: { data: DataSourceResponse }) => {
+  return h(DataSourceActions, {
     data: props.data
   })
 }

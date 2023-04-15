@@ -48,7 +48,7 @@
             :class="{
               'tab-active': restoreState.restore_type == 'local'
             }"
-            >{{ $t('local') }}</a
+            ><CaVolumeBlockStorage class="mr-1" />{{ $t('local') }}</a
           >
           <a
             class="tab-bordered tab"
@@ -56,7 +56,7 @@
             :class="{
               'tab-active': restoreState.restore_type == 'ssh'
             }"
-            >SSH</a
+            ><CaVirtualMachine class="mr-1" />SSH</a
           >
           <a
             class="tab-bordered tab"
@@ -65,7 +65,7 @@
               'tab-active': restoreState.restore_type == 'mysql'
             }"
             v-if="restoreState.data_source_type == 'mysql'"
-            >{{ $t('mysql') }}</a
+            ><DeMysqlOriginalWordmark class="mr-1" />{{ $t('mysql') }}</a
           >
           <a
             class="tab-bordered tab"
@@ -74,7 +74,25 @@
               'tab-active': restoreState.restore_type == 'postgres'
             }"
             v-if="restoreState.data_source_type == 'postgres'"
-            >{{ $t('postgres') }}</a
+            ><DePostgresqlOriginalWordmark class="mr-1" />{{ $t('postgres') }}</a
+          >
+          <a
+            class="tab-bordered tab"
+            @click="restoreState.restore_type = 'redis'"
+            :class="{
+              'tab-active': restoreState.restore_type == 'redis'
+            }"
+            v-if="restoreState.data_source_type == 'redis'"
+            ><DeRedisOriginal class="mr-1" />{{ $t('redis') }}</a
+          >
+          <a
+            class="tab-bordered tab"
+            @click="restoreState.restore_type = 'mongo'"
+            :class="{
+              'tab-active': restoreState.restore_type == 'mongo'
+            }"
+            v-if="restoreState.data_source_type == 'mongo'"
+            ><VsFolderTypeMongodb class="mr-1" />{{ $t('mongo') }}</a
           >
         </div>
         <RestoreMySQLOptions
@@ -89,6 +107,8 @@
         />
         <RestoreLocalOptions ref="optionsRef" v-if="restoreState.restore_type == 'local'" />
         <RestoreSSHOptions ref="optionsRef" v-if="restoreState.restore_type == 'ssh'" />
+        <RestoreRedisOptions ref="optionsRef" v-if="restoreState.restore_type == 'redis'" />
+        <RestoreMongoOptions ref="optionsRef" v-if="restoreState.restore_type == 'mongo'" />
       </div>
       <div class="modal-action">
         <label

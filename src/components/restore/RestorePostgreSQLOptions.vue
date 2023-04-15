@@ -60,8 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
-import { str2dict } from '@/utils/options'
+import { reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useField } from 'vee-validate'
 import * as yup from 'yup'
@@ -89,16 +88,14 @@ const { value: username, errorMessage: errorMessageUsername } = useField(
 host.value = 'localhost'
 port.value = '5432'
 username.value = 'postgres'
-const otherOptionsDict = computed(() => {
-  return str2dict(options.otherOptions)
-})
+
 const getOptions = () => {
   return {
     '--host': host.value,
     '--port': port.value,
     '--username': username.value,
     password: options.password,
-    ...otherOptionsDict.value
+    other_options: options.otherOptions
   }
 }
 defineExpose({

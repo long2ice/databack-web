@@ -43,11 +43,8 @@
     <label class="label">
       <span class="label-text-alt">
         {{ $t('redis_other_options_tips') }}
-        <a
-          class="link-primary link"
-          href="https://dev.mysql.com/doc/refman/8.0/en/mysqlpump.html"
-          target="_blank"
-          >https://dev.mysql.com/doc/refman/8.0/en/mysqlpump.html</a
+        <a class="link-primary link" href="https://github.com/yannh/redis-dump-go" target="_blank"
+          >https://github.com/yannh/redis-dump-go</a
         >
       </span>
     </label>
@@ -55,8 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
-import { dict2str, str2dict } from '@/utils/options'
+import { reactive } from 'vue'
 import { useField } from 'vee-validate'
 import * as yup from 'yup'
 import { useI18n } from 'vue-i18n'
@@ -70,7 +66,7 @@ const options: {
   user: string
 } = reactive({
   password: defaultOptions['--password'] || '',
-  otherOptions: dict2str(defaultOptions, ['--host', '--port', '--user', '--password']),
+  otherOptions: defaultOptions['other_options'] || '',
   user: defaultOptions['--user'] || ''
 })
 const { t } = useI18n()
@@ -85,16 +81,14 @@ const { value: port, errorMessage: errorMessagePort } = useField(
 
 host.value = defaultOptions['--host'] || 'localhost'
 port.value = defaultOptions['--port'] || '6379'
-const otherOptionsDict = computed(() => {
-  return str2dict(options.otherOptions)
-})
+
 const getOptions = () => {
   return {
-    '--host': host.value,
-    '--port': port.value,
-    '--user': options.user,
-    '--password': options.password,
-    ...otherOptionsDict.value
+    '-host': host.value,
+    '-port': port.value,
+    '-user': options.user,
+    password: options.password,
+    other_options: options.otherOptions
   }
 }
 defineExpose({

@@ -23,7 +23,7 @@ export default {
   other_options: '其他选项',
   mysql_other_options_placeholder:
     '请填写其他选项，例如：--databases database1,database2，多个选项用空格分隔',
-  mysql_other_options_tips: '所有选项请参考mysqlpump的帮助文档，',
+  mysql_other_options_tips: '所有选项请参考 mysqlpump 的帮助文档，',
   postgresql_other_options_placeholder: '请填写其他选项，例如：-a -b，多个选项用空格分隔',
   postgresql_other_options_tips: '所有选项请参考 {backup_program} 的帮助文档，',
   backup_program: '备份程序',
@@ -125,7 +125,7 @@ export default {
   local_datasource_desc: '备份本地目录',
   ssh_datasource_desc: '使用 SCP 备份远程目录',
   restore: '备份恢复',
-  mysql_restore_options_tips: '所有选项请参考mysql的帮助文档，',
+  mysql_restore_options_tips: '所有选项请参考 mysql 的帮助文档，',
   postgresql_restore_options_tips: '所有选项请参考 psql 的帮助文档，',
   submit: '提交',
   restore_log: '恢复记录',
@@ -135,5 +135,12 @@ export default {
   delete_selected: '删除选中',
   columns: '展示列',
   total_rows: '共 {total} 条记录',
-  root_path: '根目录'
+  root_path: '根目录',
+  redis_other_options_placeholder: '其他选项，多个选项之间用空格分隔',
+  redis_other_options_tips: '所有选项请参考 redis-dump-go 的帮助文档，',
+  manual: '手动',
+  redis_restore_options_tips: '所有选项请参考 redis-cli 的帮助文档，',
+  mongo_other_options_placeholder: '其他选项，多个选项之间用空格分隔',
+  mongo_other_options_tips: '所有选项请参考 mongodump 的帮助文档，',
+  mongo_restore_options_tips: '所有选项请参考 mongorestore 的帮助文档，'
 }

@@ -58,8 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
-import { dict2str, str2dict } from '@/utils/options'
+import { reactive } from 'vue'
 import { useField } from 'vee-validate'
 import * as yup from 'yup'
 import { useI18n } from 'vue-i18n'
@@ -72,7 +71,7 @@ const options: {
   otherOptions: string
 } = reactive({
   password: defaultOptions['--password'] || '',
-  otherOptions: dict2str(defaultOptions, ['--host', '--port', '--user', '--password'])
+  otherOptions: defaultOptions['other_options'] || ''
 })
 const { t } = useI18n()
 const { value: host, errorMessage: errorMessageHost } = useField(
@@ -90,16 +89,14 @@ const { value: username, errorMessage: errorMessageUsername } = useField(
 host.value = defaultOptions['--host'] || 'localhost'
 port.value = defaultOptions['--port'] || '3306'
 username.value = defaultOptions['--user'] || 'root'
-const otherOptionsDict = computed(() => {
-  return str2dict(options.otherOptions)
-})
+
 const getOptions = () => {
   return {
     '--host': host.value,
     '--port': port.value,
     '--user': username.value,
     '--password': options.password,
-    ...otherOptionsDict.value
+    other_options: options.otherOptions
   }
 }
 defineExpose({

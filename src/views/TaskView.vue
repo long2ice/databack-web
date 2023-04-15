@@ -138,13 +138,13 @@
             </div>
             <div class="form-control w-full">
               <label class="label">
-                <span class="label-text">{{ t('cron') }}<span class="text-error">*</span></span>
+                <span class="label-text">{{ t('cron') }}</span>
               </label>
               <input
                 type="text"
                 placeholder="0 * * * *"
                 class="input-bordered input"
-                v-model="cron"
+                v-model="form.cron"
               />
               <label class="label">
                 <span class="label-text-alt"
@@ -157,9 +157,6 @@
                     https://github.com/josiahcarlson/parse-crontab
                   </a></span
                 >
-              </label>
-              <label class="label">
-                <span class="label-text-alt text-error">{{ errorMessageCron }}</span>
               </label>
             </div>
           </div>
@@ -289,7 +286,7 @@ const fields: TableField[] = [
     field: 'cron',
     label: t('cron'),
     formatter: (row, column, cellValue) => {
-      return () => h('span', { class: 'badge' }, cellValue)
+      return () => (cellValue ? h('span', { class: 'badge' }, cellValue) : t('manual'))
     }
   },
   {
@@ -334,7 +331,8 @@ const form = reactive({
   enabled: true,
   sub_path: '',
   title: t('create_task'),
-  id: 0
+  id: 0,
+  cron: ''
 })
 watch(isUpdate, (val) => {
   if (!val) {
@@ -348,10 +346,7 @@ const { value: name, errorMessage: errorMessageName } = useField(
   'name',
   yup.string().required(t('validate.name_required'))
 )
-const { value: cron, errorMessage: errorMessageCron } = useField(
-  'cron',
-  yup.string().required(t('validate.cron_required'))
-)
+
 const { value: keep_num, errorMessage: errorMessageKeepNum } = useField(
   'keep_num',
   yup.number().moreThan(-1, t('validate.keep_num_more_than_zero'))
@@ -373,8 +368,8 @@ const onSubmit = handleSubmit(async (values) => {
       values.keep_num,
       values.keep_days,
       form.enabled,
-      values.cron,
-      form.sub_path
+      form.sub_path,
+      form.cron
     )
     toast.success(t('success.update_task'))
   } else {
@@ -386,8 +381,8 @@ const onSubmit = handleSubmit(async (values) => {
       values.keep_num,
       values.keep_days,
       form.enabled,
-      values.cron,
-      form.sub_path
+      form.sub_path,
+      form.cron
     )
     toast.success(t('success.create_task'))
   }
@@ -441,7 +436,7 @@ const handleCreateTask = () => {
   form.enabled = true
   form.sub_path = ''
   name.value = ''
-  cron.value = ''
+  form.cron = ''
   keep_num.value = 0
   keep_days.value = 0
 }
@@ -454,7 +449,7 @@ const onEdit = async (d: TaskResponse) => {
   form.compress = d.compress
   form.enabled = d.enabled
   name.value = d.name
-  cron.value = d.cron
+  form.cron = d.cron
   form.sub_path = d.sub_path
   keep_num.value = d.keep_num
   keep_days.value = d.keep_days

@@ -138,5 +138,15 @@ export default {
   mysql: 'MySQL',
   postgres: 'PostgreSQL',
   total_rows: '{total} rows in total',
-  root_path: 'Root Path'
+  root_path: 'Root Path',
+  redis_other_options_placeholder:
+    'Please enter other options, multiple options are separated by spaces',
+  redis_other_options_tips: 'All options refer to the help document of redis-dump-go, ',
+  manual: 'Manual',
+  redis: 'Redis',
+  redis_restore_options_tips: 'All options refer to the help document of redis-cli, ',
+  mongo_other_options_placeholder:
+    'Please enter other options, multiple options are separated by spaces',
+  mongo_other_options_tips: 'All options refer to the help document of mongodump, ',
+  mongo_restore_options_tips: 'All options refer to the help document of mongorestore, '
 }
