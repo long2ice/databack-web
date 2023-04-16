@@ -49,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import * as storage from '@/apis/storage'
+import * as storage from '@/api/storage'
 import { toast } from 'vue3-toastify'
 import { useI18n } from 'vue-i18n'
 import { parseDate } from '@/utils/date'

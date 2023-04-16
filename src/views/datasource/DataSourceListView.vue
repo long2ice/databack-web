@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import * as datasource from '@/apis/datasource'
+import * as datasource from '@/api/datasource'
 import DataSourceTypeIcon from '@/components/datasource/DataSourceTypeIcon.vue'
 import { toast } from 'vue3-toastify'
 import { useI18n } from 'vue-i18n'

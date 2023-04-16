@@ -143,14 +143,14 @@
 </template>
 
 <script setup lang="ts">
-import * as task_log from '@/apis/tasklog'
-import * as restore from '@/apis/restore'
+import * as task_log from '@/api/tasklog'
+import * as restore from '@/api/restore'
 import { useI18n } from 'vue-i18n'
 import { parseDate } from '@/utils/date'
 import { h, reactive, ref, watch } from 'vue'
 import type { DataSourceType, TaskLogResponse, TaskLogsResponse } from '@/types/responses'
-import { getDataSourcesBasic } from '@/apis/datasource'
-import { getStoragesBasic } from '@/apis/storage'
+import { getDataSourcesBasic } from '@/api/datasource'
+import { getStoragesBasic } from '@/api/storage'
 import { toast } from 'vue3-toastify'
 import { formatFileSize } from '@/utils/file'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'

@@ -43,7 +43,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { getStats } from '@/apis/stat'
+import { getStats } from '@/api/stat'
 import { Line } from 'vue-chartjs'
 import {
   Chart as ChartJS,

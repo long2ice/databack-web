@@ -122,7 +122,7 @@ export default {
   mysql_datasource_desc: 'Backup MySQL data by mysqlpump',
   postgres_datasource_desc: 'Backup PostgreSQL data by pg_dump and pg_dumpall',
   mongo_datasource_desc: 'Backup MongoDB data by mongodump',
-  redis_datasource_desc: 'Backup Redis data by redis-cli',
+  redis_datasource_desc: 'Backup Redis data by redis-dump-go',
   local_datasource_desc: 'Backup local data',
   ssh_datasource_desc: 'Backup remote data by SCP',
   restore: 'Restore',

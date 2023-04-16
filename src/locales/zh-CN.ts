@@ -121,7 +121,7 @@ export default {
   mysql_datasource_desc: '使用 mysqlpump 备份 MySQL 数据',
   postgres_datasource_desc: '使用 pg_dump 和 pg_dumpall 备份 PostgreSQL 数据',
   mongo_datasource_desc: '使用 mongodump 备份 MongoDB 数据',
-  redis_datasource_desc: '使用 redis-cli 备份 Redis 数据',
+  redis_datasource_desc: '使用 redis-dump-go 备份 Redis 数据',
   local_datasource_desc: '备份本地目录',
   ssh_datasource_desc: '使用 SCP 备份远程目录',
   restore: '备份恢复',

@@ -92,7 +92,7 @@ import { useI18n } from 'vue-i18n'
 import type { StorageType } from '@/types/responses'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
-import { createStorage, getStorage, updateStorage } from '@/apis/storage'
+import { createStorage, getStorage, updateStorage } from '@/api/storage'
 const router = useRouter()
 const isUpdate = router.currentRoute.value.name === 'updateStorage'
 const type = ref<StorageType>('s3')

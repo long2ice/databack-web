@@ -203,7 +203,7 @@
 </template>
 
 <script setup lang="ts">
-import * as task from '@/apis/task'
+import * as task from '@/api/task'
 import { toast } from 'vue3-toastify'
 import { useI18n } from 'vue-i18n'
 import { parseDate } from '@/utils/date'
@@ -211,8 +211,8 @@ import { h, reactive, ref, watch } from 'vue'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import type { TaskResponse, TasksResponse } from '@/types/responses'
-import { getDataSourcesBasic } from '@/apis/datasource'
-import { getStoragesBasic } from '@/apis/storage'
+import { getDataSourcesBasic } from '@/api/datasource'
+import { getStoragesBasic } from '@/api/storage'
 import * as yup from 'yup'
 import { useField, useForm } from 'vee-validate'
 import type { Sort, TableField } from '@/types/common'

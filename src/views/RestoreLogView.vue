@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import * as restore from '@/apis/restore'
+import * as restore from '@/api/restore'
 import { useI18n } from 'vue-i18n'
 import { parseDate } from '@/utils/date'
 import { h, reactive, watch } from 'vue'
