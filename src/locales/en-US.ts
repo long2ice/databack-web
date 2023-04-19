@@ -157,7 +157,7 @@ export default {
     'Please enter other options, multiple options are separated by spaces',
   mongo_other_options_tips: 'All options refer to the help document of mongodump, ',
   mongo_restore_options_tips: 'All options refer to the help document of mongorestore, ',
-  sign_in_from: {
+  sign_in_form: {
     title: 'Sign in to your account'
   },
   init_admin_form: {

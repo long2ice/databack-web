@@ -132,7 +132,13 @@ const data = reactive<ActionLogsResponse>({
   data: []
 })
 const initData = async () => {
-  const ret = await api.getActionLogs(query.limit, query.offset, query.method, query.path)
+  const ret = await api.getActionLogs(
+    query.limit,
+    query.offset,
+    query.method,
+    query.path,
+    query.sorts
+  )
   data.total = ret.total
   data.data = ret.data
 }
