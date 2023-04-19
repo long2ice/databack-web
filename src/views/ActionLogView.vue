@@ -125,7 +125,7 @@ const fields: TableField[] = [
           class_ += ' badge-warning'
           break
         case 'DELETE':
-          class_ += ' badge-danger'
+          class_ += ' badge-error'
           break
         case 'PATCH':
           class_ += ' badge-info'
