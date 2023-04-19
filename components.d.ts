@@ -9,12 +9,17 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AdminActions: typeof import('./src/components/action/AdminActions.vue')['default']
     AkGithubFill: typeof import('@kalimahapps/vue-icons/ak')['AkGithubFill']
     AkHomeAlt1: typeof import('@kalimahapps/vue-icons/ak')['AkHomeAlt1']
     AkPlay: typeof import('@kalimahapps/vue-icons/ak')['AkPlay']
+    AkSignOut: typeof import('@kalimahapps/vue-icons/ak')['AkSignOut']
     BsListTask: typeof import('@kalimahapps/vue-icons/bs')['BsListTask']
     BxColumns: typeof import('@kalimahapps/vue-icons/bx')['BxColumns']
+    BxLogOutCircle: typeof import('@kalimahapps/vue-icons/bx')['BxLogOutCircle']
     BxSolidEditAlt: typeof import('@kalimahapps/vue-icons/bx')['BxSolidEditAlt']
+    CaCloudLogging: typeof import('@kalimahapps/vue-icons/ca')['CaCloudLogging']
+    CaUserAdmin: typeof import('@kalimahapps/vue-icons/ca')['CaUserAdmin']
     CaVirtualMachine: typeof import('@kalimahapps/vue-icons/ca')['CaVirtualMachine']
     CaVolumeBlockStorage: typeof import('@kalimahapps/vue-icons/ca')['CaVolumeBlockStorage']
     ChPlus: typeof import('@kalimahapps/vue-icons/ch')['ChPlus']

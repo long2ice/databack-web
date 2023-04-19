@@ -48,7 +48,10 @@ export default {
     keep_num_required: 'Keep Num is required',
     cron_required: 'Cron is required',
     keep_num_more_than_zero: 'Keep Num must be greater than or equal 0',
-    keep_days_more_than_zero: 'Keep Days must be greater than or equal 0'
+    keep_days_more_than_zero: 'Keep Days must be greater than or equal 0',
+    email_required: 'Email is required',
+    password_required: 'Password is required',
+    invalid_email: 'Invalid email'
   },
   error: {
     server: 'Server error, please try again later!'
@@ -66,7 +69,11 @@ export default {
     run_task: 'Run task success!',
     delete_task_log: 'Delete task log success!',
     restore_task_log: 'Submit restore task success!',
-    delete_restore_log: 'Delete restore log success!'
+    delete_restore_log: 'Delete restore log success!',
+    sign_in: 'Sign in success!',
+    sign_out: 'Sign out success!',
+    init_admin: 'Init admin success!',
+    delete_admin: 'Delete admin success!'
   },
   created_at: 'Created At',
   updated_at: 'Updated At',
@@ -79,7 +86,8 @@ export default {
     delete_task: 'Are you sure to delete this task?',
     delete_task_log: 'Are you sure to delete this task log?',
     delete_task_log_msg: 'The backup file will be deleted at the same time, please confirm!',
-    delete_restore_log: 'Are you sure to delete this restore log?'
+    delete_restore_log: 'Are you sure to delete this restore log?',
+    delete_admin: 'Are you sure to delete this admin?'
   },
   search: 'Search',
   search_placeholder: 'Please enter search content',
@@ -148,5 +156,29 @@ export default {
   mongo_other_options_placeholder:
     'Please enter other options, multiple options are separated by spaces',
   mongo_other_options_tips: 'All options refer to the help document of mongodump, ',
-  mongo_restore_options_tips: 'All options refer to the help document of mongorestore, '
+  mongo_restore_options_tips: 'All options refer to the help document of mongorestore, ',
+  sign_in_from: {
+    title: 'Sign in to your account'
+  },
+  init_admin_form: {
+    title: 'Init admin account',
+    confirm_password: 'Confirm Password',
+    create: 'Create Admin',
+    nickname_placeholder: 'Please enter nickname'
+  },
+  sign_in: 'Sign in',
+  nickname: 'Nickname',
+  email_label: 'Your email',
+  super_admin: 'Super Admin',
+  admin: 'Admin',
+  sign_out: 'Sign out',
+  action_log: 'Action Log',
+  last_login_at: 'Last Login At',
+  is_superuser: 'Is Superuser',
+  is_active: 'Is Active',
+  admin_search_placeholder: 'Please enter email or nickname',
+  action_log_path_placeholder: 'Please enter path',
+  method: 'Method',
+  admin_id: 'Admin ID',
+  content: 'Content'
 }

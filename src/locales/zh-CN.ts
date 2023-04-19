@@ -47,7 +47,10 @@ export default {
     keep_num_required: '保留数量是必填项',
     cron_required: '周期是必填项',
     keep_num_more_than_zero: '保留数量必须大于等于0',
-    keep_days_more_than_zero: '保留天数必须大于等于0'
+    keep_days_more_than_zero: '保留天数必须大于等于0',
+    email_required: '邮箱是必填项',
+    password_required: '密码是必填项',
+    invalid_email: '邮箱格式不正确'
   },
   error: {
     server: '服务器错误，请稍后再试！'
@@ -65,7 +68,11 @@ export default {
     run_task: '运行任务成功！',
     delete_task_log: '删除任务记录成功！',
     restore_task_log: '提交恢复任务成功！',
-    delete_restore_log: '删除恢复记录成功！'
+    delete_restore_log: '删除恢复记录成功！',
+    sign_in: '登录成功！',
+    sign_out: '退出成功！',
+    init_admin: '初始化管理员成功！',
+    delete_admin: '删除管理员成功！'
   },
   created_at: '创建时间',
   updated_at: '更新时间',
@@ -78,7 +85,8 @@ export default {
     delete_task: '确定要删除此任务吗？',
     delete_task_log: '确定要删除此任务记录吗？',
     delete_task_log_msg: '备份文件将会同时删除，确定要删除吗？',
-    delete_restore_log: '确定要删除此恢复记录吗？'
+    delete_restore_log: '确定要删除此恢复记录吗？',
+    delete_admin: '确定要删除此管理员吗？'
   },
   search: '查询',
   search_placeholder: '请输入查询内容',
@@ -142,5 +150,29 @@ export default {
   redis_restore_options_tips: '所有选项请参考 redis-cli 的帮助文档，',
   mongo_other_options_placeholder: '其他选项，多个选项之间用空格分隔',
   mongo_other_options_tips: '所有选项请参考 mongodump 的帮助文档，',
-  mongo_restore_options_tips: '所有选项请参考 mongorestore 的帮助文档，'
+  mongo_restore_options_tips: '所有选项请参考 mongorestore 的帮助文档，',
+  sign_in_form: {
+    title: '登录你的账号'
+  },
+  init_admin_form: {
+    title: '初始化管理员账号',
+    confirm_password: '确认密码',
+    create: '创建管理员账号',
+    nickname_placeholder: '请输入昵称'
+  },
+  email_label: '邮箱',
+  sign_in: '登录',
+  nickname: '昵称',
+  super_admin: '超级管理员',
+  admin: '管理员',
+  sign_out: '退出登录',
+  action_log: '操作日志',
+  last_login_at: '最后登录时间',
+  is_superuser: '是否超级管理员',
+  is_active: '是否有效',
+  admin_search_placeholder: '请输入昵称或邮箱',
+  action_log_path_placeholder: '请输入路径',
+  method: '方法',
+  admin_id: '管理员ID',
+  content: '内容'
 }

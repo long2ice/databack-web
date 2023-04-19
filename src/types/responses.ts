@@ -99,3 +99,35 @@ export interface RestoresResponse {
   total: number
   data: RestoreResponse[]
 }
+export interface TokenResponse {
+  access_token: string
+  refresh_token: string
+}
+export interface AdminResponse {
+  id: number
+  created_at: string
+  updated_at: string
+  nickname: string
+  email: string
+  last_login_at: string
+  is_superuser: boolean
+  is_active: boolean
+}
+export interface AdminsResponse {
+  total: number
+  data: AdminResponse[]
+}
+export interface ActionLogResponse {
+  id: number
+  created_at: string
+  updated_at: string
+  path: string
+  method: string
+  content: string
+  ip: string
+  admin_id: number
+}
+export interface ActionLogsResponse {
+  total: number
+  data: ActionLogResponse[]
+}

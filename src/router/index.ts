@@ -4,58 +4,80 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/sign_in',
+      component: () => import('@/views/SignInView.vue')
+    },
+    {
+      path: '/init_admin',
+      component: () => import('@/views/InitAdminView.vue')
+    },
+    {
       path: '/',
-      component: () => import('@/views/HomeView.vue')
-    },
-    {
-      path: '/datasource',
-      component: () => import('@/views/datasource/DataSourceView.vue'),
+      component: () => import('@/views/Dashboard.vue'),
       children: [
         {
           path: '',
-          component: () => import('@/views/datasource/DataSourceListView.vue')
+          component: () => import('@/views/HomeView.vue')
         },
         {
-          path: 'add',
-          component: () => import('@/views/datasource/DataSourceAddUpdateView.vue')
+          path: '/datasource',
+          component: () => import('@/views/datasource/DataSourceView.vue'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/views/datasource/DataSourceListView.vue')
+            },
+            {
+              path: 'add',
+              component: () => import('@/views/datasource/DataSourceAddUpdateView.vue')
+            },
+            {
+              path: ':id/update',
+              name: 'updateDataSource',
+              component: () => import('@/views/datasource/DataSourceAddUpdateView.vue')
+            }
+          ]
         },
         {
-          path: ':id/update',
-          name: 'updateDataSource',
-          component: () => import('@/views/datasource/DataSourceAddUpdateView.vue')
+          path: '/storage',
+          component: () => import('@/views/storage/StorageView.vue'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/views/storage/StorageListView.vue')
+            },
+            {
+              path: 'add',
+              component: () => import('@/views/storage/AddUpdateStorageView.vue')
+            },
+            {
+              path: ':id/update',
+              name: 'updateStorage',
+              component: () => import('@/views/storage/AddUpdateStorageView.vue')
+            }
+          ]
+        },
+        {
+          path: '/task',
+          component: () => import('@/views/TaskView.vue')
+        },
+        {
+          path: '/task_log',
+          component: () => import('@/views/TaskLogView.vue')
+        },
+        {
+          path: '/restore_log',
+          component: () => import('@/views/RestoreLogView.vue')
+        },
+        {
+          path: '/admin',
+          component: () => import('@/views/AdminView.vue')
+        },
+        {
+          path: '/action_log',
+          component: () => import('@/views/ActionLogView.vue')
         }
       ]
-    },
-    {
-      path: '/storage',
-      component: () => import('@/views/storage/StorageView.vue'),
-      children: [
-        {
-          path: '',
-          component: () => import('@/views/storage/StorageListView.vue')
-        },
-        {
-          path: 'add',
-          component: () => import('@/views/storage/AddUpdateStorageView.vue')
-        },
-        {
-          path: ':id/update',
-          name: 'updateStorage',
-          component: () => import('@/views/storage/AddUpdateStorageView.vue')
-        }
-      ]
-    },
-    {
-      path: '/task',
-      component: () => import('@/views/TaskView.vue')
-    },
-    {
-      path: '/task_log',
-      component: () => import('@/views/TaskLogView.vue')
-    },
-    {
-      path: '/restore_log',
-      component: () => import('@/views/RestoreLogView.vue')
     },
     {
       path: '/404',

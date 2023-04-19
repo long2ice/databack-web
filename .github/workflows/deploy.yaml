@@ -20,5 +20,5 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.KEY }}
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: "/root/docker/caddy/www/databack-web"
+          TARGET: "/root/docker/caddy/www/databack-web-pro"
           SOURCE: "dist/"

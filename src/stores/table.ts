@@ -12,6 +12,5 @@ export const useTableState = defineStore(
       columns,
       sorts
     }
-  },
-  { persist: true }
+  }
 )

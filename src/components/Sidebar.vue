@@ -53,6 +53,18 @@
           <span v-show="!sidebar.close">{{ $t('restore_log') }}</span>
         </router-link>
       </li>
+      <li>
+        <router-link to="/admin" :class="{ active: currentRoute.path === '/admin' }">
+          <CaUserAdmin class="text-2xl" />
+          <span v-show="!sidebar.close">{{ $t('admin') }}</span>
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/action_log" :class="{ active: currentRoute.path === '/action_log' }">
+          <CaCloudLogging class="text-2xl" />
+          <span v-show="!sidebar.close">{{ $t('action_log') }}</span>
+        </router-link>
+      </li>
     </ul>
     <div
       class="mt-auto flex w-full cursor-pointer justify-center bg-base-300 p-4"
