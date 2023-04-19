@@ -47,7 +47,7 @@
             </button>
           </span>
         </th>
-        <th v-if="actions">{{ $t('action') }}</th>
+        <th v-if="actions || onDelete">{{ $t('action') }}</th>
       </tr>
     </thead>
     <tbody>
