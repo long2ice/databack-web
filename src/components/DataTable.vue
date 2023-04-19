@@ -71,7 +71,7 @@
             {{ d[field.field] }}
           </template>
         </td>
-        <td>
+        <td v-if="onDelete || actions">
           <div class="flex gap-1">
             <Component v-if="actions" :is="actions" :data="d" />
             <button

@@ -3,7 +3,7 @@
     <div class="flex flex-col items-center">
       <div class="card w-96 bg-base-100 shadow-xl">
         <div class="card-body">
-          <h2 class="card-title">{{ $t('init_admin_form.title') }}</h2>
+          <h2 class="card-title">{{ $t('init_admin_form_title') }}</h2>
           <div class="form-control w-full max-w-xs">
             <label class="label">
               <span class="label-text"
@@ -30,7 +30,7 @@
               class="input-bordered input w-full max-w-xs"
               v-model="nickname"
               name="nickname"
-              :placeholder="$t('init_admin_form.nickname_placeholder')"
+              :placeholder="$t('nickname_placeholder')"
             />
             <label class="label">
               <span class="label-text-alt text-error">{{ errorMessageNickname }}</span>
@@ -54,8 +54,7 @@
           <div class="form-control w-full max-w-xs">
             <label class="label">
               <span class="label-text"
-                ><span class="text-error">* </span
-                >{{ $t('init_admin_form.confirm_password') }}</span
+                ><span class="text-error">* </span>{{ $t('confirm_password') }}</span
               >
             </label>
             <input
@@ -70,7 +69,7 @@
             </label>
           </div>
           <button class="btn-primary btn" @click="onSubmit" :disabled="isSubmitting">
-            {{ $t('init_admin_form.create') }}
+            {{ $t('create_admin') }}
           </button>
         </div>
       </div>
@@ -83,7 +82,7 @@
 import { useField, useForm } from 'vee-validate'
 import * as yup from 'yup'
 import { useI18n } from 'vue-i18n'
-import * as api from '@/api/admin'
+import * as api from '@/api/init'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 

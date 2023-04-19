@@ -2,14 +2,6 @@ import http from '@/axios'
 import type { AdminResponse, AdminsResponse } from '@/types/responses'
 import type { Sort } from '@/types/common'
 
-export async function initAdmin(email: string, password: string, nickname: string): Promise<void> {
-  await http.post('/admin/init', {
-    email,
-    password,
-    nickname
-  })
-}
-
 export async function getMe(): Promise<AdminResponse> {
   const { data } = await http.get('/admin/me')
   return data
@@ -48,4 +40,35 @@ export async function deleteAdmins(ids: number[]): Promise<void> {
   const idsStr = ids.join(',')
   const { data } = await http.delete(`/admin/${idsStr}`)
   return data
+}
+export async function createAdmin(
+  email: string,
+  password: string,
+  nickname: string,
+  is_superuser: boolean,
+  is_active: boolean
+): Promise<void> {
+  await http.post('/admin', {
+    email,
+    password,
+    nickname,
+    is_superuser,
+    is_active
+  })
+}
+export async function updateAdmin(
+  id: number,
+  email: string,
+  password: string,
+  nickname: string,
+  is_superuser: boolean,
+  is_active: boolean
+): Promise<void> {
+  await http.patch(`/admin/${id}`, {
+    email,
+    password,
+    nickname,
+    is_superuser,
+    is_active
+  })
 }

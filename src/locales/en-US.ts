@@ -51,7 +51,8 @@ export default {
     keep_days_more_than_zero: 'Keep Days must be greater than or equal 0',
     email_required: 'Email is required',
     password_required: 'Password is required',
-    invalid_email: 'Invalid email'
+    invalid_email: 'Invalid email',
+    nickname_required: 'Nickname is required'
   },
   error: {
     server: 'Server error, please try again later!'
@@ -73,7 +74,9 @@ export default {
     sign_in: 'Sign in success!',
     sign_out: 'Sign out success!',
     init_admin: 'Init admin success!',
-    delete_admin: 'Delete admin success!'
+    delete_admin: 'Delete admin success!',
+    update_admin: 'Update admin success!',
+    create_admin: 'Create admin success!'
   },
   created_at: 'Created At',
   updated_at: 'Updated At',
@@ -160,12 +163,11 @@ export default {
   sign_in_form: {
     title: 'Sign in to your account'
   },
-  init_admin_form: {
-    title: 'Init admin account',
-    confirm_password: 'Confirm Password',
-    create: 'Create Admin',
-    nickname_placeholder: 'Please enter nickname'
-  },
+  init_admin_form_title: 'Init admin account',
+  confirm_password: 'Confirm Password',
+  nickname_placeholder: 'Please enter nickname',
+  create_admin: 'Create Admin',
+  update_admin: 'Update Admin',
   sign_in: 'Sign in',
   nickname: 'Nickname',
   email_label: 'Your email',

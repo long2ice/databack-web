@@ -48,7 +48,7 @@
 import * as api from '@/api/action_log'
 import { useI18n } from 'vue-i18n'
 import { parseDate } from '@/utils/date'
-import { reactive, watch } from 'vue'
+import { h, reactive, watch } from 'vue'
 import { toast } from 'vue3-toastify'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import ConfirmModal from '@/components/ConfirmModal.vue'
@@ -106,11 +106,33 @@ const fields: TableField[] = [
   },
   {
     field: 'path',
-    label: t('path')
+    label: t('path'),
+    truncate: true
   },
   {
     field: 'method',
-    label: t('method')
+    label: t('method'),
+    formatter: (row, column, cellValue) => {
+      let class_ = 'badge'
+      switch (cellValue) {
+        case 'GET':
+          class_ += ' badge-success'
+          break
+        case 'POST':
+          class_ += ' badge-primary'
+          break
+        case 'PUT':
+          class_ += ' badge-warning'
+          break
+        case 'DELETE':
+          class_ += ' badge-danger'
+          break
+        case 'PATCH':
+          class_ += ' badge-info'
+          break
+      }
+      return () => h('span', { class: class_ }, cellValue)
+    }
   },
   {
     field: 'created_at',

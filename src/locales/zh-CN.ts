@@ -50,7 +50,8 @@ export default {
     keep_days_more_than_zero: '保留天数必须大于等于0',
     email_required: '邮箱是必填项',
     password_required: '密码是必填项',
-    invalid_email: '邮箱格式不正确'
+    invalid_email: '邮箱格式不正确',
+    nickname_required: '昵称是必填项'
   },
   error: {
     server: '服务器错误，请稍后再试！'
@@ -72,7 +73,9 @@ export default {
     sign_in: '登录成功！',
     sign_out: '退出成功！',
     init_admin: '初始化管理员成功！',
-    delete_admin: '删除管理员成功！'
+    delete_admin: '删除管理员成功！',
+    update_admin: '更新管理员成功！',
+    create_admin: '创建管理员成功！'
   },
   created_at: '创建时间',
   updated_at: '更新时间',
@@ -154,12 +157,11 @@ export default {
   sign_in_form: {
     title: '登录你的账号'
   },
-  init_admin_form: {
-    title: '初始化管理员账号',
-    confirm_password: '确认密码',
-    create: '创建管理员账号',
-    nickname_placeholder: '请输入昵称'
-  },
+  init_admin_form_title: '初始化管理员账号',
+  confirm_password: '确认密码',
+  nickname_placeholder: '请输入昵称',
+  create_admin: '创建管理员',
+  update_admin: '更新管理员',
   email_label: '邮箱',
   sign_in: '登录',
   nickname: '昵称',
