@@ -137,6 +137,7 @@ const initData = async () => {
     query.offset,
     query.method,
     query.path,
+    undefined,
     query.sorts
   )
   data.total = ret.total
