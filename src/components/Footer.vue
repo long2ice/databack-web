@@ -4,11 +4,16 @@
       <p>
         Copyright © {{ nowYear }} - All right reserved by
         <a class="link" href="https://www.long2ice.io" target="_blank">long2ice</a>
+        <span class="mx-2 font-bold">|</span>
+        <span>{{ $t('license', { name: license.name, expire: license.expire }) }}</span>
       </p>
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
+import { getLicense } from '@/api/license'
+
 const nowYear = new Date().getFullYear()
+const license = await getLicense()
 </script>

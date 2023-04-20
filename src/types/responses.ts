@@ -131,3 +131,7 @@ export interface ActionLogsResponse {
   total: number
   data: ActionLogResponse[]
 }
+export interface LicenseResponse {
+  expire: string
+  name: string
+}

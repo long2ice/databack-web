@@ -176,5 +176,6 @@ export default {
   action_log_path_placeholder: '请输入路径',
   method: '方法',
   admin_id: '管理员ID',
-  content: '内容'
+  content: '内容',
+  license: '授权给 {name}，有效期至 {expire}'
 }

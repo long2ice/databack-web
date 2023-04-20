@@ -182,5 +182,6 @@ export default {
   action_log_path_placeholder: 'Please enter path',
   method: 'Method',
   admin_id: 'Admin ID',
-  content: 'Content'
+  content: 'Content',
+  license: 'License to {name}, expire at: {expire}'
 }
