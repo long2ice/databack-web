@@ -164,6 +164,7 @@ const deleteSelected = async () => {
   if (ret) {
     selected.value = []
   }
+  selectAll.value = false
 }
 </script>
 
