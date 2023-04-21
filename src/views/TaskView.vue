@@ -290,6 +290,14 @@ const fields: TableField[] = [
     }
   },
   {
+    field: 'next_run_at',
+    label: t('next_run_at'),
+    defaultHidden: true,
+    formatter: (row, column, cellValue) => {
+      return () => cellValue && d(parseDate(cellValue), 'long')
+    }
+  },
+  {
     field: 'created_at',
     label: t('created_at'),
     defaultHidden: true,

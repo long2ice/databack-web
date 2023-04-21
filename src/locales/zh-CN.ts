@@ -177,5 +177,6 @@ export default {
   method: '方法',
   admin_id: '管理员ID',
   content: '内容',
-  license: '授权给 {name}，有效期至 {expire}'
+  license: '授权给 {name}，有效期至 {expire}',
+  next_run_at: '下次执行时间'
 }
