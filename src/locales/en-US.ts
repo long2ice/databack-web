@@ -148,5 +148,6 @@ export default {
   mongo_other_options_placeholder:
     'Please enter other options, multiple options are separated by spaces',
   mongo_other_options_tips: 'All options refer to the help document of mongodump, ',
-  mongo_restore_options_tips: 'All options refer to the help document of mongorestore, '
+  mongo_restore_options_tips: 'All options refer to the help document of mongorestore, ',
+  next_run_at: 'Next Run At'
 }

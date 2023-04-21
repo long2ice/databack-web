@@ -142,5 +142,6 @@ export default {
   redis_restore_options_tips: '所有选项请参考 redis-cli 的帮助文档，',
   mongo_other_options_placeholder: '其他选项，多个选项之间用空格分隔',
   mongo_other_options_tips: '所有选项请参考 mongodump 的帮助文档，',
-  mongo_restore_options_tips: '所有选项请参考 mongorestore 的帮助文档，'
+  mongo_restore_options_tips: '所有选项请参考 mongorestore 的帮助文档，',
+  next_run_at: '下次执行时间'
 }
