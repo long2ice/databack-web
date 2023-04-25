@@ -38,6 +38,19 @@
           <button class="btn-primary btn" @click="onSubmit" :disabled="isSubmitting">
             {{ $t('sign_in') }}
           </button>
+          <template v-if="oauth.length > 0">
+            <div class="divider">OR</div>
+            <div class="flex justify-center gap-4">
+              <a
+                :href="item.url"
+                v-for="item in oauth"
+                :key="item.type"
+                @click="auth.oauth_type = item.type"
+              >
+                <OauthIcon :type="item.type" />
+              </a>
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -52,9 +65,10 @@ import { useI18n } from 'vue-i18n'
 import * as api from '@/api/auth'
 import * as admin from '@/api/admin'
 
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import { useAuth } from '@/stores/auth'
+import { getOauth } from '@/api/auth'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -70,11 +84,21 @@ const { value: password, errorMessage: errorMessagePassword } = useField(
 )
 const onSubmit = handleSubmit(async (values) => {
   const { email, password } = values
-  auth.token = await api.signIn(email, password)
+  auth.token = await api.login(email, password)
   auth.admin = await admin.getMe()
   await router.push({ path: '/' })
   toast.success(t('success.sign_in'))
 })
+const oauth = await getOauth(location.protocol + '//' + location.host + '/login')
+const route = useRoute()
+const { code, state } = route.query
+if (code) {
+  const auth = useAuth()
+  auth.token = await api.loginWithOauth(code as string, auth.oauth_type, state as string)
+  auth.admin = await admin.getMe()
+  router.push({ path: '/' })
+  toast.success(t('success.sign_in'))
+}
 </script>
 
 <style scoped></style>

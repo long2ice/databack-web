@@ -1,14 +1,12 @@
 <template>
   <div class="flex flex-1">
     <Sidebar />
-    <Suspense>
       <div class="flex w-full flex-col">
         <div class="flex w-full flex-col gap-2 p-4">
           <RouterView />
         </div>
         <Footer class="mt-auto" />
       </div>
-    </Suspense>
   </div>
 </template>
 <script setup lang="ts">

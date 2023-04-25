@@ -5,7 +5,12 @@ import type { AdminResponse, TokenResponse } from '@/types/responses'
 
 export const useAuth = defineStore(
   'auth',
-  (): { token: Ref<TokenResponse>; admin: Ref<AdminResponse>; sign_out: () => void } => {
+  (): {
+    token: Ref<TokenResponse>
+    admin: Ref<AdminResponse>
+    sign_out: () => void
+    oauth_type: Ref<string>
+  } => {
     const token = ref<TokenResponse>({
       access_token: '',
       refresh_token: ''
@@ -20,6 +25,7 @@ export const useAuth = defineStore(
       nickname: '',
       updated_at: ''
     })
+    const oauth_type = ref('')
     const sign_out = () => {
       token.value = {
         access_token: '',
@@ -39,7 +45,8 @@ export const useAuth = defineStore(
     return {
       token,
       admin,
-      sign_out
+      sign_out,
+      oauth_type
     }
   }
 )

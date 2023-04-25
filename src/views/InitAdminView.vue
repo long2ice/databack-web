@@ -85,9 +85,13 @@ import { useI18n } from 'vue-i18n'
 import * as api from '@/api/init'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
-
-const { t } = useI18n()
+import { getInit } from '@/api/init'
+const init = await getInit()
 const router = useRouter()
+if (init.inited) {
+  router.push({ path: '/login' })
+}
+const { t } = useI18n()
 const { handleSubmit, isSubmitting } = useForm()
 const { value: email, errorMessage: errorMessageEmail } = useField(
   'email',
@@ -112,7 +116,7 @@ const onSubmit = handleSubmit(async (values) => {
     return
   }
   await api.initAdmin(email, password, nickname)
-  await router.push({ path: '/sign_in' })
+  await router.push({ path: '/login' })
   toast.success(t('success.init_admin'))
 })
 </script>

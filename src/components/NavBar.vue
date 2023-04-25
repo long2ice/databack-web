@@ -5,7 +5,7 @@
     </div>
     <div class="flex-none">
       <button class="btn-ghost btn-circle btn">
-        <label class="swap-rotate swap">
+        <label class="swap swap-rotate">
           <input type="checkbox" data-toggle-theme="light,dark" />
           <MdOutlinedWbSunny class="swap-off text-xl" />
           <CoMoon class="swap-on text-xl" />
@@ -82,6 +82,6 @@ onMounted(() => {
 const sign_out = async () => {
   auth.sign_out()
   toast.success(i18n.t('success.sign_out'))
-  await router.push('/sign_in')
+  await router.push('/login')
 }
 </script>

@@ -15,7 +15,7 @@ http.interceptors.request.use((config) => {
   const token = auth.token
   config.headers = config.headers ?? {}
   const path = config.url
-  if (path !== '/auth/sign_in' && path !== '/auth/refresh') {
+  if (path !== '/auth/login' && path !== '/auth/refresh') {
     config.headers.Authorization = `Bearer ${token.access_token}`
   } else if (path === '/auth/refresh') {
     config.headers.Authorization = `Bearer ${token.refresh_token}`
@@ -43,7 +43,7 @@ http.interceptors.response.use(
         isRefreshing = false
       } else {
         toast.error(err)
-        await router.push({ path: '/sign_in' })
+        await router.push({ path: '/login' })
       }
     } else if (status < 500) {
       toast.error(err)

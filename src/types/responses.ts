@@ -135,3 +135,10 @@ export interface LicenseResponse {
   expire: string
   name: string
 }
+export interface InitedResponse {
+  inited: boolean
+}
+export interface OauthResponse {
+  type: string
+  url: string
+}
