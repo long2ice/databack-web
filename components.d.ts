@@ -40,6 +40,7 @@ declare module '@vue/runtime-core' {
     LocalOptions: typeof import('./src/components/datasource/LocalOptions.vue')['default']
     LuSortAsc: typeof import('@kalimahapps/vue-icons/lu')['LuSortAsc']
     LuSortDesc: typeof import('@kalimahapps/vue-icons/lu')['LuSortDesc']
+    McVip1Fill: typeof import('@kalimahapps/vue-icons/mc')['McVip1Fill']
     MdOutlinedWbSunny: typeof import('@kalimahapps/vue-icons/md')['MdOutlinedWbSunny']
     MdTwotoneRestore: typeof import('@kalimahapps/vue-icons/md')['MdTwotoneRestore']
     MongoOptions: typeof import('./src/components/datasource/MongoOptions.vue')['default']

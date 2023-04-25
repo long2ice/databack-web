@@ -35,6 +35,9 @@
       >
         <AkGithubFill class="text-xl" />
       </a>
+      <a class="btn-ghost btn-circle btn" href="https://pro.databack.dev/login" target="_blank">
+        <McVip1Fill class="text-xl" />
+      </a>
     </div>
   </div>
 </template>
