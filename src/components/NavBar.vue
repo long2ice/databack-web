@@ -178,12 +178,13 @@ const { value: confirm_new_password, errorMessage: errorMessageConfirmNewPasswor
   'confirm_new_password',
   yup.string().required(t('validate.password_required'))
 )
-const onSubmit = handleSubmit(async () => {
-  if (new_password.value !== confirm_new_password.value) {
+const onSubmit = handleSubmit(async (values) => {
+  const { old_password, new_password, confirm_new_password } = values
+  if (new_password !== confirm_new_password) {
     toast.error(t('validate.password_not_match'))
     return
   }
-  await change_password(old_password.value, new_password.value)
+  await change_password(old_password, new_password)
   toast.success(t('success.change_password'))
   isChangePassword.value = false
   auth.sign_out()

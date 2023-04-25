@@ -36,11 +36,13 @@ export async function getAdmin(
   })
   return data
 }
+
 export async function deleteAdmins(ids: number[]): Promise<void> {
   const idsStr = ids.join(',')
   const { data } = await http.delete(`/admin/${idsStr}`)
   return data
 }
+
 export async function createAdmin(
   email: string,
   password: string,
@@ -56,6 +58,7 @@ export async function createAdmin(
     is_active
   })
 }
+
 export async function updateAdmin(
   id: number,
   email: string,
@@ -72,6 +75,7 @@ export async function updateAdmin(
     is_active
   })
 }
+
 export async function change_password(old_password: string, new_password: string): Promise<void> {
   await http.patch('/admin/password', {
     old_password,
