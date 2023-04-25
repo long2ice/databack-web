@@ -59,7 +59,7 @@
           <span v-show="!sidebar.close">{{ $t('admin') }}</span>
         </router-link>
       </li>
-      <li>
+      <li v-if="auth.admin.is_superuser">
         <router-link to="/action_log" :class="{ active: currentRoute.path === '/action_log' }">
           <CaCloudLogging class="text-2xl" />
           <span v-show="!sidebar.close">{{ $t('action_log') }}</span>
@@ -82,7 +82,8 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { useSidebarState } from '@/stores/sidebar'
-
+import { useAuth } from '@/stores/auth'
+const auth = useAuth()
 const currentRoute = useRoute()
 const sidebar = useSidebarState()
 </script>

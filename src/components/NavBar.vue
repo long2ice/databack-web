@@ -5,7 +5,7 @@
     </div>
     <div class="flex-none">
       <button class="btn-ghost btn-circle btn">
-        <label class="swap swap-rotate">
+        <label class="swap-rotate swap">
           <input type="checkbox" data-toggle-theme="light,dark" />
           <MdOutlinedWbSunny class="swap-off text-xl" />
           <CoMoon class="swap-on text-xl" />
@@ -53,9 +53,86 @@
           class="dropdown-content menu rounded-box w-36 bg-base-100 p-2 text-neutral-900 shadow"
         >
           <li>
+            <button @click="isChangePassword = true">
+              <CaPassword class="text-xl" />{{ $t('change_password') }}
+            </button>
+          </li>
+          <li>
             <a @click="sign_out"><AkSignOut class="text-xl" />{{ $t('sign_out') }}</a>
           </li>
         </ul>
+      </div>
+    </div>
+  </div>
+  <input type="checkbox" class="modal-toggle" v-model="isChangePassword" />
+  <div class="modal">
+    <div class="modal-box relative">
+      <button
+        class="btn-sm btn-circle btn absolute right-2 top-2"
+        @click="isChangePassword = false"
+      >
+        ✕
+      </button>
+      <h3 class="text-lg font-bold">{{ $t('change_password') }}</h3>
+      <div>
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text"
+              ><span class="text-error">*</span>{{ $t('old_password') }}</span
+            >
+          </label>
+          <input
+            type="password"
+            class="input-bordered input"
+            v-model="old_password"
+            placeholder="••••••••"
+          />
+          <label class="label">
+            <span class="label-text-alt text-error">{{ errorMessageOldPassword }}</span>
+          </label>
+        </div>
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text"
+              ><span class="text-error">*</span>{{ $t('new_password') }}</span
+            >
+          </label>
+          <input
+            type="password"
+            class="input-bordered input"
+            v-model="new_password"
+            placeholder="••••••••"
+          />
+          <label class="label">
+            <span class="label-text-alt text-error">{{ errorMessageNewPassword }}</span>
+          </label>
+        </div>
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text"
+              ><span class="text-error">*</span>{{ $t('confirm_new_password') }}</span
+            >
+          </label>
+          <input
+            type="password"
+            class="input-bordered input"
+            v-model="confirm_new_password"
+            placeholder="••••••••"
+          />
+          <label class="label">
+            <span class="label-text-alt text-error">{{ errorMessageConfirmNewPassword }}</span>
+          </label>
+        </div>
+      </div>
+      <div class="modal-action">
+        <label
+          class="btn"
+          :class="{
+            disabled: isSubmitting
+          }"
+          @click="onSubmit"
+          >{{ $t('change_password') }}</label
+        >
       </div>
     </div>
   </div>
@@ -67,21 +144,49 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import { useAuth } from '@/stores/auth'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useField, useForm } from 'vee-validate'
+import * as yup from 'yup'
+import { change_password } from '@/api/admin'
 const language = useLanguage()
-const i18n = useI18n()
-i18n.locale.value = language.language
+const { t, locale } = useI18n()
+locale.value = language.language
 language.$subscribe((mutation, state) => {
-  i18n.locale.value = state.language
+  locale.value = state.language
 })
 const router = useRouter()
 const auth = useAuth()
 onMounted(() => {
   themeChange(false)
 })
+const isChangePassword = ref(false)
 const sign_out = async () => {
   auth.sign_out()
-  toast.success(i18n.t('success.sign_out'))
+  toast.success(t('success.sign_out'))
   await router.push('/login')
 }
+const { handleSubmit, isSubmitting } = useForm()
+const { value: old_password, errorMessage: errorMessageOldPassword } = useField(
+  'old_password',
+  yup.string().required(t('validate.password_required'))
+)
+const { value: new_password, errorMessage: errorMessageNewPassword } = useField(
+  'new_password',
+  yup.string().required(t('validate.password_required'))
+)
+const { value: confirm_new_password, errorMessage: errorMessageConfirmNewPassword } = useField(
+  'confirm_new_password',
+  yup.string().required(t('validate.password_required'))
+)
+const onSubmit = handleSubmit(async () => {
+  if (new_password.value !== confirm_new_password.value) {
+    toast.error(t('validate.password_not_match'))
+    return
+  }
+  await change_password(old_password.value, new_password.value)
+  toast.success(t('success.change_password'))
+  isChangePassword.value = false
+  auth.sign_out()
+  await router.push('/login')
+})
 </script>

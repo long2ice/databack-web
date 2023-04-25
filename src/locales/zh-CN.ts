@@ -51,7 +51,8 @@ export default {
     email_required: '邮箱是必填项',
     password_required: '密码是必填项',
     invalid_email: '邮箱格式不正确',
-    nickname_required: '昵称是必填项'
+    nickname_required: '昵称是必填项',
+    password_not_match: '两次输入的密码不一致'
   },
   error: {
     server: '服务器错误，请稍后再试！'
@@ -75,7 +76,8 @@ export default {
     init_admin: '初始化管理员成功！',
     delete_admin: '删除管理员成功！',
     update_admin: '更新管理员成功！',
-    create_admin: '创建管理员成功！'
+    create_admin: '创建管理员成功！',
+    change_password: '修改密码成功！'
   },
   created_at: '创建时间',
   updated_at: '更新时间',
@@ -178,5 +180,9 @@ export default {
   admin_id: '管理员ID',
   content: '内容',
   license: '授权给 {name}，有效期至 {expire}',
-  next_run_at: '下次执行时间'
+  next_run_at: '下次执行时间',
+  change_password: '修改密码',
+  old_password: '旧密码',
+  new_password: '新密码',
+  confirm_new_password: '确认新密码'
 }

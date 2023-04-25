@@ -52,7 +52,8 @@ export default {
     email_required: 'Email is required',
     password_required: 'Password is required',
     invalid_email: 'Invalid email',
-    nickname_required: 'Nickname is required'
+    nickname_required: 'Nickname is required',
+    password_not_match: 'Password not match'
   },
   error: {
     server: 'Server error, please try again later!'
@@ -76,7 +77,8 @@ export default {
     init_admin: 'Init admin success!',
     delete_admin: 'Delete admin success!',
     update_admin: 'Update admin success!',
-    create_admin: 'Create admin success!'
+    create_admin: 'Create admin success!',
+    change_password: 'Change password success!'
   },
   created_at: 'Created At',
   updated_at: 'Updated At',
@@ -184,5 +186,9 @@ export default {
   admin_id: 'Admin ID',
   content: 'Content',
   license: 'License to {name}, expire at: {expire}',
-  next_run_at: 'Next Run At'
+  next_run_at: 'Next Run At',
+  change_password: 'Change Password',
+  old_password: 'Old Password',
+  new_password: 'New Password',
+  confirm_new_password: 'Confirm New Password'
 }

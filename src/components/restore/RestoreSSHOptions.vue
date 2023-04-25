@@ -51,7 +51,7 @@
         <span class="label-text">{{ $t('private_key') }}</span>
         <span class="label-text-alt link"
           ><input type="file" hidden @change="importPrivateKey" />{{
-            t("import_private_key")
+            t('import_private_key')
           }}</span
         >
       </label>

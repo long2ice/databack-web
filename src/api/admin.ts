@@ -72,3 +72,9 @@ export async function updateAdmin(
     is_active
   })
 }
+export async function change_password(old_password: string, new_password: string): Promise<void> {
+  await http.patch('/admin/password', {
+    old_password,
+    new_password
+  })
+}
