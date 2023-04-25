@@ -3,7 +3,7 @@
     <div>
       <p>
         Copyright © {{ nowYear }} - All right reserved by
-        <a class="link" href="https://www.long2ice.io" target="_blank">long2ice</a>
+        <a class="link" href="mailto:long2ice@gmail.com" target="_blank">long2ice</a>
         <span class="mx-2 font-bold">|</span>
         <span>{{ $t('license', { name: license.name, expire: license.expire }) }}</span>
       </p>

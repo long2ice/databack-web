@@ -14,6 +14,7 @@
             <input
               type="text"
               placeholder="name@example.com"
+              @keyup.enter="onSubmit"
               class="input-bordered input w-full max-w-xs"
               v-model="email"
             />
@@ -28,6 +29,7 @@
             <input
               type="password"
               v-model="password"
+              @keyup.enter="onSubmit"
               placeholder="••••••••"
               class="input-bordered input w-full max-w-xs"
             />

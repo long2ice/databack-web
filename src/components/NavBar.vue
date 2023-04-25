@@ -1,7 +1,7 @@
 <template>
   <div class="navbar bg-neutral text-neutral-content">
     <div class="flex-1">
-      <router-link class="btn-ghost btn text-xl normal-case" to="/">Databack</router-link>
+      <router-link class="btn-ghost btn text-xl normal-case" to="/">Databack Pro</router-link>
     </div>
     <div class="flex-none">
       <button class="btn-ghost btn-circle btn">
@@ -50,7 +50,7 @@
         </div>
         <ul
           tabindex="0"
-          class="dropdown-content menu rounded-box w-36 bg-base-100 p-2 text-neutral-900 shadow"
+          class="dropdown-content menu rounded-box mt-2 w-36 bg-base-100 p-2 text-neutral-900 shadow"
         >
           <li>
             <button @click="isChangePassword = true">
