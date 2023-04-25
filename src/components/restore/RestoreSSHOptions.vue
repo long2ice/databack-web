@@ -49,9 +49,11 @@
     <div class="form-control w-full">
       <label class="label">
         <span class="label-text">{{ $t('private_key') }}</span>
-        <span class="label-text-alt link"><input type="file" hidden @change="importPrivateKey" />{{
-          t('import_private_key')
-        }}</span>
+        <span class="label-text-alt link"
+          ><input type="file" hidden @change="importPrivateKey" />{{
+            t("import_private_key")
+          }}</span
+        >
       </label>
       <textarea v-model="options.private_key" class="textarea-bordered textarea h-24"></textarea>
     </div>
