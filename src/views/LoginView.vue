@@ -69,6 +69,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import { useAuth } from '@/stores/auth'
 import { getOauth } from '@/api/auth'
+import { ref } from 'vue'
+import type { OauthResponse } from '@/types/responses'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -89,7 +91,7 @@ const onSubmit = handleSubmit(async (values) => {
   await router.push({ path: '/' })
   toast.success(t('success.sign_in'))
 })
-const oauth = await getOauth(location.protocol + '//' + location.host + '/login')
+const oauth = ref<OauthResponse[]>([])
 const route = useRoute()
 const { code, state } = route.query
 if (code) {
@@ -98,6 +100,8 @@ if (code) {
   auth.admin = await admin.getMe()
   router.push({ path: '/' })
   toast.success(t('success.sign_in'))
+} else {
+  oauth.value = await getOauth(location.protocol + '//' + location.host + '/login')
 }
 </script>
 
