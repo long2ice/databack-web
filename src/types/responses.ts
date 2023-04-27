@@ -112,6 +112,7 @@ export interface AdminResponse {
   last_login_at: string
   is_superuser: boolean
   is_active: boolean
+  password: string
 }
 export interface AdminsResponse {
   total: number

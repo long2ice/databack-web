@@ -165,6 +165,7 @@ const onEdit = (data: AdminResponse) => {
   nickname.value = data.nickname
   email.value = data.email
   isUpdate.value = true
+  password.value = data.password
 }
 const { t, d } = useI18n()
 const query = reactive({

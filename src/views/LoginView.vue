@@ -1,7 +1,7 @@
 <template>
   <div class="flex w-full flex-1 flex-col items-center justify-center">
     <div class="flex flex-col items-center">
-      <h1 class="mb-8 text-5xl font-bold">Databack</h1>
+      <h1 class="mb-8 text-5xl font-bold">Databack Pro</h1>
       <div class="card w-96 bg-base-100 shadow-xl">
         <div class="card-body">
           <h2 class="card-title">{{ $t('sign_in_form.title') }}</h2>
