@@ -23,7 +23,8 @@ export const useAuth = defineStore(
       is_superuser: false,
       last_login_at: '',
       nickname: '',
-      updated_at: ''
+      updated_at: '',
+      password: ''
     })
     const oauth_type = ref('')
     const sign_out = () => {
@@ -39,6 +40,7 @@ export const useAuth = defineStore(
         is_superuser: false,
         last_login_at: '',
         nickname: '',
+        password: '',
         updated_at: ''
       }
     }
