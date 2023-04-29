@@ -41,6 +41,7 @@ http.interceptors.response.use(
         const auth = useAuth()
         auth.token = await refresh()
         isRefreshing = false
+        return http.request(error.config)
       } else {
         toast.error(err)
         await router.push({ path: '/login' })
