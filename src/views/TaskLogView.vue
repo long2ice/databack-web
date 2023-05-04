@@ -264,6 +264,22 @@ const fields: TableField[] = [
       return () => cellValue && d(parseDate(cellValue), 'long')
     },
     defaultHidden: true
+  },
+  {
+    field: 'created_at',
+    label: t('created_at'),
+    formatter: (row, column, cellValue) => {
+      return () => cellValue && d(parseDate(cellValue), 'long')
+    },
+    defaultHidden: true
+  },
+  {
+    field: 'updated_at',
+    label: t('updated_at'),
+    formatter: (row, column, cellValue) => {
+      return () => cellValue && d(parseDate(cellValue), 'long')
+    },
+    defaultHidden: true
   }
 ]
 const data = reactive<TaskLogsResponse>({
