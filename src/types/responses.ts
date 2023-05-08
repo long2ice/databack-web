@@ -81,6 +81,8 @@ export interface StatResponse {
   task_count: number
   task_log_count: number
   restore_log_count: number
+  admin_count: number
+  action_log_count: number
   task_logs: TaskLogStatResponse[]
 }
 export interface RestoreResponse {

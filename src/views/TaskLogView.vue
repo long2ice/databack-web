@@ -114,7 +114,7 @@
         <label
           class="btn"
           :class="{
-            disabled: isSubmitting
+            loading: isSubmitting
           }"
           @click="onSubmit"
           >{{ $t('submit') }}</label

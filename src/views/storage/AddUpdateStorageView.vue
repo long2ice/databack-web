@@ -76,7 +76,13 @@
       </div>
     </div>
     <div class="btn-group mt-4">
-      <button class="btn-primary btn" :disabled="isSubmitting" @click="onSave">
+      <button
+        class="btn-primary btn"
+        :class="{
+          loading: isSubmitting
+        }"
+        @click="onSave"
+      >
         {{ $t('save') }}
       </button>
       <button class="btn" @click="$router.back()">{{ $t('back') }}</button>

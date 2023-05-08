@@ -37,7 +37,13 @@
               <span class="label-text-alt text-error">{{ errorMessagePassword }}</span>
             </label>
           </div>
-          <button class="btn-primary btn" @click="onSubmit" :disabled="isSubmitting">
+          <button
+            class="btn-primary btn"
+            @click="onSubmit"
+            :class="{
+              loading: isSubmitting
+            }"
+          >
             {{ $t('sign_in') }}
           </button>
           <template v-if="oauth.length > 0">

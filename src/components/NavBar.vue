@@ -5,7 +5,7 @@
     </div>
     <div class="flex-none">
       <button class="btn-ghost btn-circle btn">
-        <label class="swap-rotate swap">
+        <label class="swap swap-rotate">
           <input type="checkbox" data-toggle-theme="light,dark" />
           <MdOutlinedWbSunny class="swap-off text-xl" />
           <CoMoon class="swap-on text-xl" />
@@ -128,7 +128,7 @@
         <label
           class="btn"
           :class="{
-            disabled: isSubmitting
+            loading: isSubmitting
           }"
           @click="onSubmit"
           >{{ $t('change_password') }}</label

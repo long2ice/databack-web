@@ -68,7 +68,13 @@
               <span class="label-text-alt text-error">{{ errorMessageConfirmPassword }}</span>
             </label>
           </div>
-          <button class="btn-primary btn" @click="onSubmit" :disabled="isSubmitting">
+          <button
+            class="btn-primary btn"
+            @click="onSubmit"
+            :class="{
+              loading: isSubmitting
+            }"
+          >
             {{ $t('create_admin') }}
           </button>
         </div>

@@ -99,7 +99,7 @@
           <label
             class="btn"
             :class="{
-              disabled: isSubmitting
+              loading: isSubmitting
             }"
             @click="onSubmit"
             >{{ $t('submit') }}</label
@@ -216,8 +216,8 @@ const fields: TableField[] = [
     }
   },
   {
-    field: 'created_at',
-    label: t('created_at'),
+    field: 'updated_at',
+    label: t('updated_at'),
     formatter: (row, column, cellValue) => {
       return () => d(parseDate(cellValue), 'long')
     }

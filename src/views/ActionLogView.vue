@@ -135,17 +135,17 @@ const fields: TableField[] = [
     }
   },
   {
-    field: 'created_at',
-    label: t('created_at'),
-    formatter: (row, column, cellValue) => {
-      return () => d(parseDate(cellValue), 'long')
-    }
-  },
-  {
     field: 'updated_at',
     label: t('updated_at'),
     formatter: (row, column, cellValue) => {
       return () => cellValue && d(parseDate(cellValue), 'long')
+    }
+  },
+  {
+    field: 'created_at',
+    label: t('created_at'),
+    formatter: (row, column, cellValue) => {
+      return () => d(parseDate(cellValue), 'long')
     }
   }
 ]
