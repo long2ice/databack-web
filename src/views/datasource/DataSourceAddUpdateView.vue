@@ -79,7 +79,7 @@
   <div class="flex flex-col">
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text">{{ $t('name') }}<span class="text-error">*</span></span>
+        <span class="label-text"><span class="text-error">*</span>{{ $t('name') }}</span>
       </label>
       <input
         type="text"

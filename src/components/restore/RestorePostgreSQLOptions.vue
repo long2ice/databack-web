@@ -2,7 +2,7 @@
   <div class="flex flex-row gap-4">
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text">{{ $t('host') }}<span class="text-error">*</span></span>
+        <span class="label-text"><span class="text-error">*</span>{{ $t('host') }}</span>
       </label>
       <input type="text" class="input-bordered input" v-model="host" />
       <label class="label">
@@ -11,7 +11,7 @@
     </div>
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text">{{ $t('port') }}<span class="text-error">*</span></span>
+        <span class="label-text"><span class="text-error">*</span>{{ $t('port') }}</span>
       </label>
       <input type="number" class="input-bordered input" v-model="port" />
       <label class="label">
@@ -22,7 +22,7 @@
   <div class="flex gap-4">
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text">{{ $t('username') }}<span class="text-error">*</span></span>
+        <span class="label-text"><span class="text-error">*</span>{{ $t('username') }}</span>
       </label>
       <input type="text" v-model="username" class="input-bordered input" />
       <label class="label">
