@@ -1,4 +1,11 @@
-export type DataSourceType = 'mysql' | 'postgres' | 'local' | 'ssh' | 'redis' | 'mongo'
+export type DataSourceType =
+  | 'mysql'
+  | 'postgres'
+  | 'local'
+  | 'ssh'
+  | 'redis'
+  | 'mongo'
+  | 'clickhouse'
 
 export interface DataSourceResponse {
   id: number

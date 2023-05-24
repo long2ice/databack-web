@@ -5,6 +5,7 @@
   <CaVirtualMachine v-else-if="type === 'ssh'" class="text-5xl" />
   <VsFolderTypeMongodb v-if="type === 'mongo'" class="text-5xl" />
   <DeRedisOriginal v-if="type === 'redis'" class="text-5xl" />
+  <SiClickhouse v-if="type === 'clickhouse'" class="text-5xl text-yellow-500" />
 </template>
 
 <script setup lang="ts">

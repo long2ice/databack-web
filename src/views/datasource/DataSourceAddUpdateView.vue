@@ -48,6 +48,17 @@
     <button
       class="tab-bordered tab"
       :class="{
+        'tab-active': type == 'clickhouse'
+      }"
+      @click="type = 'clickhouse'"
+      v-if="(isUpdate && type == 'clickhouse') || !isUpdate"
+    >
+      <SiClickhouse class="mr-2 text-lg text-yellow-500" />
+      ClickHouse
+    </button>
+    <button
+      class="tab-bordered tab"
+      :class="{
         'tab-active': type == 'local'
       }"
       @click="type = 'local'"
@@ -76,6 +87,9 @@
   <div class="text-sm text-gray-500" v-if="type === 'ssh'">{{ t('ssh_datasource_desc') }}</div>
   <div class="text-sm text-gray-500" v-if="type === 'redis'">{{ t('redis_datasource_desc') }}</div>
   <div class="text-sm text-gray-500" v-if="type === 'mongo'">{{ t('mongo_datasource_desc') }}</div>
+  <div class="text-sm text-gray-500" v-if="type === 'clickhouse'">
+    {{ t('clickhouse_datasource_desc') }}
+  </div>
   <div class="flex flex-col">
     <div class="form-control w-full">
       <label class="label">
@@ -106,6 +120,11 @@
         />
         <RedisOptions v-else-if="type == 'redis'" ref="optionsRef" :defaultOptions="options" />
         <MongoOptions v-else-if="type == 'mongo'" ref="optionsRef" :defaultOptions="options" />
+        <ClickHouseOptions
+          v-else-if="type == 'clickhouse'"
+          ref="optionsRef"
+          :defaultOptions="options"
+        />
       </div>
     </div>
     <div class="btn-group mt-4">

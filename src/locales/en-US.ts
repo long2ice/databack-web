@@ -190,5 +190,9 @@ export default {
   change_password: 'Change Password',
   old_password: 'Old Password',
   new_password: 'New Password',
-  confirm_new_password: 'Confirm New Password'
+  confirm_new_password: 'Confirm New Password',
+  clickhouse_datasource_desc: 'Backup ClickHouse data by clickhouse-backup',
+  clickhouse_other_options_placeholder:
+    'Please enter other options, multiple options are separated by spaces',
+  clickhouse_other_options_tips: 'All options refer to the help document of clickhouse-backup, '
 }
