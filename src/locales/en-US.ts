@@ -194,5 +194,6 @@ export default {
   clickhouse_datasource_desc: 'Backup ClickHouse data by clickhouse-backup',
   clickhouse_other_options_placeholder:
     'Please enter other options, multiple options are separated by spaces',
-  clickhouse_other_options_tips: 'All options refer to the help document of clickhouse-backup, '
+  clickhouse_other_options_tips: 'All options refer to the help document of clickhouse-backup, ',
+  access_style: 'Access Style',
 }

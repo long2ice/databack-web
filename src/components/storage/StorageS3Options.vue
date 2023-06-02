@@ -11,9 +11,7 @@
     </div>
     <div class="form-control w-full">
       <label class="label">
-        <span class="label-text"
-          ><span class="text-error">*</span>{{ $t('secret_access_key') }}</span
-        >
+        <span class="label-text"><span class="text-error">*</span>{{ $t('secret_access_key') }}</span>
       </label>
       <input type="text" class="input-bordered input" v-model="sk" />
       <label class="label">
@@ -36,11 +34,19 @@
       <input type="text" v-model="options.region_name" class="input-bordered input" />
     </div>
   </div>
-  <div class="form-control w-full">
-    <label class="label">
-      <span class="label-text">{{ $t('endpoint_url') }}</span>
-    </label>
-    <input type="text" class="input-bordered input" v-model="options.endpoint_url" />
+  <div class="flex flex-row gap-4">
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">{{ $t('access_style') }}</span>
+      </label>
+      <input type="text" class="input-bordered input" v-model="options.access_style" />
+    </div>
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">{{ $t('endpoint_url') }}</span>
+      </label>
+      <input type="text" class="input-bordered input" v-model="options.endpoint_url" />
+    </div>
   </div>
 </template>
 
@@ -57,11 +63,13 @@ const defaultOptions = props.defaultOptions || {}
 const options: {
   region_name: string
   endpoint_url: string
-  path: string
+  path: string,
+  access_style: string
 } = reactive({
   region_name: defaultOptions['region_name'] || '',
   endpoint_url: defaultOptions['endpoint_url'] || '',
-  path: defaultOptions['path'] || ''
+  path: defaultOptions['path'] || '',
+  access_style: defaultOptions['access_style'] || 'auto'
 })
 const { t } = useI18n()
 const { value: ak, errorMessage: errorMessageAK } = useField(
@@ -86,7 +94,8 @@ const getOptions = () => {
     bucket_name: bucket_name.value,
     region_name: options.region_name,
     endpoint_url: options.endpoint_url,
-    path: options.path
+    path: options.path,
+    access_style: options.access_style
   }
 }
 defineExpose({

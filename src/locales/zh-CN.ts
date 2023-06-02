@@ -187,5 +187,6 @@ export default {
   confirm_new_password: '确认新密码',
   clickhouse_datasource_desc: '使用 clickhouse-backup 备份 ClickHouse 数据',
   clickhouse_other_options_placeholder: '其他选项，多个选项之间用空格分隔',
-  clickhouse_other_options_tips: '所有选项请参考 clickhouse-backup 的帮助文档，'
+  clickhouse_other_options_tips: '所有选项请参考 clickhouse-backup 的帮助文档，',
+  access_style: '访问方式'
 }
