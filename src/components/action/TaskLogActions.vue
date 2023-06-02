@@ -1,12 +1,8 @@
 <template>
-  <button
-    class="btn-primary btn-sm btn"
-    @click="onRestore(data)"
-    :class="{
-      'btn-disabled': data.is_deleted || data.status != 'success'
-    }"
-  >
-    <MdTwotoneRestore />
+  <button class="btn-primary btn-sm btn" @click="onRestore(data)" :class="{
+    'btn-disabled': data.is_deleted || data.status != 'success'
+  }">
+    <MdRestore />
   </button>
 </template>
 

@@ -9,18 +9,12 @@
     </template>
     <div v-show="selected.length == 0">{{ $t('total_rows', { total: total }) }}</div>
     <div class="dropdown-end dropdown ml-auto">
-      <label tabindex="0" class="btn-sm btn m-1 gap-2"><BxColumns />{{ $t('columns') }}</label>
-      <ul
-        tabindex="0"
-        class="dropdown-content flex w-32 flex-col gap-2 rounded-md bg-base-100 p-4 shadow"
-      >
+      <label tabindex="0" class="btn-sm btn m-1 gap-2">
+        <BxColumns />{{ $t('columns') }}
+      </label>
+      <ul tabindex="0" class="dropdown-content flex w-32 flex-col gap-2 rounded-md bg-base-100 p-4 shadow">
         <li v-for="field in fields" class="flex items-center gap-2" :key="field.field">
-          <input
-            type="checkbox"
-            class="checkbox checkbox-sm"
-            v-model="columns"
-            :value="field.field"
-          />
+          <input type="checkbox" class="checkbox checkbox-sm" v-model="columns" :value="field.field" />
           <span class="text-sm">{{ field.label }}</span>
         </li>
       </ul>
@@ -33,17 +27,10 @@
           <input type="checkbox" class="checkbox" v-model="selectAll" />
         </th>
         <th v-for="field in realFields" :key="field.field">
-          <span class="flex items-center gap-1"
-            >{{ field.label
-            }}<button v-if="sortFields[field.field]">
-              <LuSortAsc
-                v-show="sortFields[field.field].order === 'asc'"
-                @click="sort(field.field, 'asc')"
-              />
-              <LuSortDesc
-                v-show="sortFields[field.field].order === 'desc'"
-                @click="sort(field.field, 'desc')"
-              />
+          <span class="flex items-center gap-1">{{ field.label
+          }}<button v-if="sortFields[field.field]">
+              <BsSortUp v-show="sortFields[field.field].order === 'asc'" @click="sort(field.field, 'asc')" />
+              <BsSortDown v-show="sortFields[field.field].order === 'desc'" @click="sort(field.field, 'desc')" />
             </button>
           </span>
         </th>
@@ -62,10 +49,7 @@
             </div>
             <span class="message-tooltip">{{ d[field.field] }}</span>
           </template>
-          <Component
-            v-else-if="field.formatter"
-            :is="field.formatter(d, field.field, d[field.field], index)"
-          >
+          <Component v-else-if="field.formatter" :is="field.formatter(d, field.field, d[field.field], index)">
           </Component>
           <template v-else>
             {{ d[field.field] }}
@@ -74,11 +58,7 @@
         <td v-if="actions || onDelete">
           <div class="flex gap-1">
             <Component v-if="actions" :is="actions" :data="d" />
-            <button
-              class="btn-error btn-sm btn"
-              @click="onDelete && onDelete([d.id])"
-              v-if="onDelete"
-            >
+            <button class="btn-error btn-sm btn" @click="onDelete && onDelete([d.id])" v-if="onDelete">
               <ReDeleteBin7Line />
             </button>
           </div>
@@ -122,15 +102,15 @@ const sortFields = reactive<Record<string, Sort>>(
     acc[s.field] = s
     return acc
   }, {} as Record<string, Sort>) ||
-    props.fields.reduce((acc, f) => {
-      if (f.sortable) {
-        acc[f.field] = {
-          field: f.field,
-          order: 'asc'
-        }
+  props.fields.reduce((acc, f) => {
+    if (f.sortable) {
+      acc[f.field] = {
+        field: f.field,
+        order: 'asc'
       }
-      return acc
-    }, {} as Record<string, Sort>)
+    }
+    return acc
+  }, {} as Record<string, Sort>)
 )
 watch(
   sortFields,

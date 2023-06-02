@@ -40,7 +40,7 @@
       <router-link to="/restore_log">
         <div class="stat">
           <div class="stat-figure">
-            <MdTwotoneRestore class="text-2xl" />
+            <MdRestore class="text-2xl" />
           </div>
           <div class="stat-title">{{ $t('restore_log') }}</div>
           <div class="stat-value">{{ stat.restore_log_count }}</div>
