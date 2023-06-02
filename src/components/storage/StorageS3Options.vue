@@ -39,7 +39,11 @@
       <label class="label">
         <span class="label-text">{{ $t('access_style') }}</span>
       </label>
-      <input type="text" class="input-bordered input" v-model="options.access_style" />
+      <select class="select select-bordered w-full" v-model="options.access_style">
+        <option>auto</option>
+        <option>path</option>
+        <option>virtual</option>
+      </select>
     </div>
     <div class="form-control w-full">
       <label class="label">
