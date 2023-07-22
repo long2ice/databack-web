@@ -66,7 +66,7 @@
       </router-link>
     </div>
   </div>
-  <div class="max-w-5xl">
+  <div class="w-[75%]">
     <Line :options="options" :data="data" />
   </div>
 </template>

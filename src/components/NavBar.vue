@@ -1,7 +1,7 @@
 <template>
   <div class="navbar bg-neutral text-neutral-content">
     <div class="flex-1">
-      <router-link class="btn-ghost btn text-xl normal-case" to="/">Databack Pro</router-link>
+      <router-link class="btn-ghost btn text-xl normal-case" to="/">Databack</router-link>
     </div>
     <div class="flex-none">
       <button class="btn-ghost btn-circle btn">

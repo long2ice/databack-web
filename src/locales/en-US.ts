@@ -185,7 +185,6 @@ export default {
   method: 'Method',
   admin_id: 'Admin ID',
   content: 'Content',
-  license: 'License to {name}, expire at: {expire}',
   next_run_at: 'Next Run At',
   change_password: 'Change Password',
   old_password: 'Old Password',
